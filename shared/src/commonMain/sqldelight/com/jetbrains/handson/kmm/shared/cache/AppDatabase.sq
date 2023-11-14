@@ -1,0 +1,67 @@
+CREATE TABLE Donor (
+    id INTEGER PRIMARY KEY,
+    lastName TEXT NOT NULL,
+    firstName TEXT NOT NULL,
+    middleName TEXT NOT NULL,
+    branch TEXT NOT NULL,
+    aboRh TEXT NOT NULL,
+    dob TEXT NOT NULL,
+    gender INTEGER AS Boolean NOT NULL,
+    inReassociate INTEGER AS Boolean NOT NULL
+);
+
+insertDonor:
+INSERT INTO Donor(id, lastName, firstName, middleName, branch, aboRh, dob, gender, inReassociate)
+VALUES(?, ?, ?, ?, ?, ?, ?, ?, 0);
+
+removeAllDonors:
+DELETE FROM Donor;
+
+selectAllDonorsInfo:
+SELECT Donor.*
+FROM Donor;
+
+selectDonorsInfo:
+SELECT * FROM Donor
+WHERE lastName LIKE ?;
+
+getCount:
+SELECT COUNT(lastName)
+FROM Donor;
+
+CREATE TABLE Product (
+    id INTEGER PRIMARY KEY,
+    donorId INTEGER NOT NULL,
+    din TEXT NOT NULL,
+    aboRh TEXT NOT NULL,
+    productCode TEXT NOT NULL,
+    expirationDate TEXT NOT NULL,
+    removedForReassociation INTEGER AS Boolean NOT NULL,
+    inReassociate INTEGER AS Boolean NOT NULL,
+    FOREIGN KEY (donorId) REFERENCES Donor(id)
+);
+
+selectAllProductsInfo:
+SELECT Product.*
+FROM Product;
+
+insertProduct:
+INSERT INTO Product(id, donorId, din, aboRh, productCode, expirationDate, removedForReassociation, inReassociate)
+VALUES(?, ?, ?, ?, ?, ?, 0, 0);
+
+updateDonorIdInProduct:
+UPDATE Product SET donorId = :newValue WHERE id = :id;
+
+updateProductRemovedForReassociation:
+UPDATE Product SET removedForReassociation = :newValue WHERE id = :id;
+
+updateProductInReassociate:
+UPDATE Product SET inReassociate = :newValue WHERE id = :id;
+
+donorFromNameAndDateWithProducts:
+SELECT * FROM Donor
+WHERE lastName = ? AND dob = ?;
+
+selectProductsList:
+SELECT Product.*
+FROM Product WHERE donorId = :donorId;
