@@ -37,9 +37,9 @@ kotlin {
 //                implementation(libs.androidx.activity.compose)
 //                implementation(libs.ktor.client.android)
                 implementation(libs.sql.android)
+
                 implementation(libs.koin.core)
                 implementation(libs.koin.android)
-                implementation(libs.kmm.viewmodel)
                 implementation(libs.kermit)
                 implementation(libs.ktor.client.android)
 //                implementation(libs.koin.core)
@@ -56,7 +56,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-
+                implementation(compose.ui)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
@@ -65,6 +65,7 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(libs.colormath.compose)
                 implementation(libs.kermit)
+                implementation(libs.kmm.viewmodel)
                 implementation(libs.coroutines.core)
                 implementation(libs.precompose.navigation)
                 implementation(libs.kotlin.serialization)
@@ -107,9 +108,6 @@ android {
     defaultConfig {
         minSdk = 24
     }
-}
-dependencies {
-    implementation("androidx.core:core-ktx:+")
 }
 
 sqldelight {

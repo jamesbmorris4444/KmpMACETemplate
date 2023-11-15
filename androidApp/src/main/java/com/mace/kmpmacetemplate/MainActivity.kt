@@ -1,4 +1,4 @@
-package com.mace.kmpmacetemplate.android
+package com.mace.kmpmacetemplate
 
 import BloodViewModel
 import MaceTemplateTheme
@@ -10,17 +10,12 @@ import android.util.DisplayMetrics
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.AbstractApplier
-
 import androidx.core.view.WindowCompat
-
 import com.jetbrains.handson.kmm.shared.SpaceXSDK
 import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
 import ui.RocketLaunchScreen
 
-
 class MainActivity : ComponentActivity() {
-    val xx: AbstractApplier<String>? = null
     private val databaseDriverFactory = DatabaseDriverFactory(this)
     private val sdk = SpaceXSDK(databaseDriverFactory)
     private val repository = RepositoryImpl(sdk, databaseDriverFactory)
