@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MaceKmpTemplate</string>
+    <string name="app_name">KmpMACETemplate</string>
     <string name="rocket_launch_complete_title">SpaceX Rocket Launches</string>
     <string name="rocket_launch_pending_title">Fetching SpaceX Launches …</string>
     <string name="rocket_launch_screen_name">Rocket Launch Screen</string>

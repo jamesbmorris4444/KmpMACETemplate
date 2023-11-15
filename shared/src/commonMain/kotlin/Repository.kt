@@ -26,7 +26,8 @@ interface Repository {
     fun updateProductRemovedForReassociation(newValue: Boolean, id: Long)
 }
 
-class RepositoryImpl(private val sdk: SpaceXSDK, private val databaseDriverFactory: DatabaseDriverFactory) : Repository {
+class RepositoryImpl(private val sdk: SpaceXSDK, private val databaseDriverFactory: DatabaseDriverFactory) :
+    Repository {
 
     override var screenWidth = 0
     override var screenHeight = 0

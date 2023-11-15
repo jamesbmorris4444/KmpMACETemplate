@@ -1,4 +1,4 @@
-package com.mace.kmptemplate.di
+package com.mace.kmpmacetemplate.di
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
@@ -14,4 +14,5 @@ class BaseApplication : Application() {
             modules(listOf(appModule()))
         }
     }
+
 }

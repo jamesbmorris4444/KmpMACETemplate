@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.jetbrainsCompose)
 }
 
 android {
@@ -34,18 +35,40 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
+    }
+}
+
 dependencies {
 //    implementation(projects.shared)
-//    implementation(libs.compose.ui)
 //    implementation(libs.compose.ui.tooling.preview)
 //    implementation(libs.compose.material3)
-//    implementation(libs.androidx.activity.compose)
 //    debugImplementation(libs.compose.ui.tooling)
     implementation(projects.shared)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
+//    implementation(libs.koin.core)
+//    implementation(libs.koin.android)
+//    implementation(libs.androidx.ui)
+//    implementation(libs.compose.ui)
+//    implementation(libs.compose.ui.tooling.preview)
+//    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.20"))
+
+    implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.ktor.client.android)
-    implementation(libs.koin.core)
-    implementation(libs.koin.android)
+    constraints{
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.20")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
+    }
+
+
+
+
+//    implementation(libs.sql)
+//    implementation(libs.colormath)
+//    implementation(libs.colormath.jvm)
+//    implementation(libs.colormath.compose)
+//    implementation(libs.moko.resources)
+//    implementation(libs.moko.resources.compose)
 }
