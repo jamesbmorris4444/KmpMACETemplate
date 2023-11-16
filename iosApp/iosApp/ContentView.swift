@@ -1,5 +1,6 @@
 import UIKit
 import SwiftUI
+import shared
 
 struct ComposeView: UIViewControllerRepresentable {
     var viewModel: BloodViewModel

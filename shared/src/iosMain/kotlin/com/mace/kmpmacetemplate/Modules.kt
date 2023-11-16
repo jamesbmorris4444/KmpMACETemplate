@@ -1,4 +1,4 @@
-package com.mace.kmpmacetemplate.di
+package com.mace.kmpmacetemplate
 
 import Repository
 import RepositoryImpl

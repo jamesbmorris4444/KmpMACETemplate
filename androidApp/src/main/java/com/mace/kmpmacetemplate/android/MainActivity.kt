@@ -1,4 +1,4 @@
-package com.mace.kmpmacetemplate
+package com.mace.kmpmacetemplate.android
 
 import BloodViewModel
 import MaceTemplateTheme
@@ -10,6 +10,8 @@ import android.util.DisplayMetrics
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.compositionLocalOf
 import androidx.core.view.WindowCompat
 import com.jetbrains.handson.kmm.shared.SpaceXSDK
 import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
@@ -36,6 +38,19 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+        //setContent {
+        //            val localTheme = compositionLocalOf { DarkTheme() }
+        //            CompositionLocalProvider(localTheme provides DarkTheme()) {
+        //                MaceTemplateTheme(darkTheme = localTheme.current.isDark) {
+        //                    RocketLaunchScreen(
+        //                        repository = repository,
+        //                        configAppBar = { },
+        //                        viewModel = viewModel,
+        //                        title = "SpaceX Rocket Launches"
+        //                    )
+        //                }
+        //            }
+        //        }
     }
 
     private fun convertPixelsToDp(px: Float, context: Context): Float {

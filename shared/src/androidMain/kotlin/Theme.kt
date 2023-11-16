@@ -1,3 +1,4 @@
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
@@ -107,7 +108,7 @@ actual val lightColorPalette = lightColors(
 
 @Composable
 actual fun MaceTemplateTheme(
-    darkTheme: Boolean ,
+    darkTheme: Boolean,
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {

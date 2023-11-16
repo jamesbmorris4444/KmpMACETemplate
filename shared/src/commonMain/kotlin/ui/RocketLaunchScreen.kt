@@ -15,6 +15,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,8 +26,9 @@ import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import extraBlue
 import extraGreen
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import moe.tlaster.precompose.flow.collectAsStateWithLifecycle
 
 @Composable
 fun RocketLaunchScreen(
@@ -48,13 +51,16 @@ fun RocketLaunchScreen(
 //    viewModel.setAppDatabase()
 //    val showStandardModalState = viewModel.showStandardModalState.observeAsState().value ?: StandardModalArgs()
     val composableScope = rememberCoroutineScope()
-    val completed = viewModel.refreshCompletedState.collectAsStateWithLifecycle().value
-    val isInvalid = viewModel.databaseInvalidState.collectAsStateWithLifecycle().value
-    val failure = viewModel.refreshFailureState.collectAsStateWithLifecycle().value
+    val completed by viewModel.refreshCompletedState.collectAsState()
+    val isInvalid by viewModel.databaseInvalidState.collectAsState()
+    val failure by viewModel.refreshFailureState.collectAsState()
+    Logger.d("JIMX1 $completed    $isInvalid     $failure")
     when {
         isInvalid -> {
-            composableScope.launch {
+            composableScope.launch(Dispatchers.Main) {
+                Logger.d("JIMX2 $completed    $isInvalid     $failure")
                 val pair = repository.refreshDatabase(composableScope)
+                Logger.d("JIMX3 $completed    $isInvalid     $failure")
                 if (pair.second.isEmpty()) {
                     viewModel.updateRefreshCompletedState(true)
                     viewModel.updateDatabaseInvalidState(false)
@@ -123,7 +129,7 @@ fun RocketLaunchHandler(
     viewModel: BloodViewModel,
     title: String,
 ) {
-    val launches: List<RocketLaunch> = viewModel.launchesAvailableState.collectAsStateWithLifecycle().value
+    val launches: List<RocketLaunch> by viewModel.launchesAvailableState.collectAsState()
 
     @Composable
     fun LaunchesList(launches: List<RocketLaunch>) {

@@ -42,6 +42,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+    <array>
+        <string>avenir_bold.otf</string>
+        <string>avenir_book.otf</string>
+        <string>avenir_regular.otf</string>
+    </array>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>

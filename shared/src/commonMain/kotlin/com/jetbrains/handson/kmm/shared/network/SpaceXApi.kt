@@ -1,5 +1,6 @@
 package com.jetbrains.handson.kmm.shared.network
 
+import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -18,6 +19,7 @@ class SpaceXApi {
     }
 
     suspend fun getAllLaunches(): List<RocketLaunch> {
+        Logger.d("JIMX getAllLaunches")
         return httpClient.get("https://api.spacexdata.com/v5/launches").body()
     }
 }
