@@ -3,23 +3,24 @@ package com.jetbrains.handson.kmm.shared.network
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.get
+import io.ktor.client.request.request
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpMethod
 import kotlinx.serialization.json.Json
 
-class SpaceXApi {
-    private val httpClient = HttpClient {
-        install(ContentNegotiation) {
-            Json {
-                ignoreUnknownKeys = true
-                useAlternativeNames = false
-            }
-        }
-    }
 
+class SpaceXApi {
     suspend fun getAllLaunches(): List<RocketLaunch> {
-        Logger.d("JIMX getAllLaunches")
-        return httpClient.get("https://api.spacexdata.com/v5/launches").body()
+        val httpClient = HttpClient()
+        val jsonSerializer = Json {
+            ignoreUnknownKeys = true
+            isLenient = false
+        }
+        val response: HttpResponse = httpClient.request("https://api.spacexdata.com/v5/launches") {
+            method = HttpMethod.Get
+        }
+        val responseBody = response.bodyAsText()
+        return jsonSerializer.decodeFromString(responseBody)
     }
 }

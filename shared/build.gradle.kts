@@ -68,6 +68,7 @@ kotlin {
                 implementation(libs.kotlin.serialization)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content)
+                implementation(libs.ktor.client.engine)
             }
         }
         val iosArm64Main by getting

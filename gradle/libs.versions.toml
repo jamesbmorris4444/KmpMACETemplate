@@ -124,6 +124,7 @@ precompose-navigation = { module = "moe.tlaster:precompose", version.ref = "prec
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-version" }
 ktor-client-content = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
+ktor-client-engine = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
 kmm-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "kmm-lifecycle" }
 
 [plugins]
