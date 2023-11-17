@@ -27,7 +27,6 @@ import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import extraBlue
 import extraGreen
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 @Composable

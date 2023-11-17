@@ -15,6 +15,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.core.view.WindowCompat
 import com.jetbrains.handson.kmm.shared.SpaceXSDK
 import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
+import ui.DrawerAppComponent
 import ui.RocketLaunchScreen
 
 class MainActivity : ComponentActivity() {
@@ -28,16 +29,16 @@ class MainActivity : ComponentActivity() {
         repository.screenWidth = convertPixelsToDp(Resources.getSystem().displayMetrics.widthPixels.toFloat(), this).toInt()
         repository.screenHeight = convertPixelsToDp(Resources.getSystem().displayMetrics.heightPixels.toFloat(), this).toInt()
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        setContent {
-            MaceTemplateTheme {
-                RocketLaunchScreen(
-                    repository = repository,
-                    configAppBar = { },
-                    viewModel = viewModel,
-                    title = "SpaceX Rocket Launches"
-                )
-            }
-        }
+//        setContent {
+//            MaceTemplateTheme {
+//                RocketLaunchScreen(
+//                    repository = repository,
+//                    configAppBar = { },
+//                    viewModel = viewModel,
+//                    title = "SpaceX Rocket Launches"
+//                )
+//            }
+//        }
         //setContent {
         //            val localTheme = compositionLocalOf { DarkTheme() }
         //            CompositionLocalProvider(localTheme provides DarkTheme()) {
@@ -51,6 +52,11 @@ class MainActivity : ComponentActivity() {
         //                }
         //            }
         //        }
+        setContent {
+            MaceTemplateTheme {
+                DrawerAppComponent(viewModel, repository)
+            }
+        }
     }
 
     private fun convertPixelsToDp(px: Float, context: Context): Float {

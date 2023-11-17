@@ -6,7 +6,6 @@ import com.rickclephas.kmm.viewmodel.KMMViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import ui.StandardModalArgs
 
 actual abstract class ViewModel actual constructor() : KMMViewModel(), KoinComponent {
 
@@ -37,7 +36,9 @@ actual abstract class ViewModel actual constructor() : KMMViewModel(), KoinCompo
         get() = privateDonorsAvailableState
 
 
-    internal actual val privateShowStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
+    internal actual val privateShowStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(
+        StandardModalArgs()
+    )
     actual val showStandardModalState: MutableStateFlow<StandardModalArgs>
         get() = privateShowStandardModalState
 

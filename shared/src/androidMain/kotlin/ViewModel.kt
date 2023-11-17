@@ -38,7 +38,9 @@ actual abstract class ViewModel : KMMViewModel(), KoinComponent {
     actual val donorsAvailableState: MutableStateFlow<List<Donor>>
         get() = privateDonorsAvailableState
 
-    internal actual val privateShowStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
+    internal actual val privateShowStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(
+        StandardModalArgs()
+    )
     actual val showStandardModalState: MutableStateFlow<StandardModalArgs>
         get() = privateShowStandardModalState
 
