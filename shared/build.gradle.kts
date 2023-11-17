@@ -71,13 +71,12 @@ kotlin {
                 implementation(libs.ktor.client.engine)
                 implementation(libs.sql)
                 implementation(libs.colormath.compose)
-                implementation(libs.moko.resources)
-                implementation(libs.moko.resources.compose)
             }
         }
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosX64Main by getting
+        sourceSets["commonMain"].resources.srcDir("src/commonMain/resources")
     }
 }
 
@@ -87,9 +86,7 @@ android {
     defaultConfig {
         minSdk = 24
     }
-}
-dependencies {
-    implementation("androidx.core:core-ktx:+")
+    sourceSets["main"].resources.srcDir("src/commonMain/resources")
 }
 
 sqldelight {

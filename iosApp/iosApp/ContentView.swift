@@ -5,7 +5,7 @@ import shared
 struct ComposeView: UIViewControllerRepresentable {
     var viewModel: BloodViewModel
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController(viewModel: viewModel, repository: RepositoryImpl)
+        MainViewControllerKt.MainViewController(viewModel: viewModel, repository: Repository)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
