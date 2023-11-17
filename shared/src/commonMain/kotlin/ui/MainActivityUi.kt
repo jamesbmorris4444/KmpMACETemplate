@@ -66,7 +66,7 @@ fun DrawerAppComponent(
                 Image(
                     modifier = Modifier
                         .size(120.dp),
-                    painter = painterResource("resources/drawable/fs_logo.png"),
+                    painter = painterResource("drawable/fs_logo.png"),
                     contentDescription = Strings.get("fs_logo_content_description"),
                     contentScale = ContentScale.Fit
                 )

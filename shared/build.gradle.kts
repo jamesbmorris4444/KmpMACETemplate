@@ -71,6 +71,8 @@ kotlin {
                 implementation(libs.ktor.client.engine)
                 implementation(libs.sql)
                 implementation(libs.colormath.compose)
+                implementation(libs.moko.resources)
+                implementation(libs.moko.resources.compose)
             }
         }
         val iosArm64Main by getting
