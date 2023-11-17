@@ -6,6 +6,7 @@ import com.rickclephas.kmm.viewmodel.KMMViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import ui.StandardModalArgs
 
 actual abstract class ViewModel actual constructor() : KMMViewModel(), KoinComponent {
 

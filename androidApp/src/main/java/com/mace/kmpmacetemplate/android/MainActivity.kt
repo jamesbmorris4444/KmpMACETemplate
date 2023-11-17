@@ -3,6 +3,7 @@ package com.mace.kmpmacetemplate.android
 import BloodViewModel
 import MaceTemplateTheme
 import RepositoryImpl
+import StartApplication
 import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
@@ -29,33 +30,8 @@ class MainActivity : ComponentActivity() {
         repository.screenWidth = convertPixelsToDp(Resources.getSystem().displayMetrics.widthPixels.toFloat(), this).toInt()
         repository.screenHeight = convertPixelsToDp(Resources.getSystem().displayMetrics.heightPixels.toFloat(), this).toInt()
         WindowCompat.setDecorFitsSystemWindows(window, true)
-//        setContent {
-//            MaceTemplateTheme {
-//                RocketLaunchScreen(
-//                    repository = repository,
-//                    configAppBar = { },
-//                    viewModel = viewModel,
-//                    title = "SpaceX Rocket Launches"
-//                )
-//            }
-//        }
-        //setContent {
-        //            val localTheme = compositionLocalOf { DarkTheme() }
-        //            CompositionLocalProvider(localTheme provides DarkTheme()) {
-        //                MaceTemplateTheme(darkTheme = localTheme.current.isDark) {
-        //                    RocketLaunchScreen(
-        //                        repository = repository,
-        //                        configAppBar = { },
-        //                        viewModel = viewModel,
-        //                        title = "SpaceX Rocket Launches"
-        //                    )
-        //                }
-        //            }
-        //        }
         setContent {
-            MaceTemplateTheme {
-                DrawerAppComponent(viewModel, repository)
-            }
+            StartApplication(viewModel, repository)
         }
     }
 

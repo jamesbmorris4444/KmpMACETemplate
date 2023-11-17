@@ -5,7 +5,7 @@ import shared
 struct ComposeView: UIViewControllerRepresentable {
     var viewModel: BloodViewModel
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController(viewModel: viewModel, repository: Repository())
+        MainViewControllerKt.MainViewController(viewModel: viewModel, repository: RepositoryImpl)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
@@ -14,7 +14,7 @@ struct ComposeView: UIViewControllerRepresentable {
 struct ContentView: View {
     var viewModel = BloodViewModel()
     var body: some View {
-        ComposeView(viewModel)
+        ComposeView(viewModel: viewModel)
                 .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
     }
 }
