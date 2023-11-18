@@ -1,3 +1,4 @@
+import co.touchlab.kermit.Logger
 import platform.Foundation.NSBundle
 import platform.Foundation.NSString
 import platform.Foundation.NSURL
@@ -16,7 +17,6 @@ fun String.localized(): String {
     val baseResourcePath = NSBundle.mainBundle.pathForResource("Base", "lproj")
         ?.let { NSURL(fileURLWithPath = it) }
     val baseBundle = baseResourcePath?.let { NSBundle(it) }
-
     if (baseBundle != null) {
         val baseString = baseBundle.localizedStringForKey(this, this, null)
         if (baseString != this) return baseString

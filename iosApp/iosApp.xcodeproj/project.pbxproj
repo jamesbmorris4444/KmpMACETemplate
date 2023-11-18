@@ -11,6 +11,7 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		BD0FAC982B090186006B869C /* Localizable.strings in CopyFiles */ = {isa = PBXBuildFile; fileRef = BD0FAC972B090186006B869C /* Localizable.strings */; };
 		BDAC40A72B06391500E3EE03 /* avenir_bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BDAC40A42B06391400E3EE03 /* avenir_bold.otf */; };
 		BDAC40A82B06391500E3EE03 /* avenir_book.otf in Resources */ = {isa = PBXBuildFile; fileRef = BDAC40A52B06391400E3EE03 /* avenir_book.otf */; };
 		BDAC40A92B06391500E3EE03 /* avenir_regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BDAC40A62B06391500E3EE03 /* avenir_regular.otf */; };
@@ -27,6 +28,16 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BD303C4C2B08BF8C00278A41 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				BD0FAC982B090186006B869C /* Localizable.strings in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +47,7 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BD0FAC972B090186006B869C /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		BDAC40A42B06391400E3EE03 /* avenir_bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_bold.otf; path = ../../shared/src/main/res/font/avenir_bold.otf; sourceTree = "<group>"; };
 		BDAC40A52B06391400E3EE03 /* avenir_book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_book.otf; path = ../../shared/src/main/res/font/avenir_book.otf; sourceTree = "<group>"; };
 		BDAC40A62B06391500E3EE03 /* avenir_regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_regular.otf; path = ../../shared/src/main/res/font/avenir_regular.otf; sourceTree = "<group>"; };
@@ -63,6 +75,7 @@
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
+				BD0FAC972B090186006B869C /* Localizable.strings */,
 				7555FF7D242A565900829871 /* iosApp */,
 				7555FF7C242A565900829871 /* Products */,
 				7555FFB0242A642200829871 /* Frameworks */,
@@ -111,6 +124,7 @@
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
 				7555FFB4242A642300829871 /* Embed Frameworks */,
+				BD303C4C2B08BF8C00278A41 /* CopyFiles */,
 			);
 			buildRules = (
 			);

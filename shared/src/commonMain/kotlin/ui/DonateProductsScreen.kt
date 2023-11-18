@@ -32,17 +32,23 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
+import kotlinx.coroutines.delay
 
 @Composable
 fun DonateProductsScreen(
@@ -187,6 +193,7 @@ fun DonateProductsHandler(
         .padding(start = 24.dp, end = 24.dp)
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
+        var text by rememberSaveable { mutableStateOf("") }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -194,7 +201,7 @@ fun DonateProductsHandler(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row {
-                var text by rememberSaveable { mutableStateOf("") }
+                Spacer(modifier = Modifier.height(36.dp))
                 OutlinedTextField(
                     modifier = Modifier
                         .weight(0.7f)
@@ -215,6 +222,14 @@ fun DonateProductsHandler(
                         })
                 )
             }
+            WidgetButton(
+                padding = PaddingValues(top = 16.dp),
+                onClick = {
+                    keyboardController?.hide()
+                    handleSearchClick(text)
+                },
+                buttonText = Strings.get("search_button_text")
+            )
             WidgetButton(
                 padding = PaddingValues(top = 16.dp),
                 onClick = {

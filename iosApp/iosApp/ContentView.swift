@@ -17,6 +17,6 @@ struct ContentView: View {
     var repository: Repository
     var body: some View {
         ComposeView(viewModel: viewModel, repository: repository)
-               // .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
+                .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
     }
 }

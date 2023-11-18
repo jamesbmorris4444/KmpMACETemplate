@@ -11,10 +11,7 @@ class SpaceXSDK (databaseDriverFactory: DatabaseDriverFactory) {
     private val api = SpaceXApi()
 
     @Throws(Exception::class) suspend fun getLaunches(forceReload: Boolean): List<RocketLaunch> {
-        Logger.d("JIMX getAllLaunches1 called111 $forceReload")
         val cachedLaunches = api.getAllLaunches()
-        Logger.d("JIMX getAllLaunches1 called    $forceReload")
-        Logger.d("JIMX getAllLaunches2 called    $cachedLaunches")
         return if (cachedLaunches.isNotEmpty() && !forceReload) {
             cachedLaunches
         } else {

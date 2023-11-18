@@ -40,15 +40,12 @@ class RepositoryImpl : Repository, KoinComponent {
         var result: List<RocketLaunch> = listOf()
         var message = ""
         try {
-            Logger.d("JIMX SSS1")
             result = sdk.getLaunches(false)
             Logger.d("MACELOG: refreshDatabase success: ${result.size}")
         } catch (e: Exception) {
-            Logger.d("JIMX TTT1")
             message = e.message ?: "NULL message"
             Logger.e("MACELOG: refreshDatabase failure: ${e.message}")
         }
-        Logger.d("JIMX UUU1")
         return Pair(result, message)
     }
 

@@ -53,13 +53,10 @@ fun RocketLaunchScreen(
     val completed by viewModel.refreshCompletedState.collectAsState()
     val isInvalid by viewModel.databaseInvalidState.collectAsState()
     val failure by viewModel.refreshFailureState.collectAsState()
-    Logger.d("JIMX1 $completed    $isInvalid     $failure")
     when {
         isInvalid -> {
             composableScope.launch(Dispatchers.Main) {
-                Logger.d("JIMX2 $completed    $isInvalid     $failure")
                 val pair = repository.refreshDatabase(composableScope)
-                Logger.d("JIMX3 $completed    $isInvalid     $failure")
                 if (pair.second.isEmpty()) {
                     viewModel.updateRefreshCompletedState(true)
                     viewModel.updateDatabaseInvalidState(false)
