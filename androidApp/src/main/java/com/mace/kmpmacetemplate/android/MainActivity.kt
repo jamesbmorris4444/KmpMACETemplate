@@ -1,7 +1,6 @@
 package com.mace.kmpmacetemplate.android
 
 import BloodViewModel
-import MaceTemplateTheme
 import RepositoryImpl
 import StartApplication
 import android.content.Context
@@ -11,18 +10,10 @@ import android.util.DisplayMetrics
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.compositionLocalOf
 import androidx.core.view.WindowCompat
-import com.jetbrains.handson.kmm.shared.SpaceXSDK
-import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
-import ui.DrawerAppComponent
-import ui.RocketLaunchScreen
 
 class MainActivity : ComponentActivity() {
-    private val databaseDriverFactory = DatabaseDriverFactory(this)
-    private val sdk = SpaceXSDK(databaseDriverFactory)
-    private val repository = RepositoryImpl(sdk, databaseDriverFactory)
+    private val repository = RepositoryImpl()
     private val viewModel: BloodViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

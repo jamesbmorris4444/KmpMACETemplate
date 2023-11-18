@@ -40,7 +40,6 @@ kotlin {
                 implementation(libs.koin.android)
                 implementation(libs.kermit)
                 implementation(libs.ktor.client.android)
-                implementation(libs.kmm.viewmodel.lifecycle)
             }
         }
         val iosMain by getting {
@@ -71,6 +70,7 @@ kotlin {
                 implementation(libs.ktor.client.engine)
                 implementation(libs.sql)
                 implementation(libs.colormath.compose)
+                implementation(libs.koin.core)
             }
         }
         val iosArm64Main by getting

@@ -8,6 +8,8 @@ import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import kotlinx.coroutines.CoroutineScope
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 interface Repository {
     var screenWidth: Int
@@ -26,7 +28,10 @@ interface Repository {
     fun updateProductRemovedForReassociation(newValue: Boolean, id: Long)
 }
 
-class RepositoryImpl(private val sdk: SpaceXSDK, private val databaseDriverFactory: DatabaseDriverFactory) : Repository {
+class RepositoryImpl : Repository, KoinComponent {
+
+    private val sdk: SpaceXSDK by inject()
+    private val databaseDriverFactory: DatabaseDriverFactory by inject()
 
     override var screenWidth = 0
     override var screenHeight = 0

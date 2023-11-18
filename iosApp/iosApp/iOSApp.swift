@@ -5,12 +5,12 @@ import shared
 struct iOSApp: App {
 
     init() {
-        HelperKt.initKoin()
+        HelperKt.doInitKoin()
     }
 
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
+			ContentView(viewModel: BloodViewModel(), repository: RepositoryImpl())
 		}
 	}
 }
