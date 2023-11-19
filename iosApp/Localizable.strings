@@ -9,7 +9,7 @@
 "complete_button_text" = "Complete";
 "confirm_button_text" = "Confirm";
 "create_blood_product_title" = "Create Blood Product";
-"create_products_header_text" = "DONOR: %1$s, %2$s";
+"create_products_header_text" = "DONOR: %@, %@";
 "din_title" = "DIN";
 "donate_products" = "donate_products";
 "donate_products_no_list" = "donate_products_no_list";

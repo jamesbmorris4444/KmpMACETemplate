@@ -210,7 +210,7 @@ fun CreateProductsScreen(
             Text (
                 modifier = Modifier
                     .padding(PaddingValues(start = leftGridPadding)),
-                text = Strings.format(Strings.format("create_products_header_text", donor.lastName, donor.firstName)),
+                text = Strings.format("create_products_header_text", donor.lastName, donor.firstName),
                 style = MaterialTheme.typography.body1,
                 fontFamily = avenirFontFamilyBold
             )

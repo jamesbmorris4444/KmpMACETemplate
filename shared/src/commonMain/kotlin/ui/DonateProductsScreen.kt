@@ -37,6 +37,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
@@ -194,7 +197,6 @@ fun DonateProductsHandler(
                 .align(Alignment.TopCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val focusRequester = remember { FocusRequester() }
             val keyboardController = LocalSoftwareKeyboardController.current
             val text by viewModel.refreshEditTextState.collectAsState()
             Spacer(modifier = Modifier.height(36.dp))
@@ -203,11 +205,6 @@ fun DonateProductsHandler(
                     modifier = Modifier
                         .weight(0.7f)
                         .height(60.dp)
-                        .focusRequester(focusRequester)
-                        .onGloballyPositioned {
-                            focusRequester.requestFocus()
-                            keyboardController?.show()
-                        }
                         .testTag("OutlinedTextField"),
                     value = text,
                     onValueChange = {

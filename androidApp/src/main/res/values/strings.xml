@@ -15,7 +15,7 @@
     <string name="confirm_button_text">Confirm</string>
     <string name="complete_button_text">Complete</string>
     <string name="search_button_text">Search</string>
-    <string name="create_products_header_text">DONOR: %1$s, %2$s</string>
+    <string name="create_products_header_text">DONOR: %s, %s</string>
     <string name="no_db_entries_title_text">No entries made into the staging database</string>
     <string name="made_db_entries_title_text">Staging entry for donor/products insertion</string>
     <string name="made_db_entries_body_text">An entry was made to the staging database for insertion of new donor product(s)</string>
