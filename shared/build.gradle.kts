@@ -48,6 +48,7 @@ kotlin {
                 implementation(libs.sql.ios)
                 implementation(libs.koin.core)
                 implementation(libs.kermit)
+                implementation(libs.sentry)
             }
         }
         val commonMain by getting {

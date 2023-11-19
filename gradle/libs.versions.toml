@@ -88,10 +88,10 @@ kotlin = "1.9.20"
 compose = "1.5.4"
 compose-compiler = "1.5.4"
 compose-material3 = "1.1.2"
-androidx-activityCompose = "1.8.0"
+androidx-activityCompose = "1.8.1"
 kermit = "2.0.2"
 koin = "3.5.0"
-compose-plugin = "1.5.10"
+compose-plugin = "1.6.0-dev1276"
 sql-version = "1.5.5"
 ktor-version = "2.3.5"
 colormath = "3.3.2"
@@ -100,6 +100,7 @@ coroutines-core = "1.7.3"
 precompose-navigation = "1.5.5"
 serialization = "1.6.0"
 kmm-lifecycle = "2.6.2"
+sentry-version = "0.3.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -126,6 +127,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-ve
 ktor-client-content = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
 ktor-client-engine = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
 kmm-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "kmm-lifecycle" }
+sentry = { module = "io.sentry:sentry-kotlin-multiplatform", version.ref = "sentry-version" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

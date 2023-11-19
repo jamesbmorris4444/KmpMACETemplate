@@ -193,15 +193,15 @@ fun DonateProductsHandler(
         .padding(start = 24.dp, end = 24.dp)
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
-        var text by rememberSaveable { mutableStateOf("") }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.TopCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            var text by rememberSaveable { mutableStateOf("") }
+            Spacer(modifier = Modifier.height(36.dp))
             Row {
-                Spacer(modifier = Modifier.height(36.dp))
                 OutlinedTextField(
                     modifier = Modifier
                         .weight(0.7f)
