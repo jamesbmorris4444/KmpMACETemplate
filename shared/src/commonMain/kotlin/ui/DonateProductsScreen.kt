@@ -31,19 +31,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
@@ -61,10 +57,10 @@ fun DonateProductsScreen(
     viewModel: BloodViewModel,
     title: String
 ) {
-    val completed = viewModel.refreshCompletedState.collectAsState().value
-    val isInvalid = viewModel.databaseInvalidState.collectAsState().value
-    val showStandardModalState = viewModel.showStandardModalState.collectAsState().value
-    val failure = viewModel.refreshFailureState.collectAsState().value
+    val completed by viewModel.refreshCompletedState.collectAsState()
+    val isInvalid by viewModel.databaseInvalidState.collectAsState()
+    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
+    val failure by viewModel.refreshFailureState.collectAsState()
 
     when {
         isInvalid -> {
@@ -192,24 +188,30 @@ fun DonateProductsHandler(
         .fillMaxSize()
         .padding(start = 24.dp, end = 24.dp)
     ) {
-        val keyboardController = LocalSoftwareKeyboardController.current
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.TopCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            var text by rememberSaveable { mutableStateOf("") }
+            val focusRequester = remember { FocusRequester() }
+            val keyboardController = LocalSoftwareKeyboardController.current
+            val text by viewModel.refreshEditTextState.collectAsState()
             Spacer(modifier = Modifier.height(36.dp))
             Row {
                 OutlinedTextField(
                     modifier = Modifier
                         .weight(0.7f)
                         .height(60.dp)
+                        .focusRequester(focusRequester)
+                        .onGloballyPositioned {
+                            focusRequester.requestFocus()
+                            keyboardController?.show()
+                        }
                         .testTag("OutlinedTextField"),
                     value = text,
                     onValueChange = {
-                        text = it
+                        viewModel.refreshEditTextState(it)
                     },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(Strings.get("initial_letters_of_last_name_text")) },

@@ -36,6 +36,9 @@ actual abstract class ViewModel actual constructor() : KMMViewModel(), KoinCompo
     actual val donorsAvailableState: MutableStateFlow<List<Donor>>
         get() = privateDonorsAvailableState
 
+    internal actual val privateRefreshEditTextState: MutableStateFlow<String> = MutableStateFlow("")
+    actual val refreshEditTextState: MutableStateFlow<String>
+        get() = privateRefreshEditTextState
 
     internal actual val privateShowStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(
         StandardModalArgs()
@@ -65,6 +68,10 @@ actual abstract class ViewModel actual constructor() : KMMViewModel(), KoinCompo
 
     actual fun changeShowStandardModalState(standardModalArgs: StandardModalArgs) {
         privateShowStandardModalState.value = standardModalArgs
+    }
+
+    actual fun refreshEditTextState(text: String) {
+        privateRefreshEditTextState.value = text
     }
 
     // Start Reassociate Donation Screen state

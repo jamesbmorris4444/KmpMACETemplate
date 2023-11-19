@@ -21,12 +21,16 @@ expect abstract class ViewModel() : KMMViewModel {
     val donorsAvailableState: MutableStateFlow<List<Donor>>
     internal val privateShowStandardModalState: MutableStateFlow<StandardModalArgs>
     val showStandardModalState: MutableStateFlow<StandardModalArgs>
+    internal val privateRefreshEditTextState: MutableStateFlow<String>
+    val refreshEditTextState: MutableStateFlow<String>
     fun updateRefreshCompletedState(value: Boolean)
     fun updateDatabaseInvalidState(value: Boolean)
     fun updateRefreshFailureState(value: String)
     fun updateLaunchesAvailableState(launches: List<RocketLaunch>)
     fun updateDonorsAvailableState(donors: List<Donor>)
     fun changeShowStandardModalState(standardModalArgs: StandardModalArgs)
+    fun refreshEditTextState(text: String)
+
 
     // Start Reassociate Donation Screen state
 
