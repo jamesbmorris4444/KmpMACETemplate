@@ -31,23 +31,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color.Companion.Blue
-import androidx.compose.ui.graphics.Color.Companion.Green
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
-import kotlinx.coroutines.delay
 
 @Composable
 fun DonateProductsScreen(
@@ -129,7 +121,7 @@ fun DonateProductsHandler(
     title: String,
     onItemButtonClicked: (donor: Donor) -> Unit
 ) {
-    val foundDonors = viewModel.donorsAvailableState.collectAsState().value
+    val foundDonors by viewModel.donorsAvailableState.collectAsState()
     fun handleSearchClick(searchKey: String) {
         viewModel.updateDonorsAvailableState(repository.handleSearchClick(searchKey))
     }

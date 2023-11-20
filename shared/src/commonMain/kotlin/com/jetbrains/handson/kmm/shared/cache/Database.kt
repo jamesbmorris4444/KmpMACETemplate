@@ -86,7 +86,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
         )
     }
 
-    private fun getAllProducts(): List<Product> {
+   fun getAllProducts(): List<Product> {
         return dbQuery.selectAllProductsInfo(::mapProductSelecting).executeAsList()
     }
 
@@ -134,6 +134,10 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
 
     internal fun updateProductRemovedForReassociation(newValue: Boolean, id: Long) {
         dbQuery.updateProductRemovedForReassociation(newValue, id)
+    }
+
+    internal fun updateDonorIdInProduct(newValue: Long, id: Long) {
+        dbQuery.updateDonorIdInProduct(newValue, id)
     }
 
     internal fun selectProductsList(donorId: Long): List<Product> {

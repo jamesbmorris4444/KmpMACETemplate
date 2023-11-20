@@ -21,11 +21,12 @@ interface Repository {
     fun donorAndProductsList(): List<DonorWithProducts>
     fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts?
     fun handleSearchClick(searchKey: String) : List<Donor>
-//    fun handleSearchClickWithProducts(searchKey: String) : List<DonorWithProducts>
+    fun handleSearchClickWithProducts(searchKey: String) : List<DonorWithProducts>
 //    fun insertReassociatedProductsIntoDatabase(donor: Donor, products: List<Product>)
     fun donorFromNameAndDateWithProducts(donor: Donor): DonorWithProducts?
     fun updateProductInReassociate(newValue: Boolean, id: Long)
     fun updateProductRemovedForReassociation(newValue: Boolean, id: Long)
+    fun updateDonorIdInProduct(newValue: Long, id: Long)
 }
 
 class RepositoryImpl : Repository, KoinComponent {
@@ -220,15 +221,15 @@ class RepositoryImpl : Repository, KoinComponent {
     override fun insertDonorIntoDatabase(donor: Donor) {
         Database(databaseDriverFactory).insertDonor(donor)
     }
-//
+
     override fun insertProductsIntoDatabase(products: List<Product>) {
         Database(databaseDriverFactory).insertProductsIntoDatabase(products)
     }
-//
+
 //    override fun insertReassociatedProductsIntoDatabase(donor: Donor, products: List<Product>) {
-//        stagingAppDatabase.databaseDao().insertDonorAndProducts(donor, products)
+//        Database(databaseDriverFactory).insertDonor(donor, products)
 //    }
-//
+
     override fun donorAndProductsList(): List<DonorWithProducts> {
         val donors = Database(databaseDriverFactory).getAllDonors()
         return donors.map {
@@ -260,20 +261,17 @@ class RepositoryImpl : Repository, KoinComponent {
 //        return database.databaseDao().donorsFromFullName(searchLast, searchFirst)
 //    }
 //
-//    override fun handleSearchClickWithProducts(searchKey: String) : List<DonorWithProducts> {
-//        val fullNameResponseList = listOf(
-//            donorsFromFullNameWithProducts(mainAppDatabase, searchKey),
-//            donorsFromFullNameWithProducts(stagingAppDatabase, searchKey)
-//        )
-//        val stagingDatabaseList = fullNameResponseList[1]
-//        val mainDatabaseList = fullNameResponseList[0]
-//        val newList = stagingDatabaseList.union(mainDatabaseList).distinctBy { donor -> Utils.donorComparisonByStringWithProducts(donor) }
-//        LogUtils.D(LOG_TAG, LogUtils.FilterTags.withTags(LogUtils.TagFilter.RPO), "handleSearchClickWithProducts success: searchKey=$searchKey     returnList=$newList")
-//        return newList
-//    }
-//
-    override fun donorsFromFullNameWithProducts(lastName: String, dob: String): DonorWithProducts? {
-        return Database(databaseDriverFactory).donorFromNameAndDateWithProducts(lastName, dob)
+    override fun handleSearchClickWithProducts(searchKey: String) : List<DonorWithProducts> {
+        val donorsResponseList =  Database(databaseDriverFactory).getDonors(searchKey)
+        val products: List<Product> = Database(databaseDriverFactory).getAllProducts()
+        val donorsWithProducts = donorsResponseList.map { donor ->
+            DonorWithProducts(donor = donor, products = products.filter { it.donorId == donor.id })
+        }
+        return donorsWithProducts
+    }
+
+    override fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts? {
+        return Database(databaseDriverFactory).donorFromNameAndDateWithProducts(searchLast, dob)
     }
 
     override fun updateProductInReassociate(newValue: Boolean, id: Long) {
@@ -283,9 +281,8 @@ class RepositoryImpl : Repository, KoinComponent {
     override fun updateProductRemovedForReassociation(newValue: Boolean, id: Long) {
         Database(databaseDriverFactory).updateProductRemovedForReassociation(newValue = newValue, id = id)
     }
-//
-//    override fun donorsFromFullNameWithProducts(searchLast: String, dob: String): List<DonorWithProducts> {
-//        return stagingAppDatabase.databaseDao().donorsFromFullNameWithProducts(searchLast, dob)
-//    }
 
+    override fun updateDonorIdInProduct(newValue: Long, id: Long) {
+        Database(databaseDriverFactory).updateDonorIdInProduct(newValue, id)
+    }
 }

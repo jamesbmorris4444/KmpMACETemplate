@@ -63,7 +63,7 @@ fun ManageDonorScreen(
     donateProductsSearchStringName: String,
     createProductsStringName: String
 ) {
-    val showStandardModalState = viewModel.showStandardModalState.collectAsState().value
+    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
     val stateVertical = rememberScrollState(0)
     Logger.d("launch ManageDonorScreen=${ScreenNames.ManageDonorAfterSearch.name}")
     LaunchedEffect(key1 = true) {
@@ -312,6 +312,7 @@ fun ManageDonorScreen(
                 padding = PaddingValues(top = 16.dp, bottom = 24.dp),
                 onClick = {
                     val legalEntry = donor.lastName.isNotEmpty() && donor.dob.isNotEmpty()
+                    Logger.d("JIMX UPDATE button legalEntry=$legalEntry  databaseModified=$databaseModified  radioButtonChanged=$radioButtonChanged")
                     if ((databaseModified || radioButtonChanged)) {
                         if (legalEntry) {
                             repository.insertDonorIntoDatabase(donor)

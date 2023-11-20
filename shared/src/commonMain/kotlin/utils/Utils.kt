@@ -10,8 +10,8 @@ object Utils {
         return "${donorWithProducts.lastName},${donorWithProducts.dob}"
     }
 
-    fun donorComparisonByStringWithProducts(donorWithProducts: DonorWithProducts): String {
-        return "${donorWithProducts.donor.lastName},${donorWithProducts.donor.dob}"
+    fun donorComparisonByStringWithProducts(donor: Donor): String {
+        return "${donor.lastName},${donor.dob}"
     }
 
     fun donorBloodTypeComparisonByString(donorWithProducts: Donor): String {

@@ -78,6 +78,14 @@ actual abstract class ViewModel : KMMViewModel(), KoinComponent {
 
     // Start Reassociate Donation Screen state
 
+    actual fun handleSearchClickWithProductsCorrectDonor(searchKey: String) {
+        privateCorrectDonorsWithProductsState.value = repository.handleSearchClickWithProducts(searchKey)
+    }
+
+    actual fun handleSearchClickWithProductsIncorrectDonor(searchKey: String) {
+        privateIncorrectDonorsWithProductsState.value = repository.handleSearchClickWithProducts(searchKey)
+    }
+
     internal actual val privateCorrectDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>> = MutableStateFlow(listOf())
     actual val correctDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>>
         get() = privateCorrectDonorsWithProductsState
@@ -95,7 +103,7 @@ actual abstract class ViewModel : KMMViewModel(), KoinComponent {
     }
 
     internal actual val privateCorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts> = MutableStateFlow(DonorWithProducts(emptyDonor))
-    actual val correctDonorWithProductsStatee: MutableStateFlow<DonorWithProducts>
+    actual val correctDonorWithProductsState: MutableStateFlow<DonorWithProducts>
         get() = privateCorrectDonorWithProductsState
 
     internal actual val privateIncorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts> = MutableStateFlow(DonorWithProducts(emptyDonor))

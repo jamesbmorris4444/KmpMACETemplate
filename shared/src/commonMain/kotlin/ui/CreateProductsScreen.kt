@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -76,14 +77,12 @@ fun CreateProductsScreen(
     val enterExpirationText = Strings.get("enter_expiration_text")
     val expirationTitle = Strings.get("expiration_title")
     val aboRhTitle = Strings.get("abo_rh_title")
-    val dinText = viewModel.dinTextState.collectAsState().value
-    val expirationText  = viewModel.expirationTextState.collectAsState().value
-    val productCodeText = viewModel.productCodeTextState.collectAsState().value
-    val clearButtonVisible = viewModel.clearButtonVisibleState.collectAsState().value
-    val confirmButtonVisible = viewModel.confirmButtonVisibleState.collectAsState().value
-    val confirmNeeded  = viewModel.confirmNeededState.collectAsState().value
-    val products = viewModel.productsListState.collectAsState().value
-    val displayedProductList = viewModel.displayedProductListState.collectAsState().value
+    val dinText by viewModel.dinTextState.collectAsState()
+    val expirationText by viewModel.expirationTextState.collectAsState()
+    val productCodeText by viewModel.productCodeTextState.collectAsState()
+    val confirmNeeded by viewModel.confirmNeededState.collectAsState()
+    val products by viewModel.productsListState.collectAsState()
+    val displayedProductList by viewModel.displayedProductListState.collectAsState()
 
     fun processNewProduct() {
         val product = Product(id = 0, donorId = donor.id, din = dinText, aboRh = donor.aboRh, productCode = productCodeText, expirationDate = expirationText, inReassociate = false, removedForReassociation = false)

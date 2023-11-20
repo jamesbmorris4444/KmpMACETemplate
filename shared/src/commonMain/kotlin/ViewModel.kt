@@ -34,6 +34,8 @@ expect abstract class ViewModel() : KMMViewModel {
 
     // Start Reassociate Donation Screen state
 
+    fun handleSearchClickWithProductsCorrectDonor(searchKey: String)
+    fun handleSearchClickWithProductsIncorrectDonor(searchKey: String)
     internal val privateCorrectDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>>
     val correctDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>>
     internal val privateIncorrectDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>>
@@ -41,7 +43,7 @@ expect abstract class ViewModel() : KMMViewModel {
     fun changeCorrectDonorsWithProductsState(list: List<DonorWithProducts>)
     fun changeIncorrectDonorsWithProductsState(list: List<DonorWithProducts>)
     internal val privateCorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts>
-    val correctDonorWithProductsStatee: MutableStateFlow<DonorWithProducts>
+    val correctDonorWithProductsState: MutableStateFlow<DonorWithProducts>
     internal val privateIncorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts>
     val incorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts>
     fun changeCorrectDonorWithProductsState(donor: Donor)

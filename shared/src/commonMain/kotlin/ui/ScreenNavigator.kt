@@ -112,7 +112,7 @@ fun ScreenNavigator(
                             appBarState = it
                         },
                         title = ScreenNames.ManageDonorAfterSearch.string,
-                        canNavigateBack =  navigator.canGoBack.collectAsState(true).value,
+                        canNavigateBack = navigator.canGoBack.collectAsState(true).value,
                         navigateUp = { navigator.popBackStack() },
                         openDrawer = openDrawer,
                         viewModel = viewModel,
@@ -155,23 +155,51 @@ fun ScreenNavigator(
                         configAppBar = {
                             appBarState = it
                         },
-                        canNavigateBack = navigator.canGoBack.collectAsState(true).value,
-                        navigateUp = { navigator.popBackStack() },
+                        canNavigateBack = true,
+                        navigateUp = { navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true))) },
                         openDrawer = openDrawer
                     )
                 }
-                //composable(route = viewDonorListStringName) {
-                //                    LogUtils.D(LOG_TAG, LogUtils.FilterTags.withTags(LogUtils.TagFilter.TMP), "ScreenNavigator: launch screen=$viewDonorListStringName")
-                //                    ViewDonorListScreen(
-                //                        onComposing = {
-                //                            appBarState = it
-                //                        },
-                //                        canNavigateBack = navController.previousBackStackEntry != null,
-                //                        navigateUp = { navController.navigateUp() },
-                //                        openDrawer = openDrawer,
-                //                        viewModel = viewModel
-                //                    )
-                //                }
+                scene(
+                    route = ScreenNames.ManageDonorFromDrawer.name,
+                    navTransition = NavTransition(),
+                ) {
+                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ManageDonorFromDrawer.name}")
+                    DonateProductsHandler(
+                        repository = repository,
+                        configAppBar = {
+                            appBarState = it
+                        },
+                        canNavigateBack = true,
+                        navigateUp = { navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true))) },
+                        openDrawer = openDrawer,
+                        onItemButtonClicked = {
+                            donor = it
+                            transitionToCreateProductsScreen = false
+                            navigator.navigate(ScreenNames.ManageDonorAfterSearch.name)
+                        },
+                        viewModel = viewModel,
+                        title = ScreenNames.ManageDonorFromDrawer.string
+                    )
+                }
+                scene(
+                    route = ScreenNames.ReassociateDonation.name,
+                    navTransition = NavTransition(),
+                ) {
+                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ReassociateDonation.name}")
+                    ReassociateDonationScreen(
+                        repository = repository,
+                        onComposing = {
+                            appBarState = it
+                        },
+                        canNavigateBack = true,
+                        navigateUp = { navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true))) },
+                        openDrawer = openDrawer,
+                        viewModel = viewModel,
+                        title =  ScreenNames.ReassociateDonation.string
+                    )
+                }
+
             }
         }
     }

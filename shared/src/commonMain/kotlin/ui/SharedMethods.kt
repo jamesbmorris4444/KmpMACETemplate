@@ -63,7 +63,7 @@ fun ProductListContent(
                                 repository.updateProductInReassociate(true, productSelectedAsList[0].id)
                             }
                         },
-                    painter = painterResource("drawable/fs_logo.png"),
+                    painter = painterResource("drawable/delete_icon.png"),
                     contentDescription = "Dialog Alert"
                 )
                 Image(
@@ -86,7 +86,7 @@ fun ProductListContent(
                                 repository.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
                             }
                         },
-                    painter = painterResource("drawable/fs_logo.png"),
+                    painter = painterResource("drawable/edit_icon.png"),
                     contentDescription = "Dialog Alert"
                 )
                 Column(modifier = Modifier
