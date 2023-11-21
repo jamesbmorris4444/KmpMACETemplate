@@ -124,8 +124,7 @@ fun DrawerAppComponent(
             viewModel = viewModel,
             openDrawer = openDrawer,
             navigator = navigator,
-//            initialRoute = ScreenNames.RocketLaunch.name,
-            initialRoute = ScreenNames.DonateProductsSearch.name,
+            initialRoute = ScreenNames.RocketLaunch.name,
             repository = repository
         )
     }

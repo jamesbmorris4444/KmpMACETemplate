@@ -1,6 +1,7 @@
 package ui
 import BloodViewModel
 import Repository
+import Strings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,8 +12,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,9 +33,13 @@ import extraBlue
 import extraGreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import moe.tlaster.precompose.navigation.NavOptions
+import moe.tlaster.precompose.navigation.Navigator
+import moe.tlaster.precompose.navigation.PopUpTo
 
 @Composable
 fun RocketLaunchScreen(
+    navigator: Navigator,
     repository: Repository,
     configAppBar: (AppBarState) -> Unit,
     viewModel: BloodViewModel,
@@ -47,24 +56,22 @@ fun RocketLaunchScreen(
     }
 
     Logger.d("MACELOG: Compose: ${ScreenNames.RocketLaunch.name}")
-//    viewModel.setAppDatabase()
-//    val showStandardModalState = viewModel.showStandardModalState.observeAsState().value ?: StandardModalArgs()
     val composableScope = rememberCoroutineScope()
+    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
     val completed by viewModel.refreshCompletedState.collectAsState()
     val isInvalid by viewModel.databaseInvalidState.collectAsState()
     val failure by viewModel.refreshFailureState.collectAsState()
+    Logger.d("JIMX 1  $showStandardModalState   $completed  $isInvalid   $failure")
     when {
         isInvalid -> {
             composableScope.launch(Dispatchers.Main) {
                 val pair = repository.refreshDatabase(composableScope)
-                if (pair.second.isEmpty()) {
-                    viewModel.updateRefreshCompletedState(true)
-                    viewModel.updateDatabaseInvalidState(false)
-                    viewModel.updateRefreshFailureState("")
+                Logger.d("JIMX 2 ")
+                viewModel.updateRefreshCompletedState(true)
+                viewModel.updateDatabaseInvalidState(false)
+                if (pair.second.isEmpty()) { // success
                     viewModel.updateLaunchesAvailableState(pair.first)
-                } else {
-                    viewModel.updateRefreshCompletedState(true)
-                    viewModel.updateDatabaseInvalidState(false)
+                } else { // failure
                     viewModel.updateRefreshFailureState(pair.second)
                 }
             }
@@ -78,52 +85,47 @@ fun RocketLaunchScreen(
         }
 
         failure.isNotEmpty() -> {
-//            if (showStandardModalState.topIconResId >= 0) {
-//                StandardModal(
-//                    showStandardModalState.topIconResId,
-//                    showStandardModalState.titleText,
-//                    showStandardModalState.bodyText,
-//                    showStandardModalState.positiveText,
-//                    showStandardModalState.negativeText,
-//                    showStandardModalState.neutralText,
-//                    showStandardModalState.onDismiss
-//                )
-//            } else {
-//                viewModel.changeShowStandardModalState(
-//                    StandardModalArgs(
-//                        topIconResId = R.drawable.notification,
-//                        titleText = viewModel.getResources().getString(R.string.failure_db_entries_title_text),
-//                        bodyText = viewModel.getResources().getString(R.string.failure_db_entries_body_text, failure),
-//                        positiveText = viewModel.getResources().getString(R.string.positive_button_text_ok),
-//                    ) {
-//                        navigateUp()
-//                        viewModel.changeShowStandardModalState(StandardModalArgs())
-//                        viewModel.changeRefreshFailureState("")
-//                    }
-//                )
-//            }
+            if (showStandardModalState.topIconId.isNotEmpty()) {
+                StandardModal(
+                    showStandardModalState.topIconId,
+                    showStandardModalState.titleText,
+                    showStandardModalState.bodyText,
+                    showStandardModalState.positiveText,
+                    showStandardModalState.negativeText,
+                    showStandardModalState.neutralText,
+                    showStandardModalState.onDismiss
+                )
+            } else {
+                viewModel.changeShowStandardModalState(
+                    StandardModalArgs(
+                        topIconId = "drawable/notification.xml",
+                        titleText = Strings.get("failure_db_entries_title_text"),
+                        bodyText = Strings.format("failure_db_entries_body_text", failure),
+                        positiveText = Strings.get("positive_button_text_ok"),
+                    ) {
+                        viewModel.updateRefreshFailureState("")
+                    }
+                )
+            }
         }
 
         completed -> {
             RocketLaunchHandler(
+                navigator = navigator,
                 configAppBar = configAppBar,
                 viewModel = viewModel,
-                title = title)
-        }
-
-        else -> {
-            viewModel.updateRefreshCompletedState(false)
-            viewModel.updateDatabaseInvalidState(true)
-            viewModel.updateRefreshFailureState("")
+                title = title
+            )
         }
     }
 }
 
 @Composable
 fun RocketLaunchHandler(
+    navigator: Navigator,
     configAppBar: (AppBarState) -> Unit,
     viewModel: BloodViewModel,
-    title: String,
+    title: String
 ) {
     val launches: List<RocketLaunch> by viewModel.launchesAvailableState.collectAsState()
 
@@ -147,7 +149,20 @@ fun RocketLaunchHandler(
     LaunchedEffect(key1 = true) {
         configAppBar(
             AppBarState(
-                title = title
+                title = title,
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navigator.navigate(
+                            route = ScreenNames.DonateProductsSearch.name,
+                            NavOptions(popUpTo = PopUpTo(ScreenNames.RocketLaunch.name, inclusive = true))
+                        )
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = Strings.get("back_button_content_description")
+                        )
+                    }
+                }
             )
         )
     }

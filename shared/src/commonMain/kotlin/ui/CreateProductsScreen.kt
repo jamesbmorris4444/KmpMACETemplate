@@ -40,6 +40,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import moe.tlaster.precompose.navigation.Navigator
@@ -92,6 +93,7 @@ fun CreateProductsScreen(
     }
 
     fun addDonorWithProductsToDatabase() {
+        Logger.d("JIMX2 $products")
         repository.insertProductsIntoDatabase(products)
         viewModel.changeShowStandardModalState(
             StandardModalArgs(
@@ -165,6 +167,7 @@ fun CreateProductsScreen(
                 }
             )
         } else {
+            Logger.d("JIMX1 $products")
             if (products.isNotEmpty()) {
                 addDonorWithProductsToDatabase()
             }
