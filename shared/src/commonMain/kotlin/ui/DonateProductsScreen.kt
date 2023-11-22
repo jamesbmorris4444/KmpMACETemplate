@@ -56,7 +56,6 @@ fun DonateProductsScreen(
     val isInvalid by viewModel.databaseInvalidState.collectAsState()
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
     val failure by viewModel.refreshFailureState.collectAsState()
-
     when {
         isInvalid -> {
             repository.refreshDonors()

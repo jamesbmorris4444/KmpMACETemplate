@@ -130,7 +130,6 @@ fun ScreenNavigator(
                     Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.CreateProducts.name}")
                     CreateProductsScreen(
                         repository = repository,
-                        navigator = navigator,
                         title = ScreenNames.CreateProducts.string,
                         configAppBar = {
                             appBarState = it

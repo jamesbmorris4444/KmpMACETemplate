@@ -80,8 +80,7 @@ fun ProductListContent(
                                 onExpirationTextChange(products[index].expirationDate)
                                 onProductsChange(products.filterIndexed { filterIndex, _ -> filterIndex != index })
                             } else {
-                                val productSelectedAsList =
-                                    products.filterIndexed { filterIndex, _ -> filterIndex == index }
+                                val productSelectedAsList = products.filterIndexed { filterIndex, _ -> filterIndex == index }
                                 onProductSelected(productSelectedAsList)
                                 repository.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
                             }

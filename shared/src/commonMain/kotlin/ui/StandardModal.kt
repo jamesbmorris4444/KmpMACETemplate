@@ -52,7 +52,7 @@ fun StandardModal(
     fun TextForButton(text: String, isBackgrounded: Boolean) {
         Text(
             text = text,
-            color = if (isBackgrounded) MaterialTheme.colors.surface else  MaterialTheme.colors.surface,
+            color = if (isBackgrounded) MaterialTheme.colors.surface else  MaterialTheme.colors.primary,
             style = TextStyle(
                 fontFamily = avenirFontFamilyBold,
                 fontWeight = FontWeight.Bold,

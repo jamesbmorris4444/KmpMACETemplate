@@ -59,7 +59,7 @@ fun RocketLaunchScreen(
     val composableScope = rememberCoroutineScope()
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
     val completed by viewModel.refreshCompletedState.collectAsState()
-    val isInvalid by viewModel.databaseInvalidState.collectAsState()
+    val isInvalid by viewModel.rocketLaunchesInvalidState.collectAsState()
     val failure by viewModel.refreshFailureState.collectAsState()
     Logger.d("JIMX 1  $showStandardModalState   $completed  $isInvalid   $failure")
     when {
@@ -68,7 +68,7 @@ fun RocketLaunchScreen(
                 val pair = repository.refreshDatabase(composableScope)
                 Logger.d("JIMX 2 ")
                 viewModel.updateRefreshCompletedState(true)
-                viewModel.updateDatabaseInvalidState(false)
+                viewModel.updateRocketLaunchesInvalidState(false)
                 if (pair.second.isEmpty()) { // success
                     viewModel.updateLaunchesAvailableState(pair.first)
                 } else { // failure

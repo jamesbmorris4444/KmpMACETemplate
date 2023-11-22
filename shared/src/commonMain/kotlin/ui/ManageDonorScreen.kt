@@ -312,7 +312,6 @@ fun ManageDonorScreen(
                 padding = PaddingValues(top = 16.dp, bottom = 24.dp),
                 onClick = {
                     val legalEntry = donor.lastName.isNotEmpty() && donor.dob.isNotEmpty()
-                    Logger.d("JIMX UPDATE button legalEntry=$legalEntry  databaseModified=$databaseModified  radioButtonChanged=$radioButtonChanged")
                     if ((databaseModified || radioButtonChanged)) {
                         if (legalEntry) {
                             repository.insertDonorIntoDatabase(donor)

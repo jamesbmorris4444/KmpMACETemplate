@@ -18,13 +18,15 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
 
     val emptyDonor = Donor(0,"", "", "", "", "", "", false, false)
 
+    // Start Rocket Launches Screen state
+
+    private val privateRocketLaunchesInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val rocketLaunchesInvalidState: MutableStateFlow<Boolean>
+        get() = privateRocketLaunchesInvalidState
+
     private val privateRefreshCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val refreshCompletedState: MutableStateFlow<Boolean>
         get() = privateRefreshCompletedState
-
-    private val privateDatabaseInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val databaseInvalidState: MutableStateFlow<Boolean>
-        get() = privateDatabaseInvalidState
 
     private val privateRefreshFailureState: MutableStateFlow<String> = MutableStateFlow("")
     val refreshFailureState: MutableStateFlow<String>
@@ -34,24 +36,12 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val launchesAvailableState: MutableStateFlow<List<RocketLaunch>>
         get() = privateLaunchesAvailableState
 
-    private val privateDonorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
-    val donorsAvailableState: MutableStateFlow<List<Donor>>
-        get() = privateDonorsAvailableState
-
-    private val privateRefreshEditTextState: MutableStateFlow<String> = MutableStateFlow("")
-    val refreshEditTextState: MutableStateFlow<String>
-        get() = privateRefreshEditTextState
-
-    private val privateShowStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
-    val showStandardModalState: MutableStateFlow<StandardModalArgs>
-        get() = privateShowStandardModalState
+    fun updateRocketLaunchesInvalidState(value: Boolean) {
+        privateRocketLaunchesInvalidState.value = value
+    }
 
     fun updateRefreshCompletedState(value: Boolean) {
         privateRefreshCompletedState.value = value
-    }
-
-    fun updateDatabaseInvalidState(value: Boolean) {
-        privateDatabaseInvalidState.value = value
     }
 
     fun updateRefreshFailureState(value: String) {
@@ -62,17 +52,47 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         privateLaunchesAvailableState.value = launches
     }
 
-    fun updateDonorsAvailableState(donors: List<Donor>) {
-        privateDonorsAvailableState.value = donors
-    }
+    // End Rocket Launches Screen state
+
+    // Start Standard Modal Screen state
+
+    private val privateShowStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
+    val showStandardModalState: MutableStateFlow<StandardModalArgs>
+        get() = privateShowStandardModalState
 
     fun changeShowStandardModalState(standardModalArgs: StandardModalArgs) {
         privateShowStandardModalState.value = standardModalArgs
     }
 
+    // End Standard Modal Screen state
+
+    // Start Donate Products Screen state
+
+    private val privateDatabaseInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val databaseInvalidState: MutableStateFlow<Boolean>
+        get() = privateDatabaseInvalidState
+
+    private val privateDonorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
+    val donorsAvailableState: MutableStateFlow<List<Donor>>
+        get() = privateDonorsAvailableState
+
+    private val privateRefreshEditTextState: MutableStateFlow<String> = MutableStateFlow("")
+    val refreshEditTextState: MutableStateFlow<String>
+        get() = privateRefreshEditTextState
+
+    fun updateDatabaseInvalidState(value: Boolean) {
+        privateDatabaseInvalidState.value = value
+    }
+
+    fun updateDonorsAvailableState(donors: List<Donor>) {
+        privateDonorsAvailableState.value = donors
+    }
+
     fun refreshEditTextState(text: String) {
         privateRefreshEditTextState.value = text
     }
+
+    // End Donate Products Screen state
 
     // Start Reassociate Donation Screen state
 
@@ -187,7 +207,7 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         privateExpirationTextState.value = text
     }
 
-    private val privateClearButtonVisibleState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    private val privateClearButtonVisibleState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val clearButtonVisibleState: MutableStateFlow<Boolean>
         get() = privateClearButtonVisibleState
 
@@ -195,9 +215,13 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val confirmButtonVisibleState: MutableStateFlow<Boolean>
         get() = privateConfirmButtonVisibleState
 
-    private val privateConfirmNeededState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val confirmNeededState: MutableStateFlow<Boolean>
-        get() = privateConfirmNeededState
+    private val privateCompleteButtonVisibleState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val completeButtonVisibleState: MutableStateFlow<Boolean>
+        get() = privateCompleteButtonVisibleState
+
+    private val privateScreenIsReadOnlyState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val screenIsReadOnlyState: MutableStateFlow<Boolean>
+        get() = privateScreenIsReadOnlyState
 
     fun changeClearButtonVisibleState(state: Boolean) {
         privateClearButtonVisibleState.value = state
@@ -207,8 +231,12 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         privateConfirmButtonVisibleState.value = state
     }
 
-    fun changeConfirmNeededState(state: Boolean) {
-        privateConfirmNeededState.value = state
+    fun changeCompleteButtonVisibleState(state: Boolean) {
+        privateCompleteButtonVisibleState.value = state
+    }
+
+    fun changeScreenIsReadOnlyState(state: Boolean) {
+        privateScreenIsReadOnlyState.value = state
     }
 
     private val privateProductsListState: MutableStateFlow<List<Product>> = MutableStateFlow(listOf())
@@ -217,14 +245,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
 
     fun changeProductsListState(list: List<Product>) {
         privateProductsListState.value = list
-    }
-
-    private val privateDisplayedProductListState: MutableStateFlow<List<Product>> = MutableStateFlow(listOf())
-    val displayedProductListState: MutableStateFlow<List<Product>>
-        get() = privateDisplayedProductListState
-
-    fun changeDisplayedProductListState(list: List<Product>) {
-        privateDisplayedProductListState.value = list
     }
 
     // End Create Products Screen state
