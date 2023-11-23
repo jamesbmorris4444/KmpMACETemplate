@@ -52,10 +52,12 @@ fun DonateProductsScreen(
     viewModel: BloodViewModel,
     title: String
 ) {
+    // state variables
     val completed by viewModel.refreshCompletedState.collectAsState()
     val isInvalid by viewModel.databaseInvalidState.collectAsState()
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
     val failure by viewModel.refreshFailureState.collectAsState()
+
     when {
         isInvalid -> {
             repository.refreshDonors()
@@ -120,7 +122,9 @@ fun DonateProductsHandler(
     title: String,
     onItemButtonClicked: (donor: Donor) -> Unit
 ) {
+    // state variables
     val foundDonors by viewModel.donorsAvailableState.collectAsState()
+
     fun handleSearchClick(searchKey: String) {
         viewModel.updateDonorsAvailableState(repository.handleSearchClick(searchKey))
     }

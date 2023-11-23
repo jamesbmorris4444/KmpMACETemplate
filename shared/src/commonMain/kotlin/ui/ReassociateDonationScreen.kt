@@ -57,11 +57,11 @@ fun ReassociateDonationScreen(
     repository: Repository,
     title: String
 ) {
+    // state variables
     val correctDonorsWithProducts by viewModel.correctDonorsWithProductsState.collectAsState()
     val incorrectDonorsWithProducts by viewModel.incorrectDonorsWithProductsState.collectAsState()
     val correctDonorWithProducts by viewModel.correctDonorWithProductsState.collectAsState()
     val incorrectDonorWithProducts by viewModel.incorrectDonorWithProductsState.collectAsState()
-
     val singleSelectedProductList by viewModel.singleSelectedProductListState.collectAsState()
     val incorrectDonorSelected  by viewModel.incorrectDonorSelectedState.collectAsState()
     val isProductSelected by viewModel.isProductSelectedState.collectAsState()

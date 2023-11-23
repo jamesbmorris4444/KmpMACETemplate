@@ -63,7 +63,9 @@ fun ManageDonorScreen(
     donateProductsSearchStringName: String,
     createProductsStringName: String
 ) {
+    // state variables
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
+
     val stateVertical = rememberScrollState(0)
     Logger.d("launch ManageDonorScreen=${ScreenNames.ManageDonorAfterSearch.name}")
     LaunchedEffect(key1 = true) {

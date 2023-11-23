@@ -57,10 +57,13 @@ fun RocketLaunchScreen(
 
     Logger.d("MACELOG: Compose: ${ScreenNames.RocketLaunch.name}")
     val composableScope = rememberCoroutineScope()
+
+    // state variables
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
     val completed by viewModel.refreshCompletedState.collectAsState()
     val isInvalid by viewModel.rocketLaunchesInvalidState.collectAsState()
     val failure by viewModel.refreshFailureState.collectAsState()
+
     Logger.d("JIMX 1  $showStandardModalState   $completed  $isInvalid   $failure")
     when {
         isInvalid -> {
@@ -127,6 +130,7 @@ fun RocketLaunchHandler(
     viewModel: BloodViewModel,
     title: String
 ) {
+    // state variables
     val launches: List<RocketLaunch> by viewModel.launchesAvailableState.collectAsState()
 
     @Composable
