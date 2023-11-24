@@ -1,3 +1,4 @@
+
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
@@ -112,14 +113,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val incorrectDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>>
         get() = privateIncorrectDonorsWithProductsState
 
-    fun changeCorrectDonorsWithProductsState(list: List<DonorWithProducts>) {
-        privateCorrectDonorsWithProductsState.value = list
-    }
-
-    fun changeIncorrectDonorsWithProductsState(list: List<DonorWithProducts>) {
-        privateIncorrectDonorsWithProductsState.value = list
-    }
-
     private val privateCorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts> = MutableStateFlow(DonorWithProducts(emptyDonor))
     val correctDonorWithProductsState: MutableStateFlow<DonorWithProducts>
         get() = privateCorrectDonorWithProductsState
@@ -128,21 +121,9 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val incorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts>
         get() = privateIncorrectDonorWithProductsState
 
-    fun changeCorrectDonorWithProductsState(donor: Donor) {
-        privateCorrectDonorWithProductsState.value = repository.donorFromNameAndDateWithProducts(donor) ?: DonorWithProducts(emptyDonor, listOf())
-    }
-
-    fun changeIncorrectDonorWithProductsState(donor: Donor) {
-        privateIncorrectDonorWithProductsState.value = repository.donorFromNameAndDateWithProducts(donor) ?: DonorWithProducts(emptyDonor, listOf())
-    }
-
     private val privateSingleSelectedProductListState: MutableStateFlow<List<Product>> = MutableStateFlow(listOf())
     val singleSelectedProductListState: MutableStateFlow<List<Product>>
         get() = privateSingleSelectedProductListState
-
-    fun changeSingleSelectedProductListState(list: List<Product>) {
-        privateSingleSelectedProductListState.value = list
-    }
 
     private val privateIncorrectDonorSelectedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val incorrectDonorSelectedState: MutableStateFlow<Boolean>
@@ -155,6 +136,26 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     private val privateIsReassociateCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isReassociateCompletedState: MutableStateFlow<Boolean>
         get() = privateIsReassociateCompletedState
+
+    fun changeCorrectDonorsWithProductsState(list: List<DonorWithProducts>) {
+        privateCorrectDonorsWithProductsState.value = list
+    }
+
+    fun changeIncorrectDonorsWithProductsState(list: List<DonorWithProducts>) {
+        privateIncorrectDonorsWithProductsState.value = list
+    }
+
+    fun changeCorrectDonorWithProductsState(donor: Donor) {
+        privateCorrectDonorWithProductsState.value = repository.donorFromNameAndDateWithProducts(donor) ?: DonorWithProducts(emptyDonor, listOf())
+    }
+
+    fun changeIncorrectDonorWithProductsState(donor: Donor) {
+        privateIncorrectDonorWithProductsState.value = repository.donorFromNameAndDateWithProducts(donor) ?: DonorWithProducts(emptyDonor, listOf())
+    }
+
+    fun changeSingleSelectedProductListState(list: List<Product>) {
+        privateSingleSelectedProductListState.value = list
+    }
 
     fun changeIncorrectDonorSelectedState(state: Boolean) {
         privateIncorrectDonorSelectedState.value = state
@@ -195,18 +196,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val expirationTextState: MutableStateFlow<String>
         get() = privateExpirationTextState
 
-    fun changeDinTextState(text: String) {
-        privateDinTextState.value = text
-    }
-
-    fun changeProductCodeTextState(text: String) {
-        privateProductCodeTextState.value = text
-    }
-
-    fun changeExpirationTextState(text: String) {
-        privateExpirationTextState.value = text
-    }
-
     private val privateClearButtonVisibleState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val clearButtonVisibleState: MutableStateFlow<Boolean>
         get() = privateClearButtonVisibleState
@@ -222,6 +211,22 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     private val privateScreenIsReadOnlyState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val screenIsReadOnlyState: MutableStateFlow<Boolean>
         get() = privateScreenIsReadOnlyState
+
+    private val privateProductsListState: MutableStateFlow<List<Product>> = MutableStateFlow(listOf())
+    val productsListState: MutableStateFlow<List<Product>>
+        get() = privateProductsListState
+
+    fun changeDinTextState(text: String) {
+        privateDinTextState.value = text
+    }
+
+    fun changeProductCodeTextState(text: String) {
+        privateProductCodeTextState.value = text
+    }
+
+    fun changeExpirationTextState(text: String) {
+        privateExpirationTextState.value = text
+    }
 
     fun changeClearButtonVisibleState(state: Boolean) {
         privateClearButtonVisibleState.value = state
@@ -239,13 +244,102 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         privateScreenIsReadOnlyState.value = state
     }
 
-    private val privateProductsListState: MutableStateFlow<List<Product>> = MutableStateFlow(listOf())
-    val productsListState: MutableStateFlow<List<Product>>
-        get() = privateProductsListState
-
     fun changeProductsListState(list: List<Product>) {
         privateProductsListState.value = list
     }
 
     // End Create Products Screen state
+
+    // Start Manage Donor Screen state
+
+    private val privateDatabaseModifiedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val databaseModifiedState: MutableStateFlow<Boolean>
+        get() = privateDatabaseModifiedState
+
+    private val privateRadioButtonState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val radioButtonState: MutableStateFlow<Boolean>
+        get() = privateRadioButtonState
+
+    private val privateAboRhExpandedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val aboRhExpandedState: MutableStateFlow<Boolean>
+        get() = privateAboRhExpandedState
+
+    private val privateBranchExpandedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val branchExpandedState: MutableStateFlow<Boolean>
+        get() = privateBranchExpandedState
+
+    private val privateFirstNameState: MutableStateFlow<String> = MutableStateFlow("")
+    val firstNameState: MutableStateFlow<String>
+        get() = privateFirstNameState
+
+    private val privateMiddleNameState: MutableStateFlow<String> = MutableStateFlow("")
+    val middleNameState: MutableStateFlow<String>
+        get() = privateMiddleNameState
+
+    private val privateLastNameState: MutableStateFlow<String> = MutableStateFlow("")
+    val lastNameState: MutableStateFlow<String>
+        get() = privateLastNameState
+
+    private val privateDobState: MutableStateFlow<String> = MutableStateFlow("")
+    val dobState: MutableStateFlow<String>
+        get() = privateDobState
+
+    private val privateAboRhState: MutableStateFlow<String> = MutableStateFlow("")
+    val aboRhState: MutableStateFlow<String>
+        get() = privateAboRhState
+
+    private val privateBranchState: MutableStateFlow<String> = MutableStateFlow("")
+    val branchState: MutableStateFlow<String>
+        get() = privateBranchState
+
+    private val privateGenderState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val genderState: MutableStateFlow<Boolean>
+        get() = privateGenderState
+
+
+    fun changeDatabaseModifiedState(state: Boolean) {
+        privateDatabaseModifiedState.value = state
+    }
+
+    fun changeRadioButtonState(state: Boolean) {
+        privateRadioButtonState.value = state
+    }
+
+    fun changeAboRhExpandedState(state: Boolean) {
+        privateAboRhExpandedState.value = state
+    }
+
+    fun changeBranchExpandedState(state: Boolean) {
+        privateBranchExpandedState.value = state
+    }
+
+    fun changeFirstNameState(string: String) {
+        privateFirstNameState.value = string
+    }
+
+    fun changeMiddleNameState(string: String) {
+        privateMiddleNameState.value = string
+    }
+
+    fun changeLastNameState(string: String) {
+        privateLastNameState.value = string
+    }
+
+    fun changeDobState(string: String) {
+        privateDobState.value = string
+    }
+
+    fun changeAboRhState(string: String) {
+        privateAboRhState.value = string
+    }
+
+    fun changeBranchState(string: String) {
+        privateBranchState.value = string
+    }
+
+    fun changeGenderState(state: Boolean) {
+        privateGenderState.value = state
+    }
+
+    // End Manage Donor Screen state
 }

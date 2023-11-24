@@ -35,14 +35,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
+import extraWhite
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
@@ -100,17 +99,17 @@ fun ManageDonorScreen(
             .verticalScroll(state = stateVertical),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var databaseModified by remember { mutableStateOf(false) }
-        var radioButtonChanged by remember { mutableStateOf(false) }
-        var aboRhExpanded by remember { mutableStateOf(false) }
-        var branchExpanded by remember { mutableStateOf(false) }
-        var firstNameText by rememberSaveable { mutableStateOf(donor.firstName) }
-        var middleNameText by rememberSaveable { mutableStateOf(donor.middleName) }
-        var lastNameText by rememberSaveable { mutableStateOf(donor.lastName) }
-        var dobText by rememberSaveable { mutableStateOf(donor.dob) }
-        var aboRhText by rememberSaveable { mutableStateOf(donor.aboRh) }
-        var branchText by rememberSaveable { mutableStateOf(donor.branch) }
-        var gender by rememberSaveable { mutableStateOf(donor.gender) }
+        val databaseModified by viewModel.databaseModifiedState.collectAsState()
+        val radioButtonChanged by viewModel.radioButtonState.collectAsState()
+        val aboRhExpanded by viewModel.aboRhExpandedState.collectAsState()
+        val branchExpanded by viewModel.branchExpandedState.collectAsState()
+        val firstNameText by viewModel.firstNameState.collectAsState()
+        val middleNameText by viewModel.middleNameState.collectAsState()
+        val lastNameText by viewModel.lastNameState.collectAsState()
+        val dobText by viewModel.dobState.collectAsState()
+        val aboRhText by viewModel.aboRhState.collectAsState()
+        val branchText by viewModel.branchState.collectAsState()
+        val gender by viewModel.genderState.collectAsState()
         val enterFirstNameText = Strings.get("enter_first_name_text")
         val enterMiddleNameText = Strings.get("enter_middle_name_text")
         val enterLastNameText = Strings.get("enter_last_name_text")
@@ -135,10 +134,10 @@ fun ManageDonorScreen(
                         modifier = Modifier
                             .height(60.dp)
                             .testTag("OutlinedTextField"),
-                        value = lastNameText,
+                        value = donor.lastName,
                         onValueChange = {
-                            lastNameText = it
-                            databaseModified = true
+                            viewModel.changeLastNameState(it)
+                            viewModel.changeDatabaseModifiedState(true)
                         },
                         shape = RoundedCornerShape(10.dp),
                         label = { Text(enterLastNameText) },
@@ -152,10 +151,10 @@ fun ManageDonorScreen(
                     modifier = Modifier
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
-                    value = firstNameText,
+                    value = donor.firstName,
                     onValueChange = {
-                        firstNameText = it
-                        databaseModified = true
+                        viewModel.changeFirstNameState(it)
+                        viewModel.changeDatabaseModifiedState(true)
                     },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(enterFirstNameText) },
@@ -168,10 +167,10 @@ fun ManageDonorScreen(
                     modifier = Modifier
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
-                    value = middleNameText,
+                    value = donor.middleName,
                     onValueChange = {
-                        middleNameText = it
-                        databaseModified = true
+                        viewModel.changeMiddleNameState(it)
+                        viewModel.changeDatabaseModifiedState(true)
                     },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(enterMiddleNameText) },
@@ -185,10 +184,10 @@ fun ManageDonorScreen(
                         modifier = Modifier
                             .height(60.dp)
                             .testTag("OutlinedTextField"),
-                        value = dobText,
+                        value = donor.dob,
                         onValueChange = {
-                            dobText = it
-                            databaseModified = true
+                            viewModel.changeDobState(it)
+                            viewModel.changeDatabaseModifiedState(true)
                         },
                         shape = RoundedCornerShape(10.dp),
                         label = { Text(enterDobText) },
@@ -199,24 +198,24 @@ fun ManageDonorScreen(
             Spacer(modifier = Modifier.padding(top = 16.dp))
             Row {
                 HorizontalRadioButtons(donor.gender) { text ->
-                    gender = text == "Male"
-                    radioButtonChanged = true
+                    viewModel.changeGenderState(text == "Male")
+                    viewModel.changeRadioButtonState(true)
                 }
             }
             ExposedDropdownMenuBox(
                 expanded = aboRhExpanded,
                 onExpandedChange = {
-                    aboRhExpanded = !aboRhExpanded
+                    viewModel.changeAboRhExpandedState(!aboRhExpanded)
                 }
             ) {
                 OutlinedTextField(
                     modifier = Modifier
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
-                    value = aboRhText,
+                    value = donor.aboRh,
                     readOnly = true,
                     onValueChange = {
-                        aboRhText = it
+                        viewModel.changeAboRhState(it)
                     },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(enterBloodTypeText) },
@@ -229,7 +228,7 @@ fun ManageDonorScreen(
                 )
                 ExposedDropdownMenu(
                     expanded = aboRhExpanded,
-                    onDismissRequest = { aboRhExpanded = false }
+                    onDismissRequest = { viewModel.changeAboRhExpandedState(false) }
                 ) {
                     val aboRhArray = listOf(
                         "O-Negative",
@@ -245,13 +244,15 @@ fun ManageDonorScreen(
                         DropdownMenuItem(
                             modifier = Modifier.background(MaterialTheme.colors.secondary),
                             onClick = {
-                                aboRhExpanded = false
-                                aboRhText = label
-                                databaseModified = true
+                                viewModel.changeAboRhExpandedState(false)
+                                viewModel.changeAboRhState(label)
+                                viewModel.changeDatabaseModifiedState(true)
                             }
                         ) {
                             Text(
-                                text = label
+                                text = label,
+                                color = MaterialTheme.colors.extraWhite,
+                                style = MaterialTheme.typography.body2
                             )
                         }
                     }
@@ -261,17 +262,17 @@ fun ManageDonorScreen(
             ExposedDropdownMenuBox(
                 expanded = branchExpanded,
                 onExpandedChange = {
-                    branchExpanded = !branchExpanded
+                    viewModel.changeBranchExpandedState(!branchExpanded)
                 }
             ) {
                 OutlinedTextField(
                     modifier = Modifier
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
-                    value = branchText,
+                    value = donor.branch,
                     readOnly = true,
                     onValueChange = {
-                        branchText = it
+                        viewModel.changeBranchState(it)
                     },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(enterBranchText) },
@@ -284,7 +285,7 @@ fun ManageDonorScreen(
                 )
                 ExposedDropdownMenu(
                     expanded = branchExpanded,
-                    onDismissRequest = { branchExpanded = false }
+                    onDismissRequest = { viewModel.changeBranchExpandedState(false) }
                 ) {
                     val branchArray = listOf(
                         "The Army",
@@ -298,18 +299,22 @@ fun ManageDonorScreen(
                         DropdownMenuItem(
                             modifier = Modifier.background(MaterialTheme.colors.secondary),
                             onClick = {
-                                branchExpanded = false
-                                branchText = label
-                                databaseModified = true
+                                Logger.d("JIMX    label=$label")
+                                viewModel.changeBranchExpandedState(false)
+                                viewModel.changeBranchState(label)
+                                viewModel.changeDatabaseModifiedState(true)
                             }
                         ) {
                             Text(
-                                text = label
+                                text = label,
+                                color = MaterialTheme.colors.extraWhite,
+                                style = MaterialTheme.typography.body2
                             )
                         }
                     }
                 }
             }
+            Logger.d("JIMX    label2=$branchText")
             WidgetButton(
                 padding = PaddingValues(top = 16.dp, bottom = 24.dp),
                 onClick = {
@@ -365,7 +370,7 @@ fun ManageDonorScreen(
                             }
                         )
                     }
-                    radioButtonChanged = false
+                    viewModel.changeRadioButtonState(false)
                 },
                 buttonText = Strings.get("update_button_text")
             )
