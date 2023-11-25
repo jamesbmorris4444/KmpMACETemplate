@@ -299,7 +299,6 @@ fun ManageDonorScreen(
                         DropdownMenuItem(
                             modifier = Modifier.background(MaterialTheme.colors.secondary),
                             onClick = {
-                                Logger.d("JIMX    label=$label")
                                 viewModel.changeBranchExpandedState(false)
                                 viewModel.changeBranchState(label)
                                 viewModel.changeDatabaseModifiedState(true)
@@ -314,7 +313,6 @@ fun ManageDonorScreen(
                     }
                 }
             }
-            Logger.d("JIMX    label2=$branchText")
             WidgetButton(
                 padding = PaddingValues(top = 16.dp, bottom = 24.dp),
                 onClick = {

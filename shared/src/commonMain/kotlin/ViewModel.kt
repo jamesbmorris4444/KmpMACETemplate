@@ -17,7 +17,8 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         super.onCleared()
     }
 
-    val emptyDonor = Donor(0,"", "", "", "", "", "", false, false)
+    val emptyDonor = Donor(0,"", "", "", "", "", "", gender = false, inReassociate = false)
+    val noValue = "NO VALUE"
 
     // Start Rocket Launches Screen state
 
@@ -342,4 +343,32 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     }
 
     // End Manage Donor Screen state
+
+    // Start View Donor List Screen
+
+    private val privateDonorsAndProductsState: MutableStateFlow<List<DonorWithProducts>> = MutableStateFlow(listOf())
+    val donorsAndProductsState: MutableStateFlow<List<DonorWithProducts>>
+        get() = privateDonorsAndProductsState
+
+    private val privateLastNameTextEnteredState: MutableStateFlow<String> = MutableStateFlow("")
+    val lastNameTextEnteredState: MutableStateFlow<String>
+        get() = privateLastNameTextEnteredState
+
+    private val privateAboRhTextState: MutableStateFlow<String> = MutableStateFlow(noValue)
+    val aboRhTextState: MutableStateFlow<String>
+        get() = privateAboRhTextState
+
+    fun changeDonorsAndProductsState(state: List<DonorWithProducts>) {
+        privateDonorsAndProductsState.value = state
+    }
+
+    fun changeLastNameTextEnteredState(state: String) {
+        privateLastNameTextEnteredState.value = state
+    }
+
+    fun changeAboRhTextState(state: String) {
+        privateAboRhTextState.value = state
+    }
+
+    // End View Donor List Screen
 }

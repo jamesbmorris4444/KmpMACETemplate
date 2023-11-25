@@ -151,6 +151,7 @@ fun ScreenNavigator(
                     Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ViewDonorList.name}")
                     ViewDonorListScreen(
                         repository = repository,
+                        viewModel = viewModel,
                         title = ScreenNames.CreateProducts.string,
                         configAppBar = {
                             appBarState = it

@@ -1,4 +1,5 @@
 package ui
+import BloodViewModel
 import Repository
 import Strings
 import androidx.compose.foundation.background
@@ -30,11 +31,10 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -53,16 +53,16 @@ import utils.Utils
 @Composable
 fun ViewDonorListScreen(
     repository: Repository,
+    viewModel: BloodViewModel,
     title: String,
     configAppBar: (AppBarState) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     openDrawer: () -> Unit
 ) {
-    val donorsAndProducts: MutableState<List<DonorWithProducts>> = remember { mutableStateOf(listOf()) }
-    var nameConstraint by remember { mutableStateOf("") }
-    val bloodTypeList = listOf(
-        "NO VALUE",
+    val noValue = viewModel.noValue
+    val aboRhArray = listOf(
+        noValue,
         "O-Negative",
         "O-Positive",
         "A-Negative",
@@ -72,13 +72,17 @@ fun ViewDonorListScreen(
         "AB-Negative",
         "AB-Positive"
     )
-    val aboRhArray: MutableState<List<String>> = remember { mutableStateOf(bloodTypeList) }
-    var aboRhConstraint by remember { mutableStateOf(aboRhArray.value[0]) }
+
+    // state variables
+    val donorsAndProducts by viewModel.donorsAndProductsState.collectAsState()
+    val lastNameTextEntered by viewModel.lastNameTextEnteredState.collectAsState()
+    val aboRhTextState by viewModel.aboRhTextState.collectAsState()
+    Logger.d("JIMX STATE   donorsAndProducts=$donorsAndProducts    lastNameTextEntered=$lastNameTextEntered    aboRhTextState=$aboRhTextState")
 
     @Composable
-    fun DonorsAndProductsList(donorsAndProducts: MutableState<List<DonorWithProducts>>) {
+    fun DonorsAndProductsList(donorsAndProducts: List<DonorWithProducts>) {
         LazyColumn {
-            items(items = donorsAndProducts.value, itemContent = { donorWithProductsLocal ->
+            items(items = donorsAndProducts, itemContent = { donorWithProductsLocal ->
                 Spacer(modifier = Modifier.padding(top = 8.dp))
                 Column(modifier = Modifier
                     .fillMaxWidth()
@@ -131,21 +135,21 @@ fun ViewDonorListScreen(
         }
     }
 
-    fun handleNameOrAboRhTextEntry() {
+    fun handleNameOrAboRhTextEntry(lastNameSearchKey: String, aboRhSearchKey: String) {
         val donorAndProductsEntries = repository.donorAndProductsList()
+        Logger.d("JIMX A   lastNameSearchKey=$lastNameSearchKey    aboRhSearchKey=$aboRhSearchKey")
         val resultList = donorAndProductsEntries.map { mainDonorWithProducts ->
             donorAndProductsEntries.firstOrNull {
                 stagingDonorWithProducts -> Utils.donorComparisonByString(mainDonorWithProducts.donor) == Utils.donorComparisonByString(stagingDonorWithProducts.donor)
             } ?: mainDonorWithProducts
         }
-
-        val nameResultList = resultList.filter { finalDonorWithProducts -> Utils.donorLastNameComparisonByString(finalDonorWithProducts.donor).lowercase().startsWith(nameConstraint) }
-        val finalResultList = if (aboRhConstraint == aboRhArray.value[0]) {
+        val nameResultList = resultList.filter { finalDonorWithProducts -> Utils.donorLastNameComparisonByString(finalDonorWithProducts.donor).lowercase().startsWith(lastNameSearchKey) }
+        val finalResultList = if (aboRhSearchKey == aboRhArray[0]) {
             nameResultList
         } else {
-            nameResultList.filter { finalDonorWithProducts -> Utils.donorBloodTypeComparisonByString(finalDonorWithProducts.donor) == aboRhConstraint }
+            nameResultList.filter { finalDonorWithProducts -> Utils.donorBloodTypeComparisonByString(finalDonorWithProducts.donor) == aboRhSearchKey }
         }
-        donorsAndProducts.value = finalResultList.sortedBy { it.donor.lastName }
+        viewModel.changeDonorsAndProductsState(finalResultList.sortedBy { it.donor.lastName })
     }
 
     LaunchedEffect(key1 = true) {
@@ -174,33 +178,33 @@ fun ViewDonorListScreen(
             )
         )
     }
+
     val keyboardController = LocalSoftwareKeyboardController.current
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var lastNameTextEntered by rememberSaveable { mutableStateOf("") }
-        var aboRhText by rememberSaveable { mutableStateOf(aboRhArray.value[0]) }
-        var aboRhExpanded by remember { mutableStateOf(false) }
-        val donorSearchStringText = Strings.get("donor_search_view_donor_list_text")
         Spacer(modifier = Modifier.height(24.dp))
+        var currentLastNameText by remember { mutableStateOf(lastNameTextEntered) }
+        var currentAboRhText by remember { mutableStateOf(aboRhTextState) }
+        var aboRhExpanded by remember { mutableStateOf(false) }
         Row {
             OutlinedTextField(
                 modifier = Modifier
                     .height(60.dp),
-                value = lastNameTextEntered,
+                value = currentLastNameText,
                 onValueChange = {
-                    lastNameTextEntered = it
+                    currentLastNameText = it
+                    viewModel.changeLastNameTextEnteredState(it)
                 },
                 shape = RoundedCornerShape(10.dp),
-                label = { Text(donorSearchStringText) },
+                label = { Text(Strings.get("donor_search_view_donor_list_text")) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(
                     onDone = {
                         keyboardController?.hide()
-                        nameConstraint = lastNameTextEntered
-                        handleNameOrAboRhTextEntry()
+                        handleNameOrAboRhTextEntry(currentLastNameText, currentAboRhText)
                     })
             )
         }
@@ -214,10 +218,10 @@ fun ViewDonorListScreen(
             OutlinedTextField(
                 modifier = Modifier
                     .height(60.dp),
-                value = aboRhText,
+                value = currentAboRhText,
                 readOnly = true,
                 onValueChange = {
-                    aboRhText = it
+                    currentAboRhText = it
                 },
                 shape = RoundedCornerShape(10.dp),
                 label = { Text(Strings.get("enter_blood_type_text")) },
@@ -232,25 +236,27 @@ fun ViewDonorListScreen(
                 expanded = aboRhExpanded,
                 onDismissRequest = { aboRhExpanded = false }
             ) {
-                aboRhArray.value.forEach { label ->
+                aboRhArray.forEach { label ->
                     DropdownMenuItem(
-                        modifier = Modifier.background( MaterialTheme.colors.extraWhite),
+                        modifier = Modifier.background(MaterialTheme.colors.secondary),
                         onClick = {
                             aboRhExpanded = false
-                            aboRhText = label
-                            aboRhConstraint = aboRhText
-                            handleNameOrAboRhTextEntry()
+                            viewModel.changeAboRhTextState(label)
+                            currentAboRhText = label
+                            handleNameOrAboRhTextEntry(currentLastNameText, currentAboRhText)
                         }
                     ) {
                         Text(
-                            text = label
+                            text = label,
+                            color = MaterialTheme.colors.extraWhite,
+                            style = MaterialTheme.typography.body2
                         )
                     }
                 }
             }
         }
         Spacer(modifier = Modifier.padding(top = 16.dp))
-        if (donorsAndProducts.value.isNotEmpty()) {
+        if (donorsAndProducts.isNotEmpty()) {
             Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)
         }
         DonorsAndProductsList(donorsAndProducts)
