@@ -77,7 +77,6 @@ fun ViewDonorListScreen(
     val donorsAndProducts by viewModel.donorsAndProductsState.collectAsState()
     val lastNameTextEntered by viewModel.lastNameTextEnteredState.collectAsState()
     val aboRhTextState by viewModel.aboRhTextState.collectAsState()
-    Logger.d("JIMX STATE   donorsAndProducts=$donorsAndProducts    lastNameTextEntered=$lastNameTextEntered    aboRhTextState=$aboRhTextState")
 
     @Composable
     fun DonorsAndProductsList(donorsAndProducts: List<DonorWithProducts>) {
@@ -136,18 +135,12 @@ fun ViewDonorListScreen(
     }
 
     fun handleNameOrAboRhTextEntry(lastNameSearchKey: String, aboRhSearchKey: String) {
-        val donorAndProductsEntries = repository.donorAndProductsList()
+        val donorAndProductsEntries = repository.donorAndProductsList(lastNameSearchKey)
         Logger.d("JIMX A   lastNameSearchKey=$lastNameSearchKey    aboRhSearchKey=$aboRhSearchKey")
-        val resultList = donorAndProductsEntries.map { mainDonorWithProducts ->
-            donorAndProductsEntries.firstOrNull {
-                stagingDonorWithProducts -> Utils.donorComparisonByString(mainDonorWithProducts.donor) == Utils.donorComparisonByString(stagingDonorWithProducts.donor)
-            } ?: mainDonorWithProducts
-        }
-        val nameResultList = resultList.filter { finalDonorWithProducts -> Utils.donorLastNameComparisonByString(finalDonorWithProducts.donor).lowercase().startsWith(lastNameSearchKey) }
         val finalResultList = if (aboRhSearchKey == aboRhArray[0]) {
-            nameResultList
+            donorAndProductsEntries
         } else {
-            nameResultList.filter { finalDonorWithProducts -> Utils.donorBloodTypeComparisonByString(finalDonorWithProducts.donor) == aboRhSearchKey }
+            donorAndProductsEntries.filter { finalDonorWithProducts -> Utils.donorBloodTypeComparisonByString(finalDonorWithProducts.donor) == aboRhSearchKey }
         }
         viewModel.changeDonorsAndProductsState(finalResultList.sortedBy { it.donor.lastName })
     }

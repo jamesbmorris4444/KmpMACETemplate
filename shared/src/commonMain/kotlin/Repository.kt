@@ -18,7 +18,7 @@ interface Repository {
     fun refreshDonors()
     fun insertDonorIntoDatabase(donor: Donor)
     fun insertProductsIntoDatabase(products: List<Product>)
-    fun donorAndProductsList(): List<DonorWithProducts>
+    fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts>
     fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts?
     fun handleSearchClick(searchKey: String) : List<Donor>
     fun handleSearchClickWithProducts(searchKey: String) : List<DonorWithProducts>
@@ -230,8 +230,8 @@ class RepositoryImpl : Repository, KoinComponent {
 //        Database(databaseDriverFactory).insertDonor(donor, products)
 //    }
 
-    override fun donorAndProductsList(): List<DonorWithProducts> {
-        val donors = Database(databaseDriverFactory).getAllDonors()
+    override fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts> {
+        val donors = Database(databaseDriverFactory).getDonors(lastNameSearchKey)
         return donors.map {
             DonorWithProducts(donor = it, products = Database(databaseDriverFactory).selectProductsList(it.id))
         }
