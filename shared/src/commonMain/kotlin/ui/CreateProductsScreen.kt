@@ -27,6 +27,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -289,6 +292,9 @@ fun CreateProductsScreen(
                         fontFamily = avenirFontFamilyBold
                     )
                 }
+                var currentDinText by remember { mutableStateOf(dinText) }
+                var currentExpirationText by remember { mutableStateOf(expirationText) }
+                var currentProductCodeText by remember { mutableStateOf(productCodeText) }
                 LazyVerticalGrid(
                     modifier = Modifier
                         .padding(PaddingValues(start = leftGridPadding, end = rightGridPadding)),
@@ -311,11 +317,12 @@ fun CreateProductsScreen(
                                             .height(80.dp)
                                             .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
                                             .align(Alignment.BottomStart),
-                                        value = dinText,
+                                        value = currentDinText,
                                         readOnly = screenIsReadOnly,
                                         onValueChange = {
-                                            viewModel.changeDinTextState(it)
-                                            handleTextEntry(it, productCodeText, expirationText)
+                                            currentDinText = it
+                                            viewModel.changeDinTextState(currentDinText)
+                                            handleTextEntry(currentDinText, productCodeText, expirationText)
                                         },
                                         shape = RoundedCornerShape(10.dp),
                                         label = { Text(enterDinText) },
@@ -344,10 +351,11 @@ fun CreateProductsScreen(
                                             .height(80.dp)
                                             .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
                                             .align(Alignment.BottomStart),
-                                        value = productCodeText,
+                                        value = currentProductCodeText,
                                         readOnly = screenIsReadOnly,
                                         onValueChange = {
-                                            viewModel.changeProductCodeTextState(it)
+                                            currentProductCodeText = it
+                                            viewModel.changeProductCodeTextState(currentProductCodeText)
                                             handleTextEntry(dinText, it, expirationText)
                                         },
                                         shape = RoundedCornerShape(10.dp),
@@ -415,11 +423,12 @@ fun CreateProductsScreen(
                                             .height(80.dp)
                                             .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
                                             .align(Alignment.BottomStart),
-                                        value = expirationText,
+                                        value = currentExpirationText,
                                         readOnly = screenIsReadOnly,
                                         onValueChange = {
-                                            viewModel.changeExpirationTextState(it)
-                                            handleTextEntry(dinText, productCodeText, it)
+                                            currentExpirationText = it
+                                            viewModel.changeExpirationTextState(currentExpirationText)
+                                            handleTextEntry(dinText, productCodeText, currentExpirationText)
                                         },
                                         shape = RoundedCornerShape(10.dp),
                                         label = { Text(enterExpirationText) },

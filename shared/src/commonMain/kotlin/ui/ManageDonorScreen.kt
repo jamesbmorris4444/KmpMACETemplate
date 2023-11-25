@@ -35,6 +35,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -55,7 +56,7 @@ fun ManageDonorScreen(
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     openDrawer: () -> Unit,
-    donor: Donor,
+    donor: Donor? = null,
     title: String,
     viewModel: BloodViewModel,
     transitionToCreateProductsScreen: Boolean,
@@ -99,23 +100,24 @@ fun ManageDonorScreen(
             .verticalScroll(state = stateVertical),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val databaseModified by viewModel.databaseModifiedState.collectAsState()
-        val radioButtonChanged by viewModel.radioButtonState.collectAsState()
-        val aboRhExpanded by viewModel.aboRhExpandedState.collectAsState()
-        val branchExpanded by viewModel.branchExpandedState.collectAsState()
-        val firstNameText by viewModel.firstNameState.collectAsState()
-        val middleNameText by viewModel.middleNameState.collectAsState()
-        val lastNameText by viewModel.lastNameState.collectAsState()
-        val dobText by viewModel.dobState.collectAsState()
-        val aboRhText by viewModel.aboRhState.collectAsState()
-        val branchText by viewModel.branchState.collectAsState()
-        val gender by viewModel.genderState.collectAsState()
+
         val enterFirstNameText = Strings.get("enter_first_name_text")
         val enterMiddleNameText = Strings.get("enter_middle_name_text")
         val enterLastNameText = Strings.get("enter_last_name_text")
         val enterDobText = Strings.get("enter_dob_text")
         val enterBloodTypeText = Strings.get("enter_blood_type_text")
         val enterBranchText = Strings.get("enter_branch_text")
+        var currentFirstNameText by remember { mutableStateOf(donor?.firstName ?: "") }
+        var currentMiddleNameText by remember { mutableStateOf(donor?.middleName ?: "") }
+        var currentLastNameText by remember { mutableStateOf(donor?.lastName ?: "") }
+        var currentDobText by remember { mutableStateOf(donor?.dob ?: "") }
+        var currentAboRhText by remember { mutableStateOf(donor?.aboRh ?: "") }
+        var currentBranchText by remember { mutableStateOf(donor?.branch ?: "") }
+        var currentGender by remember { mutableStateOf(true) }
+        var databaseModified by remember { mutableStateOf(false) }
+        var radioButtonChanged by remember { mutableStateOf(false) }
+        var aboRhExpanded by remember { mutableStateOf(false) }
+        var branchExpanded  by remember { mutableStateOf(false) }
         if (showStandardModalState.topIconId.isNotEmpty()) {
             StandardModal(
                 showStandardModalState.topIconId,
@@ -134,10 +136,10 @@ fun ManageDonorScreen(
                         modifier = Modifier
                             .height(60.dp)
                             .testTag("OutlinedTextField"),
-                        value = donor.lastName,
+                        value = currentLastNameText,
                         onValueChange = {
-                            viewModel.changeLastNameState(it)
-                            viewModel.changeDatabaseModifiedState(true)
+                            currentLastNameText = it
+                            databaseModified = true
                         },
                         shape = RoundedCornerShape(10.dp),
                         label = { Text(enterLastNameText) },
@@ -151,10 +153,10 @@ fun ManageDonorScreen(
                     modifier = Modifier
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
-                    value = donor.firstName,
+                    value = currentFirstNameText,
                     onValueChange = {
-                        viewModel.changeFirstNameState(it)
-                        viewModel.changeDatabaseModifiedState(true)
+                        currentFirstNameText = it
+                        databaseModified = true
                     },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(enterFirstNameText) },
@@ -167,10 +169,10 @@ fun ManageDonorScreen(
                     modifier = Modifier
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
-                    value = donor.middleName,
+                    value = currentMiddleNameText,
                     onValueChange = {
-                        viewModel.changeMiddleNameState(it)
-                        viewModel.changeDatabaseModifiedState(true)
+                        currentMiddleNameText = it
+                        databaseModified = true
                     },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(enterMiddleNameText) },
@@ -184,10 +186,10 @@ fun ManageDonorScreen(
                         modifier = Modifier
                             .height(60.dp)
                             .testTag("OutlinedTextField"),
-                        value = donor.dob,
+                        value = currentDobText,
                         onValueChange = {
-                            viewModel.changeDobState(it)
-                            viewModel.changeDatabaseModifiedState(true)
+                            currentDobText = it
+                            databaseModified = true
                         },
                         shape = RoundedCornerShape(10.dp),
                         label = { Text(enterDobText) },
@@ -197,26 +199,24 @@ fun ManageDonorScreen(
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
             Row {
-                HorizontalRadioButtons(donor.gender) { text ->
-                    viewModel.changeGenderState(text == "Male")
-                    viewModel.changeRadioButtonState(true)
+                HorizontalRadioButtons(donor?.gender ?: true) { text ->
+                    currentGender = text == "Male"
+                    radioButtonChanged = true
                 }
             }
             ExposedDropdownMenuBox(
                 expanded = aboRhExpanded,
                 onExpandedChange = {
-                    viewModel.changeAboRhExpandedState(!aboRhExpanded)
+                    aboRhExpanded = !aboRhExpanded
                 }
             ) {
                 OutlinedTextField(
                     modifier = Modifier
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
-                    value = donor.aboRh,
+                    value = currentAboRhText,
                     readOnly = true,
-                    onValueChange = {
-                        viewModel.changeAboRhState(it)
-                    },
+                    onValueChange = { },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(enterBloodTypeText) },
                     singleLine = true,
@@ -228,7 +228,7 @@ fun ManageDonorScreen(
                 )
                 ExposedDropdownMenu(
                     expanded = aboRhExpanded,
-                    onDismissRequest = { viewModel.changeAboRhExpandedState(false) }
+                    onDismissRequest = { aboRhExpanded = false }
                 ) {
                     val aboRhArray = listOf(
                         "O-Negative",
@@ -244,9 +244,9 @@ fun ManageDonorScreen(
                         DropdownMenuItem(
                             modifier = Modifier.background(MaterialTheme.colors.secondary),
                             onClick = {
-                                viewModel.changeAboRhExpandedState(false)
-                                viewModel.changeAboRhState(label)
-                                viewModel.changeDatabaseModifiedState(true)
+                                aboRhExpanded = false
+                                currentAboRhText = label
+                                databaseModified = true
                             }
                         ) {
                             Text(
@@ -262,18 +262,16 @@ fun ManageDonorScreen(
             ExposedDropdownMenuBox(
                 expanded = branchExpanded,
                 onExpandedChange = {
-                    viewModel.changeBranchExpandedState(!branchExpanded)
+                    branchExpanded = !branchExpanded
                 }
             ) {
                 OutlinedTextField(
                     modifier = Modifier
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
-                    value = donor.branch,
+                    value = currentBranchText,
                     readOnly = true,
-                    onValueChange = {
-                        viewModel.changeBranchState(it)
-                    },
+                    onValueChange = { },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(enterBranchText) },
                     singleLine = true,
@@ -285,7 +283,7 @@ fun ManageDonorScreen(
                 )
                 ExposedDropdownMenu(
                     expanded = branchExpanded,
-                    onDismissRequest = { viewModel.changeBranchExpandedState(false) }
+                    onDismissRequest = { branchExpanded = false }
                 ) {
                     val branchArray = listOf(
                         "The Army",
@@ -299,9 +297,9 @@ fun ManageDonorScreen(
                         DropdownMenuItem(
                             modifier = Modifier.background(MaterialTheme.colors.secondary),
                             onClick = {
-                                viewModel.changeBranchExpandedState(false)
-                                viewModel.changeBranchState(label)
-                                viewModel.changeDatabaseModifiedState(true)
+                                branchExpanded = false
+                                currentBranchText = label
+                                databaseModified = true
                             }
                         ) {
                             Text(
@@ -316,10 +314,38 @@ fun ManageDonorScreen(
             WidgetButton(
                 padding = PaddingValues(top = 16.dp, bottom = 24.dp),
                 onClick = {
-                    val legalEntry = donor.lastName.isNotEmpty() && donor.dob.isNotEmpty()
                     if ((databaseModified || radioButtonChanged)) {
+                        val legalEntry = donor?.let {
+                            it.firstName.isNotEmpty() && it.middleName.isNotEmpty() && it.lastName.isNotEmpty() && it.dob.isNotEmpty() &&it.aboRh.isNotEmpty() && it.branch.isNotEmpty()
+                        } ?: run {
+                            currentFirstNameText.isNotEmpty() && currentMiddleNameText.isNotEmpty() && currentLastNameText.isNotEmpty() &&
+                                currentDobText.isNotEmpty() && currentAboRhText.isNotEmpty() && currentBranchText.isNotEmpty()
+                        }
                         if (legalEntry) {
-                            repository.insertDonorIntoDatabase(donor)
+                            if (transitionToCreateProductsScreen) {
+                                repository.updateDonor(
+                                    firstName = currentFirstNameText,
+                                    middleName = currentMiddleNameText,
+                                    lastName = currentLastNameText,
+                                    dob = currentDobText,
+                                    aboRh = currentAboRhText,
+                                    branch = currentBranchText,
+                                    gender = currentGender,
+                                    id = donor?.id ?: 1
+                                )
+                            } else {
+                                repository.insertDonorIntoDatabase(Donor(
+                                    id = 0,
+                                    firstName = currentFirstNameText,
+                                    middleName = currentMiddleNameText,
+                                    lastName = currentLastNameText,
+                                    dob = currentDobText,
+                                    aboRh = currentAboRhText,
+                                    branch = currentBranchText,
+                                    gender = currentGender,
+                                    inReassociate = false
+                                ))
+                            }
                             viewModel.changeShowStandardModalState(
                                 StandardModalArgs(
                                     topIconId = "drawable/notification.xml",

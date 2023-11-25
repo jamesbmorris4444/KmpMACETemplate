@@ -63,6 +63,10 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
         )
     }
 
+    internal fun updateDonor(firstName: String, middleName: String, lastName: String, dob: String, aboRh: String, branch: String, gender: Boolean, id: Long) {
+        dbQuery.updateDonor(firstName, middleName, lastName, dob, aboRh, branch, gender, id)
+    }
+
     internal fun getDonors(lastName: String): List<Donor> {
         return dbQuery.selectDonorsInfo("$lastName%").executeAsList()
     }

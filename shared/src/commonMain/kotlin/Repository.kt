@@ -27,6 +27,7 @@ interface Repository {
     fun updateProductInReassociate(newValue: Boolean, id: Long)
     fun updateProductRemovedForReassociation(newValue: Boolean, id: Long)
     fun updateDonorIdInProduct(newValue: Long, id: Long)
+    fun updateDonor(firstName: String, middleName: String, lastName: String, dob: String, aboRh: String, branch: String, gender: Boolean, id: Long)
 }
 
 class RepositoryImpl : Repository, KoinComponent {
@@ -284,5 +285,9 @@ class RepositoryImpl : Repository, KoinComponent {
 
     override fun updateDonorIdInProduct(newValue: Long, id: Long) {
         Database(databaseDriverFactory).updateDonorIdInProduct(newValue, id)
+    }
+
+    override fun updateDonor(firstName: String, middleName: String, lastName: String, dob: String, aboRh: String, branch: String, gender: Boolean, id: Long) {
+        Database(databaseDriverFactory).updateDonor(firstName, middleName, lastName, dob, aboRh, branch, gender, id)
     }
 }

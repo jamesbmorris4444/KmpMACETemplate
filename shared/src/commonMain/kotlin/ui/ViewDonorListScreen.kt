@@ -136,7 +136,6 @@ fun ViewDonorListScreen(
 
     fun handleNameOrAboRhTextEntry(lastNameSearchKey: String, aboRhSearchKey: String) {
         val donorAndProductsEntries = repository.donorAndProductsList(lastNameSearchKey)
-        Logger.d("JIMX A   lastNameSearchKey=$lastNameSearchKey    aboRhSearchKey=$aboRhSearchKey")
         val finalResultList = if (aboRhSearchKey == aboRhArray[0]) {
             donorAndProductsEntries
         } else {
@@ -178,8 +177,8 @@ fun ViewDonorListScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(24.dp))
-        var currentLastNameText by remember { mutableStateOf(lastNameTextEntered) }
-        var currentAboRhText by remember { mutableStateOf(aboRhTextState) }
+        var currentLastNameText = lastNameTextEntered
+        var currentAboRhText= aboRhTextState
         var aboRhExpanded by remember { mutableStateOf(false) }
         Row {
             OutlinedTextField(
@@ -188,7 +187,7 @@ fun ViewDonorListScreen(
                 value = currentLastNameText,
                 onValueChange = {
                     currentLastNameText = it
-                    viewModel.changeLastNameTextEnteredState(it)
+                    viewModel.changeLastNameTextEnteredState(currentLastNameText)
                 },
                 shape = RoundedCornerShape(10.dp),
                 label = { Text(Strings.get("donor_search_view_donor_list_text")) },
@@ -213,9 +212,7 @@ fun ViewDonorListScreen(
                     .height(60.dp),
                 value = currentAboRhText,
                 readOnly = true,
-                onValueChange = {
-                    currentAboRhText = it
-                },
+                onValueChange = { },
                 shape = RoundedCornerShape(10.dp),
                 label = { Text(Strings.get("enter_blood_type_text")) },
                 singleLine = true,
@@ -234,8 +231,8 @@ fun ViewDonorListScreen(
                         modifier = Modifier.background(MaterialTheme.colors.secondary),
                         onClick = {
                             aboRhExpanded = false
-                            viewModel.changeAboRhTextState(label)
                             currentAboRhText = label
+                            viewModel.changeAboRhTextState(currentAboRhText)
                             handleNameOrAboRhTextEntry(currentLastNameText, currentAboRhText)
                         }
                     ) {

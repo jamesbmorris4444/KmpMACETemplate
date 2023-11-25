@@ -25,6 +25,11 @@ selectDonorsInfo:
 SELECT * FROM Donor
 WHERE lastName LIKE ?;
 
+updateDonor:
+UPDATE Donor
+SET firstName = :firstName, middleName = :middleName, lastName = :lastName, dob = :dob, aboRh = :aboRh, branch = :branch, gender = :gender
+WHERE id = :id;
+
 getCount:
 SELECT COUNT(lastName)
 FROM Donor;

@@ -269,27 +269,27 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val branchExpandedState: MutableStateFlow<Boolean>
         get() = privateBranchExpandedState
 
-    private val privateFirstNameState: MutableStateFlow<String> = MutableStateFlow("")
+    private val privateFirstNameState: MutableStateFlow<String> = MutableStateFlow(noValue)
     val firstNameState: MutableStateFlow<String>
         get() = privateFirstNameState
 
-    private val privateMiddleNameState: MutableStateFlow<String> = MutableStateFlow("")
+    private val privateMiddleNameState: MutableStateFlow<String> = MutableStateFlow(noValue)
     val middleNameState: MutableStateFlow<String>
         get() = privateMiddleNameState
 
-    private val privateLastNameState: MutableStateFlow<String> = MutableStateFlow("")
+    private val privateLastNameState: MutableStateFlow<String> = MutableStateFlow(noValue)
     val lastNameState: MutableStateFlow<String>
         get() = privateLastNameState
 
-    private val privateDobState: MutableStateFlow<String> = MutableStateFlow("")
+    private val privateDobState: MutableStateFlow<String> = MutableStateFlow(noValue)
     val dobState: MutableStateFlow<String>
         get() = privateDobState
 
-    private val privateAboRhState: MutableStateFlow<String> = MutableStateFlow("")
+    private val privateAboRhState: MutableStateFlow<String> = MutableStateFlow(noValue)
     val aboRhState: MutableStateFlow<String>
         get() = privateAboRhState
 
-    private val privateBranchState: MutableStateFlow<String> = MutableStateFlow("")
+    private val privateBranchState: MutableStateFlow<String> = MutableStateFlow(noValue)
     val branchState: MutableStateFlow<String>
         get() = privateBranchState
 

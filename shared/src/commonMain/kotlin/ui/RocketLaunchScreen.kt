@@ -107,6 +107,7 @@ fun RocketLaunchScreen(
                         positiveText = Strings.get("positive_button_text_ok"),
                     ) {
                         viewModel.updateRefreshFailureState("")
+                        viewModel.changeShowStandardModalState(StandardModalArgs())
                     }
                 )
             }

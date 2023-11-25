@@ -166,22 +166,37 @@ fun ScreenNavigator(
                     navTransition = NavTransition(),
                 ) {
                     Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ManageDonorFromDrawer.name}")
-                    DonateProductsHandler(
+                    ManageDonorScreen(
                         repository = repository,
+                        navigator = navigator,
                         configAppBar = {
                             appBarState = it
                         },
                         canNavigateBack = true,
                         navigateUp = { navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true))) },
                         openDrawer = openDrawer,
-                        onItemButtonClicked = {
-                            donor = it
-                            transitionToCreateProductsScreen = false
-                            navigator.navigate(ScreenNames.ManageDonorAfterSearch.name)
-                        },
+                        title = ScreenNames.ManageDonorFromDrawer.string,
                         viewModel = viewModel,
-                        title = ScreenNames.ManageDonorFromDrawer.string
+                        transitionToCreateProductsScreen = false,
+                        donateProductsSearchStringName = ScreenNames.DonateProductsSearch.name,
+                        createProductsStringName = ScreenNames.CreateProducts.name
                     )
+//                    DonateProductsHandler(
+//                        repository = repository,
+//                        configAppBar = {
+//                            appBarState = it
+//                        },
+//                        canNavigateBack = true,
+//                        navigateUp = { navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true))) },
+//                        openDrawer = openDrawer,
+//                        onItemButtonClicked = {
+//                            donor = it
+//                            transitionToCreateProductsScreen = false
+//                            navigator.navigate(ScreenNames.ManageDonorAfterSearch.name)
+//                        },
+//                        viewModel = viewModel,
+//                        title = ScreenNames.ManageDonorFromDrawer.string
+//                    )
                 }
                 scene(
                     route = ScreenNames.ReassociateDonation.name,
