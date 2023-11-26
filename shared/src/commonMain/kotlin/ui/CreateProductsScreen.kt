@@ -109,7 +109,7 @@ fun CreateProductsScreen(
     }
 
     fun processNewProduct() {
-        val product = Product(id = 0, donorId = donor.id, din = dinText, aboRh = donor.aboRh, productCode = productCodeText, expirationDate = expirationText, inReassociate = false, removedForReassociation = false)
+        val product = Product(id = 0, donorId = donor.id, din = dinText, aboRh = donor.aboRh, productCode = productCodeText, expirationDate = expirationText, removedForReassociation = false)
         val productList: MutableList<Product> = products.toMutableList()
         productList.add(product)
         viewModel.changeProductsListState(productList)

@@ -22,9 +22,7 @@ interface Repository {
     fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts?
     fun handleSearchClick(searchKey: String) : List<Donor>
     fun handleSearchClickWithProducts(searchKey: String) : List<DonorWithProducts>
-//    fun insertReassociatedProductsIntoDatabase(donor: Donor, products: List<Product>)
     fun donorFromNameAndDateWithProducts(donor: Donor): DonorWithProducts?
-    fun updateProductInReassociate(newValue: Boolean, id: Long)
     fun updateProductRemovedForReassociation(newValue: Boolean, id: Long)
     fun updateDonorIdInProduct(newValue: Long, id: Long)
     fun updateDonor(firstName: String, middleName: String, lastName: String, dob: String, aboRh: String, branch: String, gender: Boolean, id: Long)
@@ -202,7 +200,7 @@ class RepositoryImpl : Repository, KoinComponent {
                 19 -> { "The JCS" }
                 else -> { "" }
             }
-            donorList.add(Donor(id = 1L, lastName = lastName, middleName = middleName, firstName = firstName, aboRh = aboRh, dob = dob, branch = branch, gender = true, inReassociate = false))
+            donorList.add(Donor(id = 1L, lastName = lastName, middleName = middleName, firstName = firstName, aboRh = aboRh, dob = dob, branch = branch, gender = true))
         }
         return donorList
     }
@@ -230,10 +228,6 @@ class RepositoryImpl : Repository, KoinComponent {
         Database(databaseDriverFactory).insertProductsIntoDatabase(products)
     }
 
-//    override fun insertReassociatedProductsIntoDatabase(donor: Donor, products: List<Product>) {
-//        Database(databaseDriverFactory).insertDonor(donor, products)
-//    }
-
     override fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts> {
         val donors = Database(databaseDriverFactory).getDonors(lastNameSearchKey)
         return donors.map {
@@ -249,22 +243,7 @@ class RepositoryImpl : Repository, KoinComponent {
         return Database(databaseDriverFactory).getDonors(searchKey)
 
     }
-//
-//    private fun donorsFromFullName(database: AppDatabase, search: String): List<Donor> {
-//        val searchLast: String
-//        var searchFirst = "%"
-//        val index = search.indexOf(',')
-//        if (index < 0) {
-//            searchLast = "$search%"
-//        } else {
-//            val last = search.substring(0, index)
-//            val first = search.substring(index + 1)
-//            searchFirst = "$first%"
-//            searchLast = "$last%"
-//        }
-//        return database.databaseDao().donorsFromFullName(searchLast, searchFirst)
-//    }
-//
+
     override fun handleSearchClickWithProducts(searchKey: String) : List<DonorWithProducts> {
         val donorsResponseList =  Database(databaseDriverFactory).getDonors(searchKey)
         val products: List<Product> = Database(databaseDriverFactory).getAllProducts()
@@ -276,10 +255,6 @@ class RepositoryImpl : Repository, KoinComponent {
 
     override fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts? {
         return Database(databaseDriverFactory).donorFromNameAndDateWithProducts(searchLast, dob)
-    }
-
-    override fun updateProductInReassociate(newValue: Boolean, id: Long) {
-        Database(databaseDriverFactory).updateProductInReassociate(newValue = newValue, id = id)
     }
 
     override fun updateProductRemovedForReassociation(newValue: Boolean, id: Long) {

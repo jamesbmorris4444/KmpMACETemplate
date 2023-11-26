@@ -342,8 +342,7 @@ fun ManageDonorScreen(
                                     dob = currentDobText,
                                     aboRh = currentAboRhText,
                                     branch = currentBranchText,
-                                    gender = currentGender,
-                                    inReassociate = false
+                                    gender = currentGender
                                 ))
                             }
                             viewModel.changeShowStandardModalState(

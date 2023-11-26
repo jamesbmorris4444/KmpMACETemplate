@@ -25,8 +25,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
         branch: String,
         aboRh: String,
         dob: String,
-        gender: Boolean,
-        inReassociate: Boolean
+        gender: Boolean
     ): Donor {
         return Donor(
             id = id,
@@ -36,8 +35,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
             branch = branch,
             aboRh = aboRh,
             dob = dob,
-            gender = gender,
-            inReassociate = inReassociate
+            gender = gender
         )
     }
 
@@ -101,8 +99,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
         aboRh: String,
         productCode: String,
         expirationDate: String,
-        removedForReassociation: Boolean,
-        inReassociate: Boolean
+        removedForReassociation: Boolean
     ): Product {
         return Product(
             id = id,
@@ -111,8 +108,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
             aboRh = aboRh,
             productCode = productCode,
             expirationDate = expirationDate,
-            removedForReassociation = removedForReassociation,
-            inReassociate = inReassociate
+            removedForReassociation = removedForReassociation
         )
     }
 
@@ -130,10 +126,6 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
 
     internal fun insertProductsIntoDatabase(products: List<Product>) {
         createProduct(products)
-    }
-
-    internal fun updateProductInReassociate(newValue: Boolean, id: Long) {
-        dbQuery.updateProductInReassociate(newValue, id)
     }
 
     internal fun updateProductRemovedForReassociation(newValue: Boolean, id: Long) {

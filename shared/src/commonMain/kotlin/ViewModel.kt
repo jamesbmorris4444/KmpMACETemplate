@@ -17,7 +17,7 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         super.onCleared()
     }
 
-    val emptyDonor = Donor(0,"", "", "", "", "", "", gender = false, inReassociate = false)
+    val emptyDonor = Donor(0,"", "", "", "", "", "", gender = false)
     val noValue = "NO VALUE"
 
     // Start Rocket Launches Screen state
