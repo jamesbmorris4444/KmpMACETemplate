@@ -15,7 +15,7 @@ interface Repository {
     var screenWidth: Int
     var screenHeight: Int
     suspend fun refreshDatabase(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String>
-    fun refreshDonors()
+    fun initializeDatabase()
     fun insertDonorIntoDatabase(donor: Donor)
     fun insertProductsIntoDatabase(products: List<Product>)
     fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts>
@@ -51,11 +51,14 @@ class RepositoryImpl : Repository, KoinComponent {
         return Pair(result, message)
     }
 
-    override fun refreshDonors() {
-        Database(databaseDriverFactory).clearDatabase()
-        Database(databaseDriverFactory).createDonor(createListOfDonors())
+    override fun initializeDatabase() {
         val list = Database(databaseDriverFactory).getAllDonors()
         Logger.d("MACELOG: number of donors=${list.size}")
+        if (list.isEmpty()) {
+            Logger.d("MACELOG: DB initialize")
+            Database(databaseDriverFactory).clearDatabase()
+            Database(databaseDriverFactory).createDonor(createListOfDonors())
+        }
     }
 
     private fun createListOfDonors() : List<Donor> {

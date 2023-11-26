@@ -78,20 +78,12 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val donorsAvailableState: MutableStateFlow<List<Donor>>
         get() = privateDonorsAvailableState
 
-    private val privateRefreshEditTextState: MutableStateFlow<String> = MutableStateFlow("")
-    val refreshEditTextState: MutableStateFlow<String>
-        get() = privateRefreshEditTextState
-
     fun updateDatabaseInvalidState(value: Boolean) {
         privateDatabaseInvalidState.value = value
     }
 
     fun updateDonorsAvailableState(donors: List<Donor>) {
         privateDonorsAvailableState.value = donors
-    }
-
-    fun refreshEditTextState(text: String) {
-        privateRefreshEditTextState.value = text
     }
 
     // End Donate Products Screen state
@@ -250,99 +242,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     }
 
     // End Create Products Screen state
-
-    // Start Manage Donor Screen state
-
-    private val privateDatabaseModifiedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val databaseModifiedState: MutableStateFlow<Boolean>
-        get() = privateDatabaseModifiedState
-
-    private val privateRadioButtonState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val radioButtonState: MutableStateFlow<Boolean>
-        get() = privateRadioButtonState
-
-    private val privateAboRhExpandedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val aboRhExpandedState: MutableStateFlow<Boolean>
-        get() = privateAboRhExpandedState
-
-    private val privateBranchExpandedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val branchExpandedState: MutableStateFlow<Boolean>
-        get() = privateBranchExpandedState
-
-    private val privateFirstNameState: MutableStateFlow<String> = MutableStateFlow(noValue)
-    val firstNameState: MutableStateFlow<String>
-        get() = privateFirstNameState
-
-    private val privateMiddleNameState: MutableStateFlow<String> = MutableStateFlow(noValue)
-    val middleNameState: MutableStateFlow<String>
-        get() = privateMiddleNameState
-
-    private val privateLastNameState: MutableStateFlow<String> = MutableStateFlow(noValue)
-    val lastNameState: MutableStateFlow<String>
-        get() = privateLastNameState
-
-    private val privateDobState: MutableStateFlow<String> = MutableStateFlow(noValue)
-    val dobState: MutableStateFlow<String>
-        get() = privateDobState
-
-    private val privateAboRhState: MutableStateFlow<String> = MutableStateFlow(noValue)
-    val aboRhState: MutableStateFlow<String>
-        get() = privateAboRhState
-
-    private val privateBranchState: MutableStateFlow<String> = MutableStateFlow(noValue)
-    val branchState: MutableStateFlow<String>
-        get() = privateBranchState
-
-    private val privateGenderState: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val genderState: MutableStateFlow<Boolean>
-        get() = privateGenderState
-
-
-    fun changeDatabaseModifiedState(state: Boolean) {
-        privateDatabaseModifiedState.value = state
-    }
-
-    fun changeRadioButtonState(state: Boolean) {
-        privateRadioButtonState.value = state
-    }
-
-    fun changeAboRhExpandedState(state: Boolean) {
-        privateAboRhExpandedState.value = state
-    }
-
-    fun changeBranchExpandedState(state: Boolean) {
-        privateBranchExpandedState.value = state
-    }
-
-    fun changeFirstNameState(string: String) {
-        privateFirstNameState.value = string
-    }
-
-    fun changeMiddleNameState(string: String) {
-        privateMiddleNameState.value = string
-    }
-
-    fun changeLastNameState(string: String) {
-        privateLastNameState.value = string
-    }
-
-    fun changeDobState(string: String) {
-        privateDobState.value = string
-    }
-
-    fun changeAboRhState(string: String) {
-        privateAboRhState.value = string
-    }
-
-    fun changeBranchState(string: String) {
-        privateBranchState.value = string
-    }
-
-    fun changeGenderState(state: Boolean) {
-        privateGenderState.value = state
-    }
-
-    // End Manage Donor Screen state
 
     // Start View Donor List Screen
 

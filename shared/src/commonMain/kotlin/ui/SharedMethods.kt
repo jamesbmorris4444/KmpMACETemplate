@@ -60,7 +60,7 @@ fun ProductListContent(
                             } else {
                                 val productSelectedAsList = products.filterIndexed { filterIndex, _ -> filterIndex == index }
                                 onProductSelected(productSelectedAsList)
-                                repository.updateProductInReassociate(true, productSelectedAsList[0].id)
+                                repository.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
                             }
                         },
                     painter = painterResource("drawable/delete_icon.png"),

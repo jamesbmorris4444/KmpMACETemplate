@@ -94,8 +94,13 @@ fun ScreenNavigator(
                         openDrawer = openDrawer,
                         onItemButtonClicked = {
                             donor = it
-                            transitionToCreateProductsScreen = true
-                            navigator.navigate(ScreenNames.ManageDonorAfterSearch.name)
+                            if (donor.lastName.isEmpty()) {
+                                transitionToCreateProductsScreen = false
+                                navigator.navigate(ScreenNames.ManageDonorFromDrawer.name)
+                            } else {
+                                transitionToCreateProductsScreen = true
+                                navigator.navigate(ScreenNames.ManageDonorAfterSearch.name)
+                            }
                         },
                         viewModel = viewModel,
                         title = ScreenNames.DonateProductsSearch.string

@@ -64,12 +64,10 @@ fun RocketLaunchScreen(
     val isInvalid by viewModel.rocketLaunchesInvalidState.collectAsState()
     val failure by viewModel.refreshFailureState.collectAsState()
 
-    Logger.d("JIMX 1  $showStandardModalState   $completed  $isInvalid   $failure")
     when {
         isInvalid -> {
             composableScope.launch(Dispatchers.Main) {
                 val pair = repository.refreshDatabase(composableScope)
-                Logger.d("JIMX 2 ")
                 viewModel.updateRefreshCompletedState(true)
                 viewModel.updateRocketLaunchesInvalidState(false)
                 if (pair.second.isEmpty()) { // success
@@ -102,8 +100,8 @@ fun RocketLaunchScreen(
                 viewModel.changeShowStandardModalState(
                     StandardModalArgs(
                         topIconId = "drawable/notification.xml",
-                        titleText = Strings.get("failure_db_entries_title_text"),
-                        bodyText = Strings.format("failure_db_entries_body_text", failure),
+                        titleText = Strings.get("failure_api_title_text"),
+                        bodyText = failure,
                         positiveText = Strings.get("positive_button_text_ok"),
                     ) {
                         viewModel.updateRefreshFailureState("")

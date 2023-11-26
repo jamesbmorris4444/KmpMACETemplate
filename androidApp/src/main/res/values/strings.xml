@@ -23,6 +23,7 @@
     <string name="donor_fetch_problem_title_text">Donor Fetch Problem</string>
     <string name="donor_fetch_problem_body_text">One donor expected, but found zero or more than one donors.</string>
     <string name="failure_db_entries_title_text">Main database initialization failure</string>
+    <string name="failure_api_title_text">SpaceX Launches API failure</string>
     <string name="failure_db_entries_body_text">Failure Message is: %1$s</string>
     <string name="made_reassociate_entries_body_text">An entry was made to the staging database for insertion of reassociated product(s)</string>
     <string name="made_db_entries_failure_text">Insertion of new donor in database failed</string>

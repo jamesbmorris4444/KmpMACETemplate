@@ -31,6 +31,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -60,7 +63,7 @@ fun DonateProductsScreen(
 
     when {
         isInvalid -> {
-            repository.refreshDonors()
+            repository.initializeDatabase()
             viewModel.updateRefreshCompletedState(true)
             viewModel.updateDatabaseInvalidState(false)
             viewModel.updateRefreshFailureState("")
@@ -81,7 +84,7 @@ fun DonateProductsScreen(
                     StandardModalArgs(
                         topIconId = "drawable/notification.xml",
                         titleText = Strings.get("failure_db_entries_title_text"),
-                        bodyText = Strings.format("failure_db_entries_body_text", failure),
+                        bodyText = failure,
                         positiveText = Strings.get("positive_button_text_ok")
                     ) {
                         navigateUp()
@@ -193,7 +196,7 @@ fun DonateProductsHandler(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val keyboardController = LocalSoftwareKeyboardController.current
-            val text by viewModel.refreshEditTextState.collectAsState()
+            var text by remember { mutableStateOf("") }
             Spacer(modifier = Modifier.height(36.dp))
             Row {
                 OutlinedTextField(
@@ -203,7 +206,7 @@ fun DonateProductsHandler(
                         .testTag("OutlinedTextField"),
                     value = text,
                     onValueChange = {
-                        viewModel.refreshEditTextState(it)
+                        text = it
                     },
                     shape = RoundedCornerShape(10.dp),
                     label = { Text(Strings.get("initial_letters_of_last_name_text")) },

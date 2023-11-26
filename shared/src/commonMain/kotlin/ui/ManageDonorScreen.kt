@@ -394,7 +394,6 @@ fun ManageDonorScreen(
                             }
                         )
                     }
-                    viewModel.changeRadioButtonState(false)
                 },
                 buttonText = Strings.get("update_button_text")
             )

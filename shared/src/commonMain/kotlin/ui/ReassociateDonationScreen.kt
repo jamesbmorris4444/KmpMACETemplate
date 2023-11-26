@@ -83,10 +83,9 @@ fun ReassociateDonationScreen(
         incorrectDonorsWithProducts.map { donorWithProducts ->
             donorWithProducts.products.map { product ->
                 if (product.removedForReassociation) {
-                    repository.updateDonorIdInProduct(correctDonor.id, product.donorId)
+                    repository.updateDonorIdInProduct(correctDonor.id, product.id)
                 }
             }
-//            repository.insertReassociatedProductsIntoDatabase(correctDonor, donorWithProducts.products)
             viewModel.changeShowStandardModalState(
                 StandardModalArgs(
                     topIconId = "drawable/notification.xml",
