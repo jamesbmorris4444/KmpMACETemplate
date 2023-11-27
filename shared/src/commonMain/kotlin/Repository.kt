@@ -225,7 +225,6 @@ class RepositoryImpl : Repository, KoinComponent {
     }
 
     override fun insertProductsIntoDatabase(products: List<Product>) {
-        Logger.d("JIMX products=$products")
         Database(databaseDriverFactory).insertProductsIntoDatabase(products)
     }
 

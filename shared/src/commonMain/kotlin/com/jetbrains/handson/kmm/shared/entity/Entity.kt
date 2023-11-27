@@ -43,30 +43,6 @@ data class Patch(
     val large: String?
 )
 
-//@Serializable
-//data class Donor(
-//    var lastName: String = "",
-//    var firstName: String = "",
-//    var middleName: String = "",
-//    var branch: String = "",
-//    var aboRh: String = "",
-//    var gender: Boolean = false,
-//    var dob: String = "",
-//    var inReassociate: Boolean = false
-//)
-
-//@Serializable
-//data class Product(
-//    var donorId: Long = 0,
-//    @SerialName("din") var din: String = "",
-//    @SerialName("abo_rh") var aboRh: String = "",
-//    @SerialName("product_code") var productCode: String = "",
-//    @SerialName("expiration_date") var expirationDate: String = "",
-//    var removedForReassociation: Boolean = false,
-//    var inReassociate: Boolean = false
-//
-//)
-
 data class DonorWithProducts(
     val donor: Donor,
     val products: List<Product> = listOf()

@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -81,57 +80,53 @@ fun CreateProductsScreen(
     val aboRhTitle = Strings.get("abo_rh_title")
 
     // state variables
-    val products by viewModel.productsListState.collectAsState()
-    val dinText by viewModel.dinTextState.collectAsState()
-    val expirationText by viewModel.expirationTextState.collectAsState()
-    val productCodeText by viewModel.productCodeTextState.collectAsState()
-    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
-    val screenIsReadOnly by viewModel.screenIsReadOnlyState.collectAsState()
-    val clearButtonVisible by viewModel.clearButtonVisibleState.collectAsState()
-    val confirmButtonVisible by viewModel.confirmButtonVisibleState.collectAsState()
-    val completeButtonVisible by viewModel.completeButtonVisibleState.collectAsState()
+    var products: MutableList<Product> by remember { mutableStateOf(mutableListOf()) }
+    var dinText by remember { mutableStateOf("") }
+    var expirationText by remember { mutableStateOf("") }
+    var productCodeText by remember { mutableStateOf("") }
+    var showStandardModalState by remember { mutableStateOf(StandardModalArgs()) }
+    var screenIsReadOnly by remember { mutableStateOf(false) }
+    var clearButtonVisible by remember { mutableStateOf(false) }
+    var confirmButtonVisible by remember { mutableStateOf(true) }
+    var completeButtonVisible by remember { mutableStateOf(true) }
 
     fun setButtonState(clearVisible: Boolean, confirmVisible: Boolean, completeVisible: Boolean) {
-        viewModel.changeClearButtonVisibleState(clearVisible)
+        clearButtonVisible = clearVisible
         if (screenIsReadOnly) {
-            viewModel.changeConfirmButtonVisibleState(false)
-            viewModel.changeCompleteButtonVisibleState(completeVisible)
+            confirmButtonVisible = false
+            completeButtonVisible = completeVisible
         } else {
-            viewModel.changeConfirmButtonVisibleState(confirmVisible)
-            viewModel.changeCompleteButtonVisibleState(completeVisible)
+            confirmButtonVisible = confirmVisible
+            completeButtonVisible = completeVisible
         }
     }
 
-    fun clearTextState(dinText: String = "", productCode: String = "", expiration: String = "") {
-        viewModel.changeDinTextState(dinText)
-        viewModel.changeProductCodeTextState(productCode)
-        viewModel.changeExpirationTextState(expiration)
+    fun clearTextState(dinValue: String = "", productCodeValue: String = "", expirationValue: String = "") {
+        dinText = dinValue
+        productCodeText = productCodeValue
+        expirationText = expirationValue
     }
 
     fun processNewProduct() {
         val product = Product(id = 0, donorId = donor.id, din = dinText, aboRh = donor.aboRh, productCode = productCodeText, expirationDate = expirationText, removedForReassociation = false)
-        val productList: MutableList<Product> = products.toMutableList()
-        productList.add(product)
-        viewModel.changeProductsListState(productList)
+        products.add(product)
     }
 
     fun addDonorWithProductsToDatabase() {
         repository.insertProductsIntoDatabase(products)
-        viewModel.changeShowStandardModalState(
-            StandardModalArgs(
-                topIconId = "drawable/notification.xml",
-                titleText = Strings.get("made_db_entries_title_text"),
-                bodyText = Strings.get("made_db_entries_body_text"),
-                positiveText = Strings.get("positive_button_text_ok")
-            ) {
-                viewModel.changeShowStandardModalState(StandardModalArgs())
-                viewModel.changeProductsListState(listOf())
-                viewModel.changeScreenIsReadOnlyState(false)
-                clearTextState()
-                setButtonState(clearVisible = false, confirmVisible = true, completeVisible = true)
-                onCompleteButtonClicked()
-            }
-        )
+        showStandardModalState = StandardModalArgs(
+            topIconId = "drawable/notification.xml",
+            titleText = Strings.get("made_db_entries_title_text"),
+            bodyText = Strings.get("made_db_entries_body_text"),
+            positiveText = Strings.get("positive_button_text_ok")
+        ) {
+            showStandardModalState = StandardModalArgs()
+            products = mutableListOf()
+            screenIsReadOnly = false
+            clearTextState()
+            setButtonState(clearVisible = false, confirmVisible = true, completeVisible = true)
+            onCompleteButtonClicked()
+        }
     }
 
     fun onClearClicked() {
@@ -143,25 +138,22 @@ fun CreateProductsScreen(
         if (products.isEmpty() && dinText.isEmpty() && productCodeText.isEmpty() && expirationText.isEmpty()) {
             // all are empty, display donor product list
             repository.donorsFromFullNameWithProducts(donor.lastName, donor.dob)?.let {
-                viewModel.changeProductsListState(it.products)
-                viewModel.changeScreenIsReadOnlyState(true)
+                products = it.products.toMutableList()
+                screenIsReadOnly = true
                 setButtonState(clearVisible = false, confirmVisible = false, completeVisible = true)
             } ?: {
-                viewModel.changeShowStandardModalState(
-                    StandardModalArgs(
-                        topIconId = "drawable/notification.xml",
-                        titleText = Strings.get("donor_fetch_problem_title_text"),
-                        bodyText = Strings.get("donor_fetch_problem_body_text"),
-                        positiveText = Strings.get("positive_button_text_ok")
-                    ) {
-                        viewModel.changeShowStandardModalState(StandardModalArgs())
-                    }
-                )
+                showStandardModalState = StandardModalArgs(
+                    topIconId = "drawable/notification.xml",
+                    titleText = Strings.get("donor_fetch_problem_title_text"),
+                    bodyText = Strings.get("donor_fetch_problem_body_text"),
+                    positiveText = Strings.get("positive_button_text_ok")
+                ) {
+                    showStandardModalState = StandardModalArgs()
+                }
             }
         } else {
             processNewProduct()
             clearTextState()
-            // JIMX clearTextState not done
             setButtonState(clearVisible = false, confirmVisible = false, completeVisible = true)
         }
     }
@@ -170,41 +162,39 @@ fun CreateProductsScreen(
         when {
             screenIsReadOnly || (products.isEmpty() && (dinText.isEmpty() || productCodeText.isEmpty() || expirationText.isEmpty())) -> {
                 // Nothing to store in DB, exit
-                viewModel.changeScreenIsReadOnlyState(false)
+                screenIsReadOnly = false
                 clearTextState()
                 setButtonState(clearVisible = false, confirmVisible = true, completeVisible = true)
                 onCompleteButtonClicked()
             }
             dinText.isNotEmpty() && productCodeText.isNotEmpty() && expirationText.isNotEmpty() -> {
                 // all fields filled, DB entry possibly needed
-                viewModel.changeShowStandardModalState(
-                    StandardModalArgs(
-                        topIconId = "drawable/notification.xml",
-                        titleText = Strings.get("std_modal_noconfirm_title"),
-                        bodyText = Strings.get("std_modal_noconfirm_body"),
-                        positiveText = Strings.get("positive_button_text_yes"),
-                        negativeText = Strings.get("negative_button_text_no")
-                    ) { dismissSelector ->
-                        when (dismissSelector) {
-                            DismissSelector.POSITIVE -> {
-                                processNewProduct()
-                                clearTextState()
-                                setButtonState(clearVisible = false, confirmVisible = false, completeVisible = true)
-                            }
-                            else -> {
-                                setButtonState(clearVisible = true, confirmVisible = true, completeVisible = true)
-                            }
+                showStandardModalState = StandardModalArgs(
+                    topIconId = "drawable/notification.xml",
+                    titleText = Strings.get("std_modal_noconfirm_title"),
+                    bodyText = Strings.get("std_modal_noconfirm_body"),
+                    positiveText = Strings.get("positive_button_text_yes"),
+                    negativeText = Strings.get("negative_button_text_no")
+                ) { dismissSelector ->
+                    when (dismissSelector) {
+                        DismissSelector.POSITIVE -> {
+                            processNewProduct()
+                            clearTextState()
+                            setButtonState(clearVisible = false, confirmVisible = false, completeVisible = true)
                         }
-                        viewModel.changeShowStandardModalState(StandardModalArgs())
+                        else -> {
+                            setButtonState(clearVisible = true, confirmVisible = true, completeVisible = true)
+                        }
                     }
-                )
+                    showStandardModalState = StandardModalArgs()
+                }
             }
             else -> {
                 // At least one field is empty, add products to DB if any are present
                 if (products.isNotEmpty()) {
                     addDonorWithProductsToDatabase()
                 } else {
-                    viewModel.changeScreenIsReadOnlyState(false)
+                    screenIsReadOnly = false
                     clearTextState()
                     setButtonState(clearVisible = false, confirmVisible = true, completeVisible = true)
                     onCompleteButtonClicked()
@@ -216,25 +206,8 @@ fun CreateProductsScreen(
     fun handleTextEntry(dinText: String, productCodeText: String, expirationText: String) {
         val allPresent = dinText.isNotEmpty() && productCodeText.isNotEmpty() && expirationText.isNotEmpty()
         val nonePresent = dinText.isEmpty() && productCodeText.isEmpty() && expirationText.isEmpty()
-        if (allPresent || nonePresent) {
-            viewModel.changeConfirmButtonVisibleState(true)
-        } else {
-            viewModel.changeConfirmButtonVisibleState(false)
-        }
-        if (nonePresent) {
-            viewModel.changeClearButtonVisibleState(false)
-        } else {
-            viewModel.changeClearButtonVisibleState(true)
-        }
-    }
-
-    fun goBack() {
-        viewModel.changeShowStandardModalState(StandardModalArgs())
-        viewModel.changeProductsListState(listOf())
-        viewModel.changeScreenIsReadOnlyState(false)
-        clearTextState()
-        setButtonState(clearVisible = false, confirmVisible = true, completeVisible = true)
-        navigateUp()
+        confirmButtonVisible = allPresent || nonePresent
+        clearButtonVisible = nonePresent.not()
     }
 
     LaunchedEffect(key1 = true) {
@@ -251,7 +224,7 @@ fun CreateProductsScreen(
                 },
                 navigationIcon = {
                     if (canNavigateBack) {
-                        IconButton(onClick = { goBack() }) {
+                        IconButton(onClick = { navigateUp() }) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = Strings.get("back_button_content_description")
@@ -293,9 +266,9 @@ fun CreateProductsScreen(
                         fontFamily = avenirFontFamilyBold
                     )
                 }
-                var currentDinText by remember { mutableStateOf(dinText) }
-                var currentExpirationText by remember { mutableStateOf(expirationText) }
-                var currentProductCodeText by remember { mutableStateOf(productCodeText) }
+//                var currentDinText by remember { mutableStateOf(dinText) }
+//                var currentExpirationText by remember { mutableStateOf(expirationText) }
+//                var currentProductCodeText by remember { mutableStateOf(productCodeText) }
                 LazyVerticalGrid(
                     modifier = Modifier
                         .padding(PaddingValues(start = leftGridPadding, end = rightGridPadding)),
@@ -318,12 +291,11 @@ fun CreateProductsScreen(
                                             .height(80.dp)
                                             .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
                                             .align(Alignment.BottomStart),
-                                        value = currentDinText,
+                                        value = dinText,
                                         readOnly = screenIsReadOnly,
                                         onValueChange = {
-                                            currentDinText = it
-                                            viewModel.changeDinTextState(currentDinText)
-                                            handleTextEntry(currentDinText, productCodeText, expirationText)
+                                            dinText = it
+                                            handleTextEntry(dinText, productCodeText, expirationText)
                                         },
                                         shape = RoundedCornerShape(10.dp),
                                         label = { Text(enterDinText) },
@@ -352,12 +324,11 @@ fun CreateProductsScreen(
                                             .height(80.dp)
                                             .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
                                             .align(Alignment.BottomStart),
-                                        value = currentProductCodeText,
+                                        value = productCodeText,
                                         readOnly = screenIsReadOnly,
                                         onValueChange = {
-                                            currentProductCodeText = it
-                                            viewModel.changeProductCodeTextState(currentProductCodeText)
-                                            handleTextEntry(dinText, it, expirationText)
+                                            productCodeText = it
+                                            handleTextEntry(dinText, productCodeText, expirationText)
                                         },
                                         shape = RoundedCornerShape(10.dp),
                                         label = { Text(enterProductCodeText) },
@@ -424,12 +395,11 @@ fun CreateProductsScreen(
                                             .height(80.dp)
                                             .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
                                             .align(Alignment.BottomStart),
-                                        value = currentExpirationText,
+                                        value = expirationText,
                                         readOnly = screenIsReadOnly,
                                         onValueChange = {
-                                            currentExpirationText = it
-                                            viewModel.changeExpirationTextState(currentExpirationText)
-                                            handleTextEntry(dinText, productCodeText, currentExpirationText)
+                                            expirationText = it
+                                            handleTextEntry(dinText, productCodeText, expirationText)
                                         },
                                         shape = RoundedCornerShape(10.dp),
                                         label = { Text(enterExpirationText) },
@@ -492,10 +462,10 @@ fun CreateProductsScreen(
                     canScrollVertically = true,
                     productList = products,
                     useOnProductsChange = true,
-                    onProductsChange = { viewModel.changeProductsListState(it) },
-                    onDinTextChange = { viewModel.changeDinTextState(it) },
-                    onProductCodeTextChange = { viewModel.changeProductCodeTextState(it) },
-                    onExpirationTextChange = { viewModel.changeDinTextState(it) },
+                    onProductsChange = { products = it.toMutableList() },
+                    onDinTextChange = { dinText = it },
+                    onProductCodeTextChange = { productCodeText = it },
+                    onExpirationTextChange = { expirationText = it },
                     enablerForProducts = { true }
                 )
             }

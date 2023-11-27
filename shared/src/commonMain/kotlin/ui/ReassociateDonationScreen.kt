@@ -58,7 +58,7 @@ fun ReassociateDonationScreen(
     title: String
 ) {
     // state variables
-    val correctDonorsWithProducts by viewModel.correctDonorsWithProductsState.collectAsState()
+    var correctDonorsWithProducts: List<DonorWithProducts> by remember { mutableStateOf(listOf()) }
     val incorrectDonorsWithProducts by viewModel.incorrectDonorsWithProductsState.collectAsState()
     val correctDonorWithProducts by viewModel.correctDonorWithProductsState.collectAsState()
     val incorrectDonorWithProducts by viewModel.incorrectDonorWithProductsState.collectAsState()

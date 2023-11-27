@@ -72,7 +72,6 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
     private fun createProduct(products: List<Product>) {
         dbQuery.transaction {
             products.forEach { product ->
-                Logger.d("JIMX productxxxxxxx=$product")
                 insertProduct(product)
             }
         }
