@@ -3,6 +3,7 @@ package com.mace.kmpmacetemplate.android
 import BloodViewModel
 import RepositoryImpl
 import StartApplication
+import Strings
 import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
@@ -28,10 +29,5 @@ class MainActivity : ComponentActivity() {
 
     private fun convertPixelsToDp(px: Float, context: Context): Float {
         return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        //repository.saveStagingDatabase(Constants.MODIFIED_DATABASE_NAME, getDatabasePath(Constants.MODIFIED_DATABASE_NAME))
     }
 }

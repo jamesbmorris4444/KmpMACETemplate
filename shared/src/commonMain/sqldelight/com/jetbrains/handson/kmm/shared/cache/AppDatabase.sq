@@ -50,7 +50,7 @@ FROM Product;
 
 insertProduct:
 INSERT INTO Product(id, donorId, din, aboRh, productCode, expirationDate, removedForReassociation)
-VALUES(?, ?, ?, ?, ?, ?, 0);
+VALUES(?, ?, ?, ?, ?, ?, ?);
 
 updateDonorIdInProduct:
 UPDATE Product SET donorId = :newValue WHERE id = :id;

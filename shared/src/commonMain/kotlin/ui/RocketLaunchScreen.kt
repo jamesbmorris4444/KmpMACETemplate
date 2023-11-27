@@ -67,7 +67,7 @@ fun RocketLaunchScreen(
     when {
         isInvalid -> {
             composableScope.launch(Dispatchers.Main) {
-                val pair = repository.refreshDatabase(composableScope)
+                val pair = repository.getSpaceXLaunches(composableScope)
                 viewModel.updateRefreshCompletedState(true)
                 viewModel.updateRocketLaunchesInvalidState(false)
                 if (pair.second.isEmpty()) { // success

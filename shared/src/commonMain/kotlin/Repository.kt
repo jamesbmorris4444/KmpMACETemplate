@@ -14,7 +14,7 @@ import org.koin.core.component.inject
 interface Repository {
     var screenWidth: Int
     var screenHeight: Int
-    suspend fun refreshDatabase(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String>
+    suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String>
     fun initializeDatabase()
     fun insertDonorIntoDatabase(donor: Donor)
     fun insertProductsIntoDatabase(products: List<Product>)
@@ -36,7 +36,7 @@ class RepositoryImpl : Repository, KoinComponent {
     override var screenWidth = 0
     override var screenHeight = 0
 
-    override suspend fun refreshDatabase(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String> {
+    override suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String> {
         var result: List<RocketLaunch> = listOf()
         var message = ""
         try {
@@ -225,6 +225,7 @@ class RepositoryImpl : Repository, KoinComponent {
     }
 
     override fun insertProductsIntoDatabase(products: List<Product>) {
+        Logger.d("JIMX products=$products")
         Database(databaseDriverFactory).insertProductsIntoDatabase(products)
     }
 

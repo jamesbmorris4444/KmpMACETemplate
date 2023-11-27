@@ -72,6 +72,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
     private fun createProduct(products: List<Product>) {
         dbQuery.transaction {
             products.forEach { product ->
+                Logger.d("JIMX productxxxxxxx=$product")
                 insertProduct(product)
             }
         }
@@ -84,7 +85,8 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
             din = product.din,
             aboRh = product.aboRh,
             productCode = product.productCode,
-            expirationDate = product.expirationDate
+            expirationDate = product.expirationDate,
+            removedForReassociation = false
         )
     }
 

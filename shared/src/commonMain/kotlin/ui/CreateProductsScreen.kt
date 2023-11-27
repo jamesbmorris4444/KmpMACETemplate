@@ -161,6 +161,7 @@ fun CreateProductsScreen(
         } else {
             processNewProduct()
             clearTextState()
+            // JIMX clearTextState not done
             setButtonState(clearVisible = false, confirmVisible = false, completeVisible = true)
         }
     }
