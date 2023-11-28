@@ -266,9 +266,6 @@ fun CreateProductsScreen(
                         fontFamily = avenirFontFamilyBold
                     )
                 }
-//                var currentDinText by remember { mutableStateOf(dinText) }
-//                var currentExpirationText by remember { mutableStateOf(expirationText) }
-//                var currentProductCodeText by remember { mutableStateOf(productCodeText) }
                 LazyVerticalGrid(
                     modifier = Modifier
                         .padding(PaddingValues(start = leftGridPadding, end = rightGridPadding)),
@@ -458,7 +455,7 @@ fun CreateProductsScreen(
                 }
                 Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                 ProductListScreen(
-                    repository = repository,
+                    viewModel = viewModel,
                     canScrollVertically = true,
                     productList = products,
                     useOnProductsChange = true,

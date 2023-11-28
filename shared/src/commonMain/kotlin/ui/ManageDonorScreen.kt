@@ -67,7 +67,7 @@ fun ManageDonorScreen(
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
 
     val stateVertical = rememberScrollState(0)
-    Logger.d("launch ManageDonorScreen=${ScreenNames.ManageDonorAfterSearch.name}")
+    Logger.i("launch ManageDonorScreen=${ScreenNames.ManageDonorAfterSearch.name}")
     LaunchedEffect(key1 = true) {
         configAppBar(
             AppBarState(

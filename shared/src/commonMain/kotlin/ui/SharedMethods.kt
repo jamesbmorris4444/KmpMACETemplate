@@ -1,6 +1,6 @@
 package ui
 
-import Repository
+import ViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.painterResource
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ProductListContent(
-    repository: Repository,
+    viewModel: ViewModel,
     canScrollVertically: Boolean,
     products: List<Product>,
     useOnProductsChange: Boolean,
@@ -60,7 +60,7 @@ fun ProductListContent(
                             } else {
                                 val productSelectedAsList = products.filterIndexed { filterIndex, _ -> filterIndex == index }
                                 onProductSelected(productSelectedAsList)
-                                repository.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
+                                viewModel.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
                             }
                         },
                     painter = painterResource("drawable/delete_icon.png"),
@@ -82,7 +82,7 @@ fun ProductListContent(
                             } else {
                                 val productSelectedAsList = products.filterIndexed { filterIndex, _ -> filterIndex == index }
                                 onProductSelected(productSelectedAsList)
-                                repository.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
+                                viewModel.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
                             }
                         },
                     painter = painterResource("drawable/edit_icon.png"),
@@ -121,7 +121,7 @@ fun ProductListContent(
 
 @Composable
 fun ProductListScreen(
-    repository: Repository,
+    viewModel: ViewModel,
     canScrollVertically: Boolean,
     productList: List<Product>,
     useOnProductsChange: Boolean,
@@ -133,7 +133,7 @@ fun ProductListScreen(
     enablerForProducts: (Product) -> Boolean
 ) {
     ProductListContent(
-        repository = repository,
+        viewModel = viewModel,
         canScrollVertically = canScrollVertically,
         products = productList,
         useOnProductsChange = useOnProductsChange,

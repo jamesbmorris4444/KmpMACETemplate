@@ -1,6 +1,5 @@
 
 import com.jetbrains.handson.kmm.shared.cache.Donor
-import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.rickclephas.kmm.viewmodel.KMMViewModel
@@ -90,115 +89,32 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
 
     // Start Reassociate Donation Screen state
 
-    fun handleSearchClickWithProductsCorrectDonor(searchKey: String) {
-        privateCorrectDonorsWithProductsState.value = repository.handleSearchClickWithProducts(searchKey)
+    fun handleSearchClickWithProductsCorrectDonor(searchKey: String): List<DonorWithProducts> {
+        return repository.handleSearchClickWithProducts(searchKey)
     }
 
-    fun handleSearchClickWithProductsIncorrectDonor(searchKey: String) {
-        privateIncorrectDonorsWithProductsState.value = repository.handleSearchClickWithProducts(searchKey)
+    fun handleSearchClickWithProductsIncorrectDonor(searchKey: String): List<DonorWithProducts> {
+        return repository.handleSearchClickWithProducts(searchKey)
     }
 
-    private val privateCorrectDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>> = MutableStateFlow(listOf())
-    val correctDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>>
-        get() = privateCorrectDonorsWithProductsState
-
-    private val privateIncorrectDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>> = MutableStateFlow(listOf())
-    val incorrectDonorsWithProductsState: MutableStateFlow<List<DonorWithProducts>>
-        get() = privateIncorrectDonorsWithProductsState
-
-    private val privateCorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts> = MutableStateFlow(DonorWithProducts(emptyDonor))
-    val correctDonorWithProductsState: MutableStateFlow<DonorWithProducts>
-        get() = privateCorrectDonorWithProductsState
-
-    private val privateIncorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts> = MutableStateFlow(DonorWithProducts(emptyDonor))
-    val incorrectDonorWithProductsState: MutableStateFlow<DonorWithProducts>
-        get() = privateIncorrectDonorWithProductsState
-
-    private val privateSingleSelectedProductListState: MutableStateFlow<List<Product>> = MutableStateFlow(listOf())
-    val singleSelectedProductListState: MutableStateFlow<List<Product>>
-        get() = privateSingleSelectedProductListState
-
-    private val privateIncorrectDonorSelectedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val incorrectDonorSelectedState: MutableStateFlow<Boolean>
-        get() = privateIncorrectDonorSelectedState
-
-    private val privateIsProductSelectedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isProductSelectedState: MutableStateFlow<Boolean>
-        get() = privateIsProductSelectedState
-
-    private val privateIsReassociateCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isReassociateCompletedState: MutableStateFlow<Boolean>
-        get() = privateIsReassociateCompletedState
-
-    fun changeCorrectDonorsWithProductsState(list: List<DonorWithProducts>) {
-        privateCorrectDonorsWithProductsState.value = list
+    fun updateDonorIdInProduct(correctDonorId: Long, productId: Long) {
+        repository.updateDonorIdInProduct(correctDonorId, productId)
     }
 
-    fun changeIncorrectDonorsWithProductsState(list: List<DonorWithProducts>) {
-        privateIncorrectDonorsWithProductsState.value = list
+    fun donorFromNameAndDateWithProducts(donor: Donor): DonorWithProducts? {
+        return repository.donorFromNameAndDateWithProducts(donor)
     }
 
-    fun changeCorrectDonorWithProductsState(donor: Donor) {
-        privateCorrectDonorWithProductsState.value = repository.donorFromNameAndDateWithProducts(donor) ?: DonorWithProducts(emptyDonor, listOf())
-    }
-
-    fun changeIncorrectDonorWithProductsState(donor: Donor) {
-        privateIncorrectDonorWithProductsState.value = repository.donorFromNameAndDateWithProducts(donor) ?: DonorWithProducts(emptyDonor, listOf())
-    }
-
-    fun changeSingleSelectedProductListState(list: List<Product>) {
-        privateSingleSelectedProductListState.value = list
-    }
-
-    fun changeIncorrectDonorSelectedState(state: Boolean) {
-        privateIncorrectDonorSelectedState.value = state
-    }
-
-    fun changeIsProductSelectedState(state: Boolean) {
-        privateIsProductSelectedState.value = state
-    }
-
-    fun changeIsReassociateCompletedState(state: Boolean) {
-        privateIsReassociateCompletedState.value = state
-    }
-
-    fun resetReassociateCompletedScreen() {
-        privateCorrectDonorsWithProductsState.value = listOf()
-        privateIncorrectDonorsWithProductsState.value = listOf()
-        privateCorrectDonorWithProductsState.value = DonorWithProducts(emptyDonor)
-        privateIncorrectDonorWithProductsState.value = DonorWithProducts(emptyDonor)
-        privateSingleSelectedProductListState.value = listOf()
-        privateIncorrectDonorSelectedState.value = false
-        privateIsProductSelectedState.value = false
-        privateIsReassociateCompletedState.value = false
+    fun updateProductRemovedForReassociation(newValue: Boolean, productId: Long) {
+        repository.updateProductRemovedForReassociation(newValue, productId)
     }
 
     // End Reassociate Donation Screen state
 
     // Start View Donor List Screen
 
-    private val privateDonorsAndProductsState: MutableStateFlow<List<DonorWithProducts>> = MutableStateFlow(listOf())
-    val donorsAndProductsState: MutableStateFlow<List<DonorWithProducts>>
-        get() = privateDonorsAndProductsState
-
-    private val privateLastNameTextEnteredState: MutableStateFlow<String> = MutableStateFlow("")
-    val lastNameTextEnteredState: MutableStateFlow<String>
-        get() = privateLastNameTextEnteredState
-
-    private val privateAboRhTextState: MutableStateFlow<String> = MutableStateFlow(noValue)
-    val aboRhTextState: MutableStateFlow<String>
-        get() = privateAboRhTextState
-
-    fun changeDonorsAndProductsState(state: List<DonorWithProducts>) {
-        privateDonorsAndProductsState.value = state
-    }
-
-    fun changeLastNameTextEnteredState(state: String) {
-        privateLastNameTextEnteredState.value = state
-    }
-
-    fun changeAboRhTextState(state: String) {
-        privateAboRhTextState.value = state
+    fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts> {
+        return repository.donorAndProductsList(lastNameSearchKey)
     }
 
     // End View Donor List Screen

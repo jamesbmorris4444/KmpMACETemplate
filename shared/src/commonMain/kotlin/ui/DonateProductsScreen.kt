@@ -157,7 +157,7 @@ fun DonateProductsHandler(
         }
     }
 
-    Logger.d("launch DonateProductsScreen=$title    donors=$foundDonors")
+    Logger.i("launch DonateProductsScreen=$title    donors=$foundDonors")
 
     LaunchedEffect(key1 = true) {
         configAppBar(

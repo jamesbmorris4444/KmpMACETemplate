@@ -68,7 +68,7 @@ fun ScreenNavigator(
                     route = ScreenNames.RocketLaunch.name,
                     navTransition = NavTransition(),
                 ) {
-                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.RocketLaunch.name}")
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.RocketLaunch.name}")
                     RocketLaunchScreen(
                         navigator = navigator,
                         repository = repository,
@@ -83,7 +83,7 @@ fun ScreenNavigator(
                     route = ScreenNames.DonateProductsSearch.name,
                     navTransition = NavTransition(),
                 ) {
-                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.DonateProductsSearch.name}")
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.DonateProductsSearch.name}")
                     DonateProductsScreen(
                         repository = repository,
                         configAppBar = {
@@ -110,7 +110,7 @@ fun ScreenNavigator(
                     route = ScreenNames.ManageDonorAfterSearch.name,
                     navTransition = NavTransition(),
                 ) {
-                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ManageDonorAfterSearch.name}")
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ManageDonorAfterSearch.name}")
                     ManageDonorScreen(
                         repository = repository,
                         navigator = navigator,
@@ -132,7 +132,7 @@ fun ScreenNavigator(
                     route = ScreenNames.CreateProducts.name,
                     navTransition = NavTransition(),
                 ) {
-                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.CreateProducts.name}")
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.CreateProducts.name}")
                     CreateProductsScreen(
                         repository = repository,
                         title = ScreenNames.CreateProducts.string,
@@ -153,11 +153,10 @@ fun ScreenNavigator(
                     route = ScreenNames.ViewDonorList.name,
                     navTransition = NavTransition(),
                 ) {
-                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ViewDonorList.name}")
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ViewDonorList.name}")
                     ViewDonorListScreen(
-                        repository = repository,
                         viewModel = viewModel,
-                        title = ScreenNames.CreateProducts.string,
+                        title = ScreenNames.ViewDonorList.string,
                         configAppBar = {
                             appBarState = it
                         },
@@ -170,7 +169,7 @@ fun ScreenNavigator(
                     route = ScreenNames.ManageDonorFromDrawer.name,
                     navTransition = NavTransition(),
                 ) {
-                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ManageDonorFromDrawer.name}")
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ManageDonorFromDrawer.name}")
                     ManageDonorScreen(
                         repository = repository,
                         navigator = navigator,
@@ -186,30 +185,13 @@ fun ScreenNavigator(
                         donateProductsSearchStringName = ScreenNames.DonateProductsSearch.name,
                         createProductsStringName = ScreenNames.CreateProducts.name
                     )
-//                    DonateProductsHandler(
-//                        repository = repository,
-//                        configAppBar = {
-//                            appBarState = it
-//                        },
-//                        canNavigateBack = true,
-//                        navigateUp = { navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true))) },
-//                        openDrawer = openDrawer,
-//                        onItemButtonClicked = {
-//                            donor = it
-//                            transitionToCreateProductsScreen = false
-//                            navigator.navigate(ScreenNames.ManageDonorAfterSearch.name)
-//                        },
-//                        viewModel = viewModel,
-//                        title = ScreenNames.ManageDonorFromDrawer.string
-//                    )
                 }
                 scene(
                     route = ScreenNames.ReassociateDonation.name,
                     navTransition = NavTransition(),
                 ) {
-                    Logger.d("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ReassociateDonation.name}")
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ReassociateDonation.name}")
                     ReassociateDonationScreen(
-                        repository = repository,
                         onComposing = {
                             appBarState = it
                         },

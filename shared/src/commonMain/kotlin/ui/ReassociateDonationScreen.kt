@@ -1,7 +1,6 @@
 package ui
 
 import BloodViewModel
-import Repository
 import Strings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -27,7 +26,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,28 +52,27 @@ fun ReassociateDonationScreen(
     navigateUp: () -> Unit,
     openDrawer: () -> Unit,
     viewModel: BloodViewModel,
-    repository: Repository,
     title: String
 ) {
     // state variables
     var correctDonorsWithProducts: List<DonorWithProducts> by remember { mutableStateOf(listOf()) }
-    val incorrectDonorsWithProducts by viewModel.incorrectDonorsWithProductsState.collectAsState()
-    val correctDonorWithProducts by viewModel.correctDonorWithProductsState.collectAsState()
-    val incorrectDonorWithProducts by viewModel.incorrectDonorWithProductsState.collectAsState()
-    val singleSelectedProductList by viewModel.singleSelectedProductListState.collectAsState()
-    val incorrectDonorSelected  by viewModel.incorrectDonorSelectedState.collectAsState()
-    val isProductSelected by viewModel.isProductSelectedState.collectAsState()
-    val isReassociateCompleted by viewModel.isReassociateCompletedState.collectAsState()
-    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
+    var incorrectDonorsWithProducts: List<DonorWithProducts> by remember { mutableStateOf(listOf()) }
+    var correctDonorWithProducts: DonorWithProducts by remember { mutableStateOf(DonorWithProducts(viewModel.emptyDonor)) }
+    var incorrectDonorWithProducts: DonorWithProducts by remember { mutableStateOf(DonorWithProducts(viewModel.emptyDonor)) }
+    var singleSelectedProductList: List<Product> by remember { mutableStateOf(listOf()) }
+    var incorrectDonorSelected by remember { mutableStateOf(false) }
+    var isProductSelected by remember { mutableStateOf(false) }
+    var isReassociateCompleted by remember { mutableStateOf(false) }
+    var showStandardModalState by remember { mutableStateOf(StandardModalArgs()) }
 
     val reassociateDonationSearchStringName = ScreenNames.ReassociateDonation.name
     val keyboardController = LocalSoftwareKeyboardController.current
 
     fun handleSearchClickWithProducts(isCorrectDonorProcessing: Boolean, searchKey: String) {
         if (isCorrectDonorProcessing) {
-            viewModel.handleSearchClickWithProductsCorrectDonor(searchKey = searchKey)
+            correctDonorsWithProducts = viewModel.handleSearchClickWithProductsCorrectDonor(searchKey = searchKey)
         } else {
-            viewModel.handleSearchClickWithProductsIncorrectDonor(searchKey = searchKey)
+            incorrectDonorsWithProducts = viewModel.handleSearchClickWithProductsIncorrectDonor(searchKey = searchKey)
         }
     }
 
@@ -83,21 +80,30 @@ fun ReassociateDonationScreen(
         incorrectDonorsWithProducts.map { donorWithProducts ->
             donorWithProducts.products.map { product ->
                 if (product.removedForReassociation) {
-                    repository.updateDonorIdInProduct(correctDonor.id, product.id)
+                    viewModel.updateDonorIdInProduct(correctDonor.id, product.id)
                 }
             }
-            viewModel.changeShowStandardModalState(
-                StandardModalArgs(
-                    topIconId = "drawable/notification.xml",
-                    titleText = Strings.get("made_reassociate_entries_body_text"),
-                    positiveText = Strings.get("positive_button_text_ok")
-                ) {
-                    viewModel.changeCorrectDonorWithProductsState(correctDonor)
-                    viewModel.changeIsReassociateCompletedState(true)
-                    viewModel.changeShowStandardModalState(StandardModalArgs())
-                }
-            )
+            showStandardModalState = StandardModalArgs(
+                topIconId = "drawable/notification.xml",
+                titleText = Strings.get("made_reassociate_entries_body_text"),
+                positiveText = Strings.get("positive_button_text_ok")
+            ) {
+                correctDonorWithProducts = viewModel.donorFromNameAndDateWithProducts(correctDonor) ?: DonorWithProducts(viewModel.emptyDonor)
+                isReassociateCompleted = true
+                showStandardModalState = StandardModalArgs()
+            }
         }
+    }
+
+    fun resetReassociatedScreen() {
+        correctDonorsWithProducts = listOf()
+        incorrectDonorsWithProducts = listOf()
+        correctDonorWithProducts = DonorWithProducts(viewModel.emptyDonor)
+        incorrectDonorWithProducts = DonorWithProducts(viewModel.emptyDonor)
+        singleSelectedProductList = listOf()
+        incorrectDonorSelected = false
+        isProductSelected = false
+        isReassociateCompleted = false
     }
 
     @Composable
@@ -120,12 +126,12 @@ fun ReassociateDonationScreen(
                                 moveProductsToCorrectDonor(it.donor)
                             } else {
                                 if (isCorrectDonorProcessing) {
-                                    viewModel.changeCorrectDonorsWithProductsState(listOf(it))
-                                    viewModel.changeCorrectDonorWithProductsState(it.donor)
+                                    correctDonorsWithProducts = listOf(it)
+                                    correctDonorWithProducts = viewModel.donorFromNameAndDateWithProducts(it.donor) ?: DonorWithProducts(viewModel.emptyDonor)
                                 } else {
-                                    viewModel.changeIncorrectDonorsWithProductsState(listOf(it))
-                                    viewModel.changeIncorrectDonorWithProductsState(it.donor)
-                                    viewModel.changeIncorrectDonorSelectedState(true)
+                                    incorrectDonorsWithProducts = listOf(it)
+                                    incorrectDonorWithProducts = viewModel.donorFromNameAndDateWithProducts(it.donor) ?: DonorWithProducts(viewModel.emptyDonor)
+                                    incorrectDonorSelected = true
                                 }
                             }
                         }
@@ -142,13 +148,13 @@ fun ReassociateDonationScreen(
                     }
                     Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                     ProductListScreen(
-                        repository = repository,
+                        viewModel = viewModel,
                         canScrollVertically = false,
                         productList = it.products,
                         useOnProductsChange = false,
                         onProductSelected = { productList ->
-                            viewModel.changeSingleSelectedProductListState(productList)
-                            viewModel.changeIsProductSelectedState(true)
+                            singleSelectedProductList = productList
+                            isProductSelected = true
                         },
                         enablerForProducts = enablerForProducts
                     )
@@ -156,9 +162,13 @@ fun ReassociateDonationScreen(
             }
         }
     }
+    fun goBack() {
+        resetReassociatedScreen()
+        navigateUp()
+    }
 
     LaunchedEffect(key1 = true) {
-        Logger.d("launch ReassociateDonationScreen=$reassociateDonationSearchStringName")
+        Logger.i("launch ReassociateDonationScreen=$reassociateDonationSearchStringName")
         onComposing(
             AppBarState(
                 title = title,
@@ -172,7 +182,7 @@ fun ReassociateDonationScreen(
                 },
                 navigationIcon = {
                     if (canNavigateBack) {
-                        IconButton(onClick = navigateUp.also { viewModel.resetReassociateCompletedScreen() }) {
+                        IconButton(onClick = { goBack() }) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = Strings.get("back_button_content_description")
@@ -183,11 +193,12 @@ fun ReassociateDonationScreen(
             )
         )
     }
+
     Box(modifier = Modifier
         .fillMaxSize()
         .padding(start = 24.dp, end = 24.dp)
     ) {
-        Logger.d("Compose: ${ScreenNames.ReassociateDonation.name}")
+        Logger.i("Compose: ${ScreenNames.ReassociateDonation.name}")
         Column(
             modifier = Modifier
                 .fillMaxWidth(),

@@ -41,7 +41,7 @@ class RepositoryImpl : Repository, KoinComponent {
         var message = ""
         try {
             result = sdk.getLaunches(false)
-            Logger.d("MACELOG: refreshDatabase success: ${result.size}")
+            Logger.i("MACELOG: refreshDatabase success: ${result.size}")
         } catch (e: Exception) {
             message = e.message ?: "NULL message"
             Logger.e("MACELOG: refreshDatabase failure: ${e.message}")
@@ -51,9 +51,9 @@ class RepositoryImpl : Repository, KoinComponent {
 
     override fun initializeDatabase() {
         val list = Database(databaseDriverFactory).getAllDonors()
-        Logger.d("MACELOG: number of donors=${list.size}")
+        Logger.i("MACELOG: number of donors=${list.size}")
         if (list.isEmpty()) {
-            Logger.d("MACELOG: DB initialize")
+            Logger.i("MACELOG: DB initialize")
             Database(databaseDriverFactory).clearDatabase()
             Database(databaseDriverFactory).createDonor(createListOfDonors())
         }

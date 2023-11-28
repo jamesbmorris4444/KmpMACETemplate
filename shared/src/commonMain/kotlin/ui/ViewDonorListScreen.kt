@@ -1,6 +1,5 @@
 package ui
 import BloodViewModel
-import Repository
 import Strings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,7 +50,6 @@ import utils.Utils
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ViewDonorListScreen(
-    repository: Repository,
     viewModel: BloodViewModel,
     title: String,
     configAppBar: (AppBarState) -> Unit,
@@ -74,9 +71,9 @@ fun ViewDonorListScreen(
     )
 
     // state variables
-    val donorsAndProducts by viewModel.donorsAndProductsState.collectAsState()
-    val lastNameTextEntered by viewModel.lastNameTextEnteredState.collectAsState()
-    val aboRhTextState by viewModel.aboRhTextState.collectAsState()
+    var donorsAndProducts: List<DonorWithProducts> by remember { mutableStateOf(listOf()) }
+    var lastNameTextEntered by remember { mutableStateOf("") }
+    var aboRhTextState by remember { mutableStateOf(noValue) }
 
     @Composable
     fun DonorsAndProductsList(donorsAndProducts: List<DonorWithProducts>) {
@@ -135,17 +132,17 @@ fun ViewDonorListScreen(
     }
 
     fun handleNameOrAboRhTextEntry(lastNameSearchKey: String, aboRhSearchKey: String) {
-        val donorAndProductsEntries = repository.donorAndProductsList(lastNameSearchKey)
+        val donorAndProductsEntries = viewModel.donorAndProductsList(lastNameSearchKey)
         val finalResultList = if (aboRhSearchKey == aboRhArray[0]) {
             donorAndProductsEntries
         } else {
             donorAndProductsEntries.filter { finalDonorWithProducts -> Utils.donorBloodTypeComparisonByString(finalDonorWithProducts.donor) == aboRhSearchKey }
         }
-        viewModel.changeDonorsAndProductsState(finalResultList.sortedBy { it.donor.lastName })
+        donorsAndProducts = finalResultList.sortedBy { it.donor.lastName }
     }
 
     LaunchedEffect(key1 = true) {
-        Logger.d("MACELOG: launch ViewDonorList Screen=${ScreenNames.ViewDonorList.name}")
+        Logger.i("MACELOG: launch ViewDonorList Screen=${ScreenNames.ViewDonorList.name}")
         configAppBar(
             AppBarState(
                 title = title,
@@ -177,17 +174,14 @@ fun ViewDonorListScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(24.dp))
-        var currentLastNameText = lastNameTextEntered
-        var currentAboRhText= aboRhTextState
         var aboRhExpanded by remember { mutableStateOf(false) }
         Row {
             OutlinedTextField(
                 modifier = Modifier
                     .height(60.dp),
-                value = currentLastNameText,
+                value = lastNameTextEntered,
                 onValueChange = {
-                    currentLastNameText = it
-                    viewModel.changeLastNameTextEnteredState(currentLastNameText)
+                    lastNameTextEntered = it
                 },
                 shape = RoundedCornerShape(10.dp),
                 label = { Text(Strings.get("donor_search_view_donor_list_text")) },
@@ -196,7 +190,7 @@ fun ViewDonorListScreen(
                 keyboardActions = KeyboardActions(
                     onDone = {
                         keyboardController?.hide()
-                        handleNameOrAboRhTextEntry(currentLastNameText, currentAboRhText)
+                        handleNameOrAboRhTextEntry(lastNameTextEntered, aboRhTextState)
                     })
             )
         }
@@ -210,7 +204,7 @@ fun ViewDonorListScreen(
             OutlinedTextField(
                 modifier = Modifier
                     .height(60.dp),
-                value = currentAboRhText,
+                value = aboRhTextState,
                 readOnly = true,
                 onValueChange = { },
                 shape = RoundedCornerShape(10.dp),
@@ -231,9 +225,8 @@ fun ViewDonorListScreen(
                         modifier = Modifier.background(MaterialTheme.colors.secondary),
                         onClick = {
                             aboRhExpanded = false
-                            currentAboRhText = label
-                            viewModel.changeAboRhTextState(currentAboRhText)
-                            handleNameOrAboRhTextEntry(currentLastNameText, currentAboRhText)
+                            aboRhTextState = label
+                            handleNameOrAboRhTextEntry(lastNameTextEntered, aboRhTextState)
                         }
                     ) {
                         Text(

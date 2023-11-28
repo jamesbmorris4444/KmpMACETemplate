@@ -144,11 +144,11 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
     private fun dumpDonorsAndProducts() {
         val result1 = getAllDonors()
         result1.forEach {
-            Logger.d("MACELOG: DUMP DONORS      Donor=$it")
+            Logger.i("MACELOG: DUMP DONORS      Donor=$it")
         }
         val result2 = getAllProducts()
         result2.forEach {
-            Logger.d("MACELOG: DUMP PRODUCTS    Product=$it")
+            Logger.i("MACELOG: DUMP PRODUCTS    Product=$it")
         }
     }
 

@@ -23,11 +23,11 @@ object Utils {
     }
 
     fun prettyPrintList(list: List<DonorWithProducts>) {
-        Logger.d("MACELOG: =======================")
+        Logger.i("MACELOG: =======================")
         list.forEach {
-            Logger.d("MACELOG: donor and products=$it")
+            Logger.i("MACELOG: donor and products=$it")
         }
-        Logger.d("MACELOG: =======================")
+        Logger.i("MACELOG: =======================")
     }
 
 }

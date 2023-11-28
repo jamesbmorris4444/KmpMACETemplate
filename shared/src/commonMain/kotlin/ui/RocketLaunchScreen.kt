@@ -55,7 +55,7 @@ fun RocketLaunchScreen(
         )
     }
 
-    Logger.d("MACELOG: Compose: ${ScreenNames.RocketLaunch.name}")
+    Logger.i("MACELOG: Compose: ${ScreenNames.RocketLaunch.name}")
     val composableScope = rememberCoroutineScope()
 
     // state variables
