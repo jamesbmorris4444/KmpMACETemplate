@@ -70,8 +70,8 @@ fun ScreenNavigator(
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.RocketLaunch.name}")
                     RocketLaunchScreen(
-                        navigator = navigator,
                         repository = repository,
+                        navigator = navigator,
                         configAppBar = {
                             appBarState = it
                         },

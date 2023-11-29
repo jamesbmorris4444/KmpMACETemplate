@@ -113,7 +113,7 @@ fun CreateProductsScreen(
     }
 
     fun addDonorWithProductsToDatabase() {
-        repository.insertProductsIntoDatabase(products)
+        viewModel.insertProductsIntoDatabase(products)
         showStandardModalState = StandardModalArgs(
             topIconId = "drawable/notification.xml",
             titleText = Strings.get("made_db_entries_title_text"),
@@ -137,7 +137,7 @@ fun CreateProductsScreen(
     fun onConfirmClicked() {
         if (products.isEmpty() && dinText.isEmpty() && productCodeText.isEmpty() && expirationText.isEmpty()) {
             // all are empty, display donor product list
-            repository.donorsFromFullNameWithProducts(donor.lastName, donor.dob)?.let {
+            viewModel.donorsFromFullNameWithProducts(donor.lastName, donor.dob)?.let {
                 products = it.products.toMutableList()
                 screenIsReadOnly = true
                 setButtonState(clearVisible = false, confirmVisible = false, completeVisible = true)

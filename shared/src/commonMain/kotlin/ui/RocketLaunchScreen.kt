@@ -68,12 +68,12 @@ fun RocketLaunchScreen(
         isInvalid -> {
             composableScope.launch(Dispatchers.Main) {
                 val pair = repository.getSpaceXLaunches(composableScope)
-                viewModel.updateRefreshCompletedState(true)
-                viewModel.updateRocketLaunchesInvalidState(false)
+                viewModel.refreshCompletedState.value = true
+                viewModel.rocketLaunchesInvalidState.value = false
                 if (pair.second.isEmpty()) { // success
-                    viewModel.updateLaunchesAvailableState(pair.first)
+                    viewModel.launchesAvailableState.value = pair.first
                 } else { // failure
-                    viewModel.updateRefreshFailureState(pair.second)
+                    viewModel.refreshFailureState. value = pair.second
                 }
             }
             Column(
@@ -104,7 +104,7 @@ fun RocketLaunchScreen(
                         bodyText = failure,
                         positiveText = Strings.get("positive_button_text_ok"),
                     ) {
-                        viewModel.updateRefreshFailureState("")
+                        viewModel.refreshFailureState.value = ""
                         viewModel.changeShowStandardModalState(StandardModalArgs())
                     }
                 )

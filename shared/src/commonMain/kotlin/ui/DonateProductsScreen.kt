@@ -64,9 +64,9 @@ fun DonateProductsScreen(
     when {
         isInvalid -> {
             repository.initializeDatabase()
-            viewModel.updateRefreshCompletedState(true)
-            viewModel.updateDatabaseInvalidState(false)
-            viewModel.updateRefreshFailureState("")
+            viewModel.refreshCompletedState.value = true
+            viewModel.databaseInvalidState.value = false
+            viewModel.refreshFailureState.value = ""
         }
         failure.isNotEmpty() -> {
             if (showStandardModalState.topIconId.isNotEmpty()) {
@@ -89,7 +89,7 @@ fun DonateProductsScreen(
                     ) {
                         navigateUp()
                         viewModel.changeShowStandardModalState(StandardModalArgs())
-                        viewModel.updateRefreshFailureState("")
+                        viewModel.refreshFailureState.value = ""
                     }
                 )
             }
@@ -106,9 +106,9 @@ fun DonateProductsScreen(
                 onItemButtonClicked = onItemButtonClicked)
         }
         else -> {
-            viewModel.updateRefreshCompletedState(false)
-            viewModel.updateDatabaseInvalidState(true)
-            viewModel.updateRefreshFailureState("")
+            viewModel.refreshCompletedState.value = false
+            viewModel.databaseInvalidState.value = true
+            viewModel.refreshFailureState.value = ""
         }
     }
 }
@@ -129,7 +129,7 @@ fun DonateProductsHandler(
     val foundDonors by viewModel.donorsAvailableState.collectAsState()
 
     fun handleSearchClick(searchKey: String) {
-        viewModel.updateDonorsAvailableState(repository.handleSearchClick(searchKey))
+        viewModel.donorsAvailableState.value = repository.handleSearchClick(searchKey)
     }
 
     @Composable
