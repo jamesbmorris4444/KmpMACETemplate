@@ -4,6 +4,7 @@ import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.rickclephas.kmm.viewmodel.KMMViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -20,34 +21,21 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val emptyDonor = Donor(0,"", "", "", "", "", "", gender = false)
     val noValue = "NO VALUE"
 
-    // Start Rocket Launches Screen state
-
     var rocketLaunchesInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
     var refreshCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var refreshFailureState: MutableStateFlow<String> = MutableStateFlow("")
     var launchesAvailableState: MutableStateFlow<List<RocketLaunch>> = MutableStateFlow(listOf())
-
-    // End Rocket Launches Screen state
-
-    // Start Standard Modal Screen state
-
-    private val privateShowStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
-    val showStandardModalState: MutableStateFlow<StandardModalArgs>
-        get() = privateShowStandardModalState
-
-    fun changeShowStandardModalState(standardModalArgs: StandardModalArgs) {
-        privateShowStandardModalState.value = standardModalArgs
-    }
-
-    // End Standard Modal Screen state
-
-    // Start Donate Products Screen state
-
+    val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
     var databaseInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
     var donorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
 
+    fun initializeDatabase() {
+        repository.initializeDatabase()
+    }
 
-    // End Donate Products Screen state
+    suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String> {
+        return repository.getSpaceXLaunches(composableScope)
+    }
 
     fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts? {
         return repository.donorsFromFullNameWithProducts(searchLast, dob)
@@ -57,7 +45,9 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         repository.insertProductsIntoDatabase(products)
     }
 
-    // Start Reassociate Donation Screen state
+    fun handleSearchClick(searchKey:String): List<Donor> {
+        return repository.handleSearchClick(searchKey)
+    }
 
     fun handleSearchClickWithProductsCorrectDonor(searchKey: String): List<DonorWithProducts> {
         return repository.handleSearchClickWithProducts(searchKey)
@@ -79,13 +69,33 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         repository.updateProductRemovedForReassociation(newValue, productId)
     }
 
-    // End Reassociate Donation Screen state
-
-    // Start View Donor List Screen
-
     fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts> {
         return repository.donorAndProductsList(lastNameSearchKey)
     }
 
-    // End View Donor List Screen
+    fun updateDonor(
+        firstName: String,
+        middleName: String,
+        lastName: String,
+        dob: String,
+        aboRh: String,
+        branch: String,
+        gender: Boolean,
+        id: Long
+    ) {
+        repository.updateDonor(
+            firstName = firstName,
+            middleName = middleName,
+            lastName = lastName,
+            dob = dob,
+            aboRh = aboRh,
+            branch = branch,
+            gender = gender,
+            id = id
+        )
+    }
+
+    fun insertDonorIntoDatabase(donor: Donor) {
+        repository.insertDonorIntoDatabase(donor)
+    }
 }

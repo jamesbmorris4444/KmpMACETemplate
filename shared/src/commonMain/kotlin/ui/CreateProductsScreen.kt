@@ -54,7 +54,7 @@ import ui.WidgetButton
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateProductsScreen(
-    repository: Repository,
+    screenWidth: Dp,
     configAppBar: (AppBarState) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
@@ -64,7 +64,6 @@ fun CreateProductsScreen(
     title: String,
     onCompleteButtonClicked: () -> Unit,
 ) {
-    val screenWidth = repository.screenWidth.dp
     val leftGridPadding = 20.dp
     val rightGridPadding = 20.dp
     val horizontalGridWidth = screenWidth - leftGridPadding - rightGridPadding

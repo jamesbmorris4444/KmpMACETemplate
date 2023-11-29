@@ -1,6 +1,5 @@
 package ui
 import BloodViewModel
-import Repository
 import Strings
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import extraBlack
 import extraMagenta
@@ -43,7 +43,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun DrawerAppComponent(
     viewModel: BloodViewModel,
-    repository: Repository
+    screenWidth: Dp
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val currentScreen = remember { mutableStateOf(ScreenNames.DonateProductsSearch) }
@@ -125,7 +125,7 @@ fun DrawerAppComponent(
             openDrawer = openDrawer,
             navigator = navigator,
             initialRoute = ScreenNames.RocketLaunch.name,
-            repository = repository
+            screenWidth = screenWidth
         )
     }
 

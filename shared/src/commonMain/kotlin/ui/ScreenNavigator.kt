@@ -1,7 +1,6 @@
 package ui
 import BloodViewModel
 import CreateProductsScreen
-import Repository
 import Strings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -18,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.Dp
 import co.touchlab.kermit.Logger
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
@@ -47,7 +47,7 @@ fun ScreenNavigator(
     navigator: Navigator,
     initialRoute: String,
     viewModel: BloodViewModel,
-    repository: Repository,
+    screenWidth: Dp,
     openDrawer: () -> Unit = { }
 ) {
     var appBarState by remember { mutableStateOf(AppBarState()) }
@@ -70,7 +70,6 @@ fun ScreenNavigator(
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.RocketLaunch.name}")
                     RocketLaunchScreen(
-                        repository = repository,
                         navigator = navigator,
                         configAppBar = {
                             appBarState = it
@@ -85,7 +84,6 @@ fun ScreenNavigator(
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.DonateProductsSearch.name}")
                     DonateProductsScreen(
-                        repository = repository,
                         configAppBar = {
                             appBarState = it
                         },
@@ -112,7 +110,6 @@ fun ScreenNavigator(
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ManageDonorAfterSearch.name}")
                     ManageDonorScreen(
-                        repository = repository,
                         navigator = navigator,
                         configAppBar = {
                             appBarState = it
@@ -134,7 +131,7 @@ fun ScreenNavigator(
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.CreateProducts.name}")
                     CreateProductsScreen(
-                        repository = repository,
+                        screenWidth = screenWidth,
                         title = ScreenNames.CreateProducts.string,
                         configAppBar = {
                             appBarState = it
@@ -171,7 +168,6 @@ fun ScreenNavigator(
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ManageDonorFromDrawer.name}")
                     ManageDonorScreen(
-                        repository = repository,
                         navigator = navigator,
                         configAppBar = {
                             appBarState = it

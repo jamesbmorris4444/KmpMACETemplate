@@ -1,7 +1,6 @@
 package ui
 
 import BloodViewModel
-import Repository
 import Strings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -50,7 +49,6 @@ import moe.tlaster.precompose.navigation.PopUpTo
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ManageDonorScreen(
-    repository: Repository,
     navigator: Navigator,
     configAppBar: (AppBarState) -> Unit,
     canNavigateBack: Boolean,
@@ -323,7 +321,7 @@ fun ManageDonorScreen(
                         }
                         if (legalEntry) {
                             if (transitionToCreateProductsScreen) {
-                                repository.updateDonor(
+                                viewModel.updateDonor(
                                     firstName = currentFirstNameText,
                                     middleName = currentMiddleNameText,
                                     lastName = currentLastNameText,
@@ -334,7 +332,7 @@ fun ManageDonorScreen(
                                     id = donor?.id ?: 1
                                 )
                             } else {
-                                repository.insertDonorIntoDatabase(Donor(
+                                viewModel.insertDonorIntoDatabase(Donor(
                                     id = 0,
                                     firstName = currentFirstNameText,
                                     middleName = currentMiddleNameText,
@@ -345,43 +343,10 @@ fun ManageDonorScreen(
                                     gender = currentGender
                                 ))
                             }
-                            viewModel.changeShowStandardModalState(
-                                StandardModalArgs(
-                                    topIconId = "drawable/notification.xml",
-                                    titleText = Strings.get("made_db_entries_title_text"),
-                                    bodyText = Strings.get("made_db_entries_body_text"),
-                                    positiveText = Strings.get("positive_button_text_ok")
-                                ) {
-                                    if (transitionToCreateProductsScreen) {
-                                        navigator.navigate(createProductsStringName, NavOptions(popUpTo = PopUpTo(donateProductsSearchStringName, inclusive = false)))
-                                    } else {
-                                        navigator.popBackStack()
-                                    }
-                                    viewModel.changeShowStandardModalState(StandardModalArgs())
-                                }
-                            )
-                        } else {
-                            viewModel.changeShowStandardModalState(
-                                StandardModalArgs(
-                                    topIconId = "drawable/notification.xml",
-                                    titleText = Strings.get("made_db_entries_title_text"),
-                                    bodyText = Strings.get("not_made_db_entries_body_text"),
-                                    positiveText = Strings.get("positive_button_text_ok")
-                                ) {
-                                    if (transitionToCreateProductsScreen) {
-                                        navigator.navigate(createProductsStringName, NavOptions(popUpTo = PopUpTo(donateProductsSearchStringName, inclusive = false)))
-                                    } else {
-                                        navigator.popBackStack()
-                                    }
-                                    viewModel.changeShowStandardModalState(StandardModalArgs())
-                                }
-                            )
-                        }
-                    } else {
-                        viewModel.changeShowStandardModalState(
-                            StandardModalArgs(
+                            viewModel.showStandardModalState.value =  StandardModalArgs(
                                 topIconId = "drawable/notification.xml",
-                                titleText = Strings.get("no_db_entries_title_text"),
+                                titleText = Strings.get("made_db_entries_title_text"),
+                                bodyText = Strings.get("made_db_entries_body_text"),
                                 positiveText = Strings.get("positive_button_text_ok")
                             ) {
                                 if (transitionToCreateProductsScreen) {
@@ -389,9 +354,36 @@ fun ManageDonorScreen(
                                 } else {
                                     navigator.popBackStack()
                                 }
-                                viewModel.changeShowStandardModalState(StandardModalArgs())
+                                viewModel.showStandardModalState.value = StandardModalArgs()
                             }
-                        )
+                        } else {
+                            viewModel.showStandardModalState.value = StandardModalArgs(
+                                topIconId = "drawable/notification.xml",
+                                titleText = Strings.get("made_db_entries_title_text"),
+                                bodyText = Strings.get("not_made_db_entries_body_text"),
+                                positiveText = Strings.get("positive_button_text_ok")
+                            ) {
+                                if (transitionToCreateProductsScreen) {
+                                    navigator.navigate(createProductsStringName, NavOptions(popUpTo = PopUpTo(donateProductsSearchStringName, inclusive = false)))
+                                } else {
+                                    navigator.popBackStack()
+                                }
+                                viewModel.showStandardModalState.value = StandardModalArgs()
+                            }
+                        }
+                    } else {
+                        viewModel.showStandardModalState.value = StandardModalArgs(
+                            topIconId = "drawable/notification.xml",
+                            titleText = Strings.get("no_db_entries_title_text"),
+                            positiveText = Strings.get("positive_button_text_ok")
+                        ) {
+                            if (transitionToCreateProductsScreen) {
+                                navigator.navigate(createProductsStringName, NavOptions(popUpTo = PopUpTo(donateProductsSearchStringName, inclusive = false)))
+                            } else {
+                                navigator.popBackStack()
+                            }
+                            viewModel.showStandardModalState.value = StandardModalArgs()
+                        }
                     }
                 },
                 buttonText = Strings.get("update_button_text")

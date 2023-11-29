@@ -1,7 +1,6 @@
 package ui
 
 import BloodViewModel
-import Repository
 import Strings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -46,7 +45,6 @@ import com.jetbrains.handson.kmm.shared.cache.Donor
 
 @Composable
 fun DonateProductsScreen(
-    repository: Repository,
     configAppBar: (AppBarState) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
@@ -63,7 +61,7 @@ fun DonateProductsScreen(
 
     when {
         isInvalid -> {
-            repository.initializeDatabase()
+            viewModel.initializeDatabase()
             viewModel.refreshCompletedState.value = true
             viewModel.databaseInvalidState.value = false
             viewModel.refreshFailureState.value = ""
@@ -80,23 +78,20 @@ fun DonateProductsScreen(
                     showStandardModalState.onDismiss
                 )
             } else {
-                viewModel.changeShowStandardModalState(
-                    StandardModalArgs(
-                        topIconId = "drawable/notification.xml",
-                        titleText = Strings.get("failure_db_entries_title_text"),
-                        bodyText = failure,
-                        positiveText = Strings.get("positive_button_text_ok")
-                    ) {
-                        navigateUp()
-                        viewModel.changeShowStandardModalState(StandardModalArgs())
-                        viewModel.refreshFailureState.value = ""
-                    }
-                )
+                viewModel.showStandardModalState.value = StandardModalArgs(
+                    topIconId = "drawable/notification.xml",
+                    titleText = Strings.get("failure_db_entries_title_text"),
+                    bodyText = failure,
+                    positiveText = Strings.get("positive_button_text_ok")
+                ) {
+                    navigateUp()
+                    viewModel.showStandardModalState.value = StandardModalArgs()
+                    viewModel.refreshFailureState.value = ""
+                }
             }
         }
         completed -> {
             DonateProductsHandler(
-                repository,
                 configAppBar = configAppBar,
                 canNavigateBack = canNavigateBack,
                 navigateUp = navigateUp,
@@ -116,7 +111,6 @@ fun DonateProductsScreen(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DonateProductsHandler(
-    repository: Repository,
     configAppBar: (AppBarState) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
@@ -129,7 +123,7 @@ fun DonateProductsHandler(
     val foundDonors by viewModel.donorsAvailableState.collectAsState()
 
     fun handleSearchClick(searchKey: String) {
-        viewModel.donorsAvailableState.value = repository.handleSearchClick(searchKey)
+        viewModel.donorsAvailableState.value = viewModel.handleSearchClick(searchKey)
     }
 
     @Composable

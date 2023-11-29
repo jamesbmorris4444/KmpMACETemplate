@@ -1,6 +1,5 @@
 package ui
 import BloodViewModel
-import Repository
 import Strings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,7 +39,6 @@ import moe.tlaster.precompose.navigation.PopUpTo
 @Composable
 fun RocketLaunchScreen(
     navigator: Navigator,
-    repository: Repository,
     configAppBar: (AppBarState) -> Unit,
     viewModel: BloodViewModel,
     title: String
@@ -67,7 +65,7 @@ fun RocketLaunchScreen(
     when {
         isInvalid -> {
             composableScope.launch(Dispatchers.Main) {
-                val pair = repository.getSpaceXLaunches(composableScope)
+                val pair = viewModel.getSpaceXLaunches(composableScope)
                 viewModel.refreshCompletedState.value = true
                 viewModel.rocketLaunchesInvalidState.value = false
                 if (pair.second.isEmpty()) { // success
@@ -97,17 +95,15 @@ fun RocketLaunchScreen(
                     showStandardModalState.onDismiss
                 )
             } else {
-                viewModel.changeShowStandardModalState(
-                    StandardModalArgs(
-                        topIconId = "drawable/notification.xml",
-                        titleText = Strings.get("failure_api_title_text"),
-                        bodyText = failure,
-                        positiveText = Strings.get("positive_button_text_ok"),
-                    ) {
-                        viewModel.refreshFailureState.value = ""
-                        viewModel.changeShowStandardModalState(StandardModalArgs())
-                    }
-                )
+                viewModel.showStandardModalState.value = StandardModalArgs(
+                    topIconId = "drawable/notification.xml",
+                    titleText = Strings.get("failure_api_title_text"),
+                    bodyText = failure,
+                    positiveText = Strings.get("positive_button_text_ok"),
+                ) {
+                    viewModel.refreshFailureState.value = ""
+                    viewModel.showStandardModalState.value = StandardModalArgs()
+                }
             }
         }
 
