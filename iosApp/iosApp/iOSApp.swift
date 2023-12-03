@@ -1,11 +1,21 @@
 import SwiftUI
+import Sentry
+
 import shared
 
 @main
 struct iOSApp: App {
-
     init() {
         HelperKt.doInitKoin()
+        SentrySDK.start { options in
+            options.dsn = "https://cf41e9b6a3a72a9aa0517d51e5a2f89e@o4506251182604288.ingest.sentry.io/4506251420237824"
+            options.debug = true // Enabled debug when first installing is always helpful
+            options.enableTracing = true 
+
+            // Uncomment the following lines to add more data to your events
+            // options.attachScreenshot = true // This adds a screenshot to the error events
+            // options.attachViewHierarchy = true // This adds the view hierarchy to the error events
+        }
     }
 
     var bloodViewModel = BloodViewModel()

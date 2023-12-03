@@ -6,6 +6,7 @@ import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
+import com.jetbrains.handson.kmm.shared.entity.Movies
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import kotlinx.coroutines.CoroutineScope
 import org.koin.core.component.KoinComponent
@@ -15,6 +16,7 @@ interface Repository {
     var screenWidth: Int
     var screenHeight: Int
     suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String>
+    suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movies>, String>
     fun initializeDatabase()
     fun insertDonorIntoDatabase(donor: Donor)
     fun insertProductsIntoDatabase(products: List<Product>)
@@ -41,10 +43,23 @@ class RepositoryImpl : Repository, KoinComponent {
         var message = ""
         try {
             result = sdk.getLaunches(false)
-            Logger.i("MACELOG: refreshDatabase success: ${result.size}")
+            Logger.i("MACELOG: SpaceX launches success: ${result.size}")
         } catch (e: Exception) {
             message = e.message ?: "NULL message"
-            Logger.e("MACELOG: refreshDatabase failure: ${e.message}")
+            Logger.e("MACELOG: SpaceX launches failure: ${e.message}")
+        }
+        return Pair(result, message)
+    }
+
+    override suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movies>, String> {
+        var result: List<Movies> = listOf()
+        var message = ""
+        try {
+            result = sdk.getMovies(false)
+            Logger.i("MACELOG: movies success: ${result.size}")
+        } catch (e: Exception) {
+            message = e.message ?: "NULL message"
+            Logger.e("MACELOG: movies failure: ${e.message}")
         }
         return Pair(result, message)
     }

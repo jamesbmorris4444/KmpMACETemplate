@@ -79,6 +79,20 @@ fun ScreenNavigator(
                     )
                 }
                 scene(
+                    route = ScreenNames.Movies.name,
+                    navTransition = NavTransition(),
+                ) {
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.Movies.name}")
+                    MoviesScreen(
+                        navigator = navigator,
+                        configAppBar = {
+                            appBarState = it
+                        },
+                        viewModel = viewModel,
+                        title = ScreenNames.Movies.string
+                    )
+                }
+                scene(
                     route = ScreenNames.DonateProductsSearch.name,
                     navTransition = NavTransition(),
                 ) {
@@ -223,6 +237,7 @@ fun StartScreenAppBar(
 
 enum class ScreenNames(val inDrawer: Boolean, val string: String) {
     RocketLaunch(false, Strings.get("rocket_launch_screen_name")),
+    Movies(false, Strings.get("movies_screen_name")),
     DonateProductsSearch(false, Strings.get("donate_products_search_screen_name")),
     CreateProducts(false, Strings.get("create_blood_product_title")),
     ManageDonorAfterSearch(false, Strings.get("manage_donor_after_search_title")),

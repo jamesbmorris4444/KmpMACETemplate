@@ -63,5 +63,7 @@
     <string name="donor_search_view_donor_list_text">Donor Search String</string>
     <string name="std_modal_noconfirm_title">Product Entry Not Confirmed</string>
     <string name="std_modal_noconfirm_body">Complete button was clicked without confirming current grid entry. Do you want to confirm?</string>
+    
+    <string name="movies_screen_name">Movies Database Screen</string>
 
 </resources>

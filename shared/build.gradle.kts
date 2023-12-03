@@ -35,16 +35,16 @@ kotlin {
     sourceSets {
         val androidMain by getting {
             dependencies {
+                implementation(libs.ktor.client.okhttp)
                 implementation(libs.sql.android)
                 implementation(libs.koin.core)
                 implementation(libs.koin.android)
                 implementation(libs.kermit)
-                implementation(libs.ktor.client.android)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.ktor.client.ios)
+                implementation(libs.ktor.client.darwin)
                 implementation(libs.sql.ios)
                 implementation(libs.koin.core)
                 implementation(libs.kermit)
@@ -67,11 +67,12 @@ kotlin {
                 implementation(libs.precompose.navigation)
                 implementation(libs.kotlin.serialization)
                 implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.content)
-                implementation(libs.ktor.client.engine)
+//                implementation(libs.ktor.client.content)
+//                implementation(libs.ktor.client.engine)
                 implementation(libs.sql)
                 implementation(libs.colormath.compose)
                 implementation(libs.koin.core)
+                implementation(libs.kamel)
             }
         }
         val iosArm64Main by getting

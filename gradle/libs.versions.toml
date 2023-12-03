@@ -9,14 +9,15 @@ kermit = "2.0.2"
 koin = "3.5.0"
 compose-plugin = "1.6.0-dev1276"
 sql-version = "1.5.5"
-ktor-version = "2.3.5"
+ktor = "2.3.6"
 colormath = "3.3.2"
 kmm-viewmodel = "1.0.0-ALPHA-15"
-coroutines-core = "1.7.3"
+coroutines = "1.7.3"
 precompose-navigation = "1.5.5"
 serialization = "1.6.0"
 kmm-lifecycle = "2.6.2"
 sentry-version = "0.3.0"
+kamel = "0.9.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -32,18 +33,18 @@ kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 sql = { module = "com.squareup.sqldelight:runtime", version.ref = "sql-version" }
 sql-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sql-version" }
 sql-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sql-version" }
-ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-version" }
-ktor-client-ios = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor-version" }
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-version" }
-ktor-client-content = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
-ktor-client-engine = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 colormath-compose = { module = "com.github.ajalt.colormath:colormath-ext-jetpack-compose", version.ref = "colormath" }
 kmm-viewmodel = { module = "com.rickclephas.kmm:kmm-viewmodel-core", version.ref = "kmm-viewmodel" }
 kmm-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "kmm-lifecycle" }
-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines-core" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 precompose-navigation = { module = "moe.tlaster:precompose", version.ref = "precompose-navigation" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 sentry = { module = "io.sentry:sentry-kotlin-multiplatform", version.ref = "sentry-version" }
+kamel = { module = "media.kamel:kamel-image", version.ref = "kamel" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

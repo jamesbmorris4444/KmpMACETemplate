@@ -2,6 +2,7 @@
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
+import com.jetbrains.handson.kmm.shared.entity.Movies
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.rickclephas.kmm.viewmodel.KMMViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -25,12 +26,22 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     var refreshCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var refreshFailureState: MutableStateFlow<String> = MutableStateFlow("")
     var launchesAvailableState: MutableStateFlow<List<RocketLaunch>> = MutableStateFlow(listOf())
+
+    var moviesInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    var moviesCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    var moviesFailureState: MutableStateFlow<String> = MutableStateFlow("")
+    var moviesAvailableState: MutableStateFlow<List<Movies>> = MutableStateFlow(listOf())
+
     val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
     var databaseInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
     var donorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
 
     fun initializeDatabase() {
         repository.initializeDatabase()
+    }
+
+    suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movies>, String> {
+        return repository.getMovies(composableScope)
     }
 
     suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String> {
