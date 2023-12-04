@@ -6,7 +6,7 @@ import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
-import com.jetbrains.handson.kmm.shared.entity.Movies
+import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import kotlinx.coroutines.CoroutineScope
 import org.koin.core.component.KoinComponent
@@ -16,7 +16,7 @@ interface Repository {
     var screenWidth: Int
     var screenHeight: Int
     suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String>
-    suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movies>, String>
+    suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movie>, String>
     fun initializeDatabase()
     fun insertDonorIntoDatabase(donor: Donor)
     fun insertProductsIntoDatabase(products: List<Product>)
@@ -51,8 +51,8 @@ class RepositoryImpl : Repository, KoinComponent {
         return Pair(result, message)
     }
 
-    override suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movies>, String> {
-        var result: List<Movies> = listOf()
+    override suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movie>, String> {
+        var result: List<Movie> = listOf()
         var message = ""
         try {
             result = sdk.getMovies(false)

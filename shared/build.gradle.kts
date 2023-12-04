@@ -67,12 +67,12 @@ kotlin {
                 implementation(libs.precompose.navigation)
                 implementation(libs.kotlin.serialization)
                 implementation(libs.ktor.client.core)
-//                implementation(libs.ktor.client.content)
-//                implementation(libs.ktor.client.engine)
                 implementation(libs.sql)
                 implementation(libs.colormath.compose)
                 implementation(libs.koin.core)
                 implementation(libs.kamel)
+                implementation(libs.paging.common)
+                implementation(libs.paging.compose)
             }
         }
         val iosArm64Main by getting

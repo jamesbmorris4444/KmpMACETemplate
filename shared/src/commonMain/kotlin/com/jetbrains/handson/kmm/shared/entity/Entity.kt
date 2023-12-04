@@ -30,11 +30,11 @@ data class RocketLaunch(
 @Serializable
 data class MoviesWithPageNumber(
     @SerialName("page") val page: Int,
-    @SerialName("results") val results: List<Movies>
+    @SerialName("results") val results: List<Movie>
 )
 
 @Serializable
-data class Movies(
+data class Movie(
     @SerialName(value = "vote_count") var voteCount: Int = 0,
     @SerialName(value = "video") var video: Boolean = false,
     @SerialName(value = "vote_average") var voteAverage: Float = 0f,

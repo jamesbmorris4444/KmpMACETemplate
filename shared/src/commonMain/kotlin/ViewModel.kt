@@ -2,7 +2,7 @@
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
-import com.jetbrains.handson.kmm.shared.entity.Movies
+import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.rickclephas.kmm.viewmodel.KMMViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +30,7 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     var moviesInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
     var moviesCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var moviesFailureState: MutableStateFlow<String> = MutableStateFlow("")
-    var moviesAvailableState: MutableStateFlow<List<Movies>> = MutableStateFlow(listOf())
+    var moviesAvailableState: MutableStateFlow<List<Movie>> = MutableStateFlow(listOf())
 
     val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
     var databaseInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
@@ -40,7 +40,7 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         repository.initializeDatabase()
     }
 
-    suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movies>, String> {
+    suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movie>, String> {
         return repository.getMovies(composableScope)
     }
 

@@ -1,6 +1,6 @@
 package com.jetbrains.handson.kmm.shared.network
 
-import com.jetbrains.handson.kmm.shared.entity.Movies
+import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.MoviesWithPageNumber
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import io.ktor.client.HttpClient
@@ -11,7 +11,6 @@ import io.ktor.http.HttpMethod
 import kotlinx.serialization.json.Json
 
 class SpaceXApi {
-
     suspend fun getAllLaunches(): List<RocketLaunch> {
         val httpClient = HttpClient()
         val jsonSerializer = Json {
@@ -33,7 +32,7 @@ class SpaceXApi {
     private val languageRequestParam = "language"
     private val language = "en"
 
-    suspend fun getMovies(): List<Movies> {
+    suspend fun getMovies(): List<Movie> {
         val httpClient = HttpClient()
         val jsonSerializer = Json {
             ignoreUnknownKeys = true
