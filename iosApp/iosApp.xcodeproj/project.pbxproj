@@ -128,6 +128,7 @@
 				7555FFB4242A642300829871 /* Embed Frameworks */,
 				BD303C4C2B08BF8C00278A41 /* CopyFiles */,
 				EE19DBE672454582BFD6328E /* Upload Debug Symbols to Sentry */,
+				BE49A70A80714430876ED730 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -210,7 +211,7 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
 		};
-		EE19DBE672454582BFD6328E /* Upload Debug Symbols to Sentry */ = {
+		BE49A70A80714430876ED730 /* Upload Debug Symbols to Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
