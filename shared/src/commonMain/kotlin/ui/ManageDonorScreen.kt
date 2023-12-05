@@ -250,7 +250,7 @@ fun ManageDonorScreen(
                             Text(
                                 text = label,
                                 color = MaterialTheme.colors.extraWhite,
-                                style = MaterialTheme.typography.body2
+                                style = MaterialTheme.typography.body1
                             )
                         }
                     }
@@ -303,7 +303,7 @@ fun ManageDonorScreen(
                             Text(
                                 text = label,
                                 color = MaterialTheme.colors.extraWhite,
-                                style = MaterialTheme.typography.body2
+                                style = MaterialTheme.typography.body1
                             )
                         }
                     }

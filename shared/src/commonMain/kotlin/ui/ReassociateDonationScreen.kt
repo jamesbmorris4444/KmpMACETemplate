@@ -267,7 +267,7 @@ fun ReassociateDonationScreen(
                                 modifier = Modifier.align(Alignment.Start),
                                 text = Strings.get("choose_product_for_reassociation_title"),
                                 color = MaterialTheme.colors.extraRed,
-                                style = MaterialTheme.typography.body2
+                                style = MaterialTheme.typography.body1
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)
@@ -306,7 +306,7 @@ fun ReassociateDonationScreen(
                                     modifier = Modifier.align(Alignment.Start),
                                     text = Strings.get("choose_correct_donor_title"),
                                     color = MaterialTheme.colors.extraRed,
-                                    style = MaterialTheme.typography.body2
+                                    style = MaterialTheme.typography.body1
                                 )
                                 Spacer(modifier = Modifier.height(10.dp))
                             }
@@ -348,7 +348,7 @@ fun ReassociateDonationScreen(
                                     .align(Alignment.Start),
                                 text = Strings.get("choose_incorrect_donor_title"),
                                 color = MaterialTheme.colors.extraRed,
-                                style = MaterialTheme.typography.body2
+                                style = MaterialTheme.typography.body1
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)

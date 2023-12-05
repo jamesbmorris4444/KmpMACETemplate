@@ -227,7 +227,7 @@ fun StartScreenAppBar(
             modifier = Modifier.testTag("item"),
             text = appBarState.title,
             color = MaterialTheme.colors.onPrimary,
-            style = MaterialTheme.typography.subtitle1
+            style = MaterialTheme.typography.body1
         ) },
         backgroundColor = MaterialTheme.colors.primary,
         actions = { appBarState.actions?.invoke(this) },

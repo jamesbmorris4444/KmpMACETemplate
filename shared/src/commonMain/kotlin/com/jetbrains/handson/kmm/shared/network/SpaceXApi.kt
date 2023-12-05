@@ -2,6 +2,7 @@ package com.jetbrains.handson.kmm.shared.network
 
 import app.cash.paging.PagingSource
 import app.cash.paging.PagingState
+import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.MoviesWithPageNumber
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
@@ -75,6 +76,7 @@ class MoviePagingSource : PagingSource<Int, Movie>() {
         )
         val responseBody = response.bodyAsText()
         val moviesWithPageNumber: MoviesWithPageNumber =  jsonSerializer.decodeFromString(responseBody)
-        return moviesWithPageNumber.results//.filter { it.genreIds.contains(37)}
+        Logger.i("JIMX   ${moviesWithPageNumber.results}")
+        return moviesWithPageNumber.results.filter { it.genreIds.any { genre -> genre == 37 || genre == 10759 || genre == 80 || genre == 18 || genre == 9648 } }
     }
 }

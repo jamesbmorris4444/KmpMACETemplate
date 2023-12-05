@@ -232,7 +232,7 @@ fun ViewDonorListScreen(
                         Text(
                             text = label,
                             color = MaterialTheme.colors.extraWhite,
-                            style = MaterialTheme.typography.body2
+                            style = MaterialTheme.typography.body1
                         )
                     }
                 }

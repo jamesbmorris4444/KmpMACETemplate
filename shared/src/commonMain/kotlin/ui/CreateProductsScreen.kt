@@ -294,7 +294,13 @@ fun CreateProductsScreen(
                                             handleTextEntry(dinText, productCodeText, expirationText)
                                         },
                                         shape = RoundedCornerShape(10.dp),
-                                        label = { Text(enterDinText) },
+                                        label = {
+                                            Text(
+                                                text = enterDinText,
+                                                style = MaterialTheme.typography.body1,
+                                                color =  MaterialTheme.colors.extraBlack
+                                            )
+                                        },
                                         singleLine = true,
                                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                                     )
@@ -304,6 +310,7 @@ fun CreateProductsScreen(
                                             .align(Alignment.TopStart),
                                         text = dinTitle,
                                         style = MaterialTheme.typography.body1,
+                                        color =  MaterialTheme.colors.extraBlack,
                                         fontFamily = avenirFontFamilyBold
 
                                     )
@@ -327,7 +334,13 @@ fun CreateProductsScreen(
                                             handleTextEntry(dinText, productCodeText, expirationText)
                                         },
                                         shape = RoundedCornerShape(10.dp),
-                                        label = { Text(enterProductCodeText) },
+                                        label = {
+                                            Text(
+                                                text = enterProductCodeText,
+                                                style = MaterialTheme.typography.body1,
+                                                color =  MaterialTheme.colors.extraBlack,
+                                            )
+                                        },
                                         singleLine = true,
                                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                                     )
@@ -368,6 +381,7 @@ fun CreateProductsScreen(
                                             .align(Alignment.TopStart),
                                         text = aboRhTitle,
                                         style = MaterialTheme.typography.body1,
+
                                         fontFamily = avenirFontFamilyBold
                                     )
                                     Text(

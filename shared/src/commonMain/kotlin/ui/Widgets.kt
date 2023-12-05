@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun WidgetButton(padding: PaddingValues, buttonText: String, onClick: () -> Unit) {
@@ -26,7 +25,7 @@ fun WidgetButton(padding: PaddingValues, buttonText: String, onClick: () -> Unit
     ) {
         Text(
             text = buttonText,
-            fontSize = 16.sp,
+            style = MaterialTheme.typography.body1,
             color = MaterialTheme.colors.onPrimary
         )
     }

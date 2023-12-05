@@ -2,14 +2,13 @@ package ui
 
 import BloodViewModel
 import Strings
+import Strings.format
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -32,7 +31,6 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.Movie
-import extraBlue
 import io.kamel.core.Resource
 import io.kamel.core.utils.cacheControl
 import io.kamel.image.KamelImage
@@ -71,15 +69,7 @@ fun MoviesHandler(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
-
-    @Composable
-    fun CustomCircularProgressBar() {
-        CircularProgressIndicator(
-            modifier = Modifier.size(60.dp),
-            color = MaterialTheme.colors.extraBlue,
-            strokeWidth = 6.dp
-        )
-    }
+    val genreMap: Map<Int, String> = mapOf(Pair(37, "Western"), Pair(10759, "Action & Adventure"), Pair (80, "Crime"), Pair(18, "Drama"), Pair(9648, "Mystery"))
 
     @Composable
     fun standardModalError(failureMessage: String) {
@@ -110,9 +100,13 @@ fun MoviesHandler(
         val movies: LazyPagingItems<Movie> = viewModel.moviesAvailableState.collectAsLazyPagingItems()
         LazyColumn {
             items(count = movies.itemCount) { index ->
+                val genres = movies[index]?.genreIds?.filter { genreMap[it].isNullOrEmpty().not() }
                 MoviesDisplay(
                     title = movies[index]?.title ?: "",
                     posterPath = movies[index]?.posterPath ?: "",
+                    genre = genres?.map { genreMap[it] ?: "" } ?: listOf(),
+                    voteAverage = movies[index]?.voteAverage ?: 0.0f,
+                    popularity = movies[index]?.popularity?.toInt() ?: 0,
                     coroutineScope = coroutineScope
                 )
             }
@@ -177,14 +171,33 @@ fun MoviesHandler(
 @Composable
 fun MoviesDisplay(
     title: String,
+    genre: List<String>,
+    voteAverage: Float,
+    popularity: Int,
     posterPath: String,
     coroutineScope: CoroutineScope
 ) {
+    val x = format("%.2f", 1.22222)
     Text(
         modifier = Modifier.testTag("item"),
         text = "Title: $title",
         color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body2
+        style = MaterialTheme.typography.body1
+    )
+    Text(
+        text = "Genre: $genre",
+        color = MaterialTheme.colors.onBackground,
+        style = MaterialTheme.typography.body1
+    )
+    Text(
+        text = "Vote Average: $voteAverage",
+        color = MaterialTheme.colors.onBackground,
+        style = MaterialTheme.typography.body1
+    )
+    Text(
+        text = "Popularity: $popularity",
+        color = MaterialTheme.colors.onBackground,
+        style = MaterialTheme.typography.body1
     )
     val fullPath = "https://image.tmdb.org/t/p/w500$posterPath" // or 185
     val painterResource: Resource<Painter> = asyncPainterResource(fullPath) {

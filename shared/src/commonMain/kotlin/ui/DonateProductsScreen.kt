@@ -42,6 +42,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
+import extraBlack
 
 @Composable
 fun DonateProductsScreen(
@@ -203,7 +204,13 @@ fun DonateProductsHandler(
                         text = it
                     },
                     shape = RoundedCornerShape(10.dp),
-                    label = { Text(Strings.get("initial_letters_of_last_name_text")) },
+                    label = {
+                        Text(
+                            Strings.get("initial_letters_of_last_name_text"),
+                            color = MaterialTheme.colors.extraBlack,
+                            style = MaterialTheme.typography.body1
+                        )
+                    },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(

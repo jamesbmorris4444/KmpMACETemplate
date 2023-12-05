@@ -1,4 +1,4 @@
-import androidx.compose.foundation.isSystemInDarkTheme
+
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.ajalt.colormath.extensions.android.composecolor.toComposeColor
 import com.github.ajalt.colormath.model.RGB
 import com.mace.kmpmacetemplate.R
@@ -61,19 +62,19 @@ actual val shapes = Shapes(
 )
 
 actual val typography = Typography(
-    h1 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    h2 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    h3 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    h4 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    h5 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    h6 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    body1 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    body2 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    subtitle1 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    subtitle2 = TextStyle(fontFamily = avenirFontFamilyRegular),
-    button = TextStyle(fontFamily = avenirFontFamilyRegular),
-    caption = TextStyle(fontFamily = avenirFontFamilyRegular),
-    overline = TextStyle(fontFamily = avenirFontFamilyRegular)
+    h1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 32.sp),
+    h2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 24.sp),
+    h3 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 21.sp),
+    h4 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp),
+    h5 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 13.sp),
+    h6 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 11.sp),
+    body1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp),
+    body2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 18.sp),
+    subtitle1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 12.sp),
+    subtitle2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 14.sp),
+    button = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 20.sp),
+    caption = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 24.sp),
+    overline = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 14.sp)
 )
 
 actual val darkColorPalette = darkColors(
