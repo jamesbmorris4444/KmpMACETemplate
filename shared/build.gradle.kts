@@ -82,6 +82,14 @@ kotlin {
     }
 }
 
+kotlin {
+    sourceSets {
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
+    }
+}
+
 android {
     namespace = "com.mace.kmpmacetemplate"
     compileSdk = 34

@@ -1,11 +1,17 @@
 
+import app.cash.paging.Pager
+import app.cash.paging.PagingConfig
+import app.cash.paging.PagingData
+import app.cash.paging.cachedIn
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.rickclephas.kmm.viewmodel.KMMViewModel
+import com.rickclephas.kmm.viewmodel.coroutineScope
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -27,10 +33,12 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     var refreshFailureState: MutableStateFlow<String> = MutableStateFlow("")
     var launchesAvailableState: MutableStateFlow<List<RocketLaunch>> = MutableStateFlow(listOf())
 
-    var moviesInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    var moviesCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var moviesFailureState: MutableStateFlow<String> = MutableStateFlow("")
-    var moviesAvailableState: MutableStateFlow<List<Movie>> = MutableStateFlow(listOf())
+    val moviesAvailableState: Flow<PagingData<Movie>> = Pager(
+        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        pagingSourceFactory = { repository.getMoviePagingSource() }
+        )
+        .flow
+        .cachedIn(viewModelScope.coroutineScope)
 
     val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
     var databaseInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
@@ -38,10 +46,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
 
     fun initializeDatabase() {
         repository.initializeDatabase()
-    }
-
-    suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movie>, String> {
-        return repository.getMovies(composableScope)
     }
 
     suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String> {

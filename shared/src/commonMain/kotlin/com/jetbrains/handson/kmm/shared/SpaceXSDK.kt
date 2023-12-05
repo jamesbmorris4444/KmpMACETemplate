@@ -2,8 +2,8 @@ package com.jetbrains.handson.kmm.shared
 
 import com.jetbrains.handson.kmm.shared.cache.Database
 import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
-import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
+import com.jetbrains.handson.kmm.shared.network.MoviePagingSource
 import com.jetbrains.handson.kmm.shared.network.SpaceXApi
 
 class SpaceXSDK (databaseDriverFactory: DatabaseDriverFactory) {
@@ -23,15 +23,7 @@ class SpaceXSDK (databaseDriverFactory: DatabaseDriverFactory) {
         }
     }
 
-    @Throws(Exception::class) suspend fun getMovies(forceReload: Boolean): List<Movie> {
-        val cachedMovies = api.getMovies()
-        return if (cachedMovies.isNotEmpty() && !forceReload) {
-            cachedMovies
-        } else {
-            api.getMovies().also {
-                return it
-            }
-
-        }
+    fun getMoviePagingSource(): MoviePagingSource {
+        return MoviePagingSource()
     }
 }

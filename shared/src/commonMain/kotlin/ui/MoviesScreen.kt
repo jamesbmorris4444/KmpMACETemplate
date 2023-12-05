@@ -2,7 +2,6 @@ package ui
 
 import BloodViewModel
 import Strings
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import app.cash.paging.LoadStateError
+import app.cash.paging.compose.LazyPagingItems
+import app.cash.paging.compose.collectAsLazyPagingItems
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.Movie
 import extraBlue
@@ -39,7 +41,6 @@ import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.utils.CacheControl
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -52,6 +53,24 @@ fun MoviesScreen(
     viewModel: BloodViewModel,
     title: String
 ) {
+    Logger.i("MACELOG: Compose: ${ScreenNames.RocketLaunch.name}")
+    MoviesHandler(
+        navigator = navigator,
+        configAppBar = configAppBar,
+        viewModel = viewModel,
+        title = title
+    )
+}
+
+@Composable
+fun MoviesHandler(
+    navigator: Navigator,
+    configAppBar: (AppBarState) -> Unit,
+    viewModel: BloodViewModel,
+    title: String
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
 
     @Composable
     fun CustomCircularProgressBar() {
@@ -62,40 +81,9 @@ fun MoviesScreen(
         )
     }
 
-    Logger.i("MACELOG: Compose: ${ScreenNames.RocketLaunch.name}")
-    val composableScope = rememberCoroutineScope()
-
-    // state variables
-    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
-    val completed by viewModel.moviesCompletedState.collectAsState()
-    val isInvalid by viewModel.moviesInvalidState.collectAsState()
-    val failure by viewModel.moviesFailureState.collectAsState()
-
-    when {
-        isInvalid -> {
-            composableScope.launch(Dispatchers.Main) {
-                val pair = viewModel.getMovies(composableScope)
-                viewModel.moviesCompletedState.value = true
-                viewModel.moviesInvalidState.value = false
-                if (pair.second.isEmpty()) { // success
-                    viewModel.moviesAvailableState.value = pair.first
-                } else { // failure
-                    viewModel.moviesFailureState. value = pair.second
-                }
-                Logger.d("JIMX 1  ${pair.first}")
-                Logger.d("JIMX 2  ${pair.second}")
-            }
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                CustomCircularProgressBar()
-            }
-        }
-
-        failure.isNotEmpty() -> {
-            if (showStandardModalState.topIconId.isNotEmpty()) {
+    @Composable
+    fun standardModalError(failureMessage: String) {
+        if (showStandardModalState.topIconId.isNotEmpty()) {
                 StandardModal(
                     showStandardModalState.topIconId,
                     showStandardModalState.titleText,
@@ -109,48 +97,41 @@ fun MoviesScreen(
                 viewModel.showStandardModalState.value = StandardModalArgs(
                     topIconId = "drawable/notification.xml",
                     titleText = Strings.get("failure_api_title_text"),
-                    bodyText = failure,
+                    bodyText = failureMessage,
                     positiveText = Strings.get("positive_button_text_ok"),
                 ) {
-                    viewModel.moviesFailureState.value = ""
                     viewModel.showStandardModalState.value = StandardModalArgs()
                 }
             }
-        }
-
-        completed -> {
-            MoviesHandler(
-                navigator = navigator,
-                configAppBar = configAppBar,
-                viewModel = viewModel,
-                title = title
-            )
-        }
     }
-}
-
-@Composable
-fun MoviesHandler(
-    navigator: Navigator,
-    configAppBar: (AppBarState) -> Unit,
-    viewModel: BloodViewModel,
-    title: String
-) {
-    // state variables
-    val movies: List<Movie> by viewModel.moviesAvailableState.collectAsState()
-    val coroutineScope = rememberCoroutineScope()
-
 
     @Composable
-    fun LaunchesList(movies: List<Movie>) {
+    fun LaunchesList() {
+        val movies: LazyPagingItems<Movie> = viewModel.moviesAvailableState.collectAsLazyPagingItems()
         LazyColumn {
-            movies.forEach { movie ->
-                item {
-                    MoviesDisplay(
-                        title = movie.title,
-                        posterPath = movie.posterPath,
-                        coroutineScope = coroutineScope
-                    )
+            items(count = movies.itemCount) { index ->
+                MoviesDisplay(
+                    title = movies[index]?.title ?: "",
+                    posterPath = movies[index]?.posterPath ?: "",
+                    coroutineScope = coroutineScope
+                )
+            }
+            movies.apply {
+                when {
+                    loadState.refresh is LoadStateError -> {
+                        item {
+                            (movies.loadState.refresh as LoadStateError).error.message?.let {
+                                standardModalError(it)
+                            }
+                        }
+                    }
+                    loadState.append is LoadStateError -> {
+                        item {
+                            (movies.loadState.append as LoadStateError).error.message?.let {
+                                standardModalError(it)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -188,7 +169,7 @@ fun MoviesHandler(
                 .align(Alignment.TopCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LaunchesList(movies)
+            LaunchesList()
         }
     }
 }
@@ -222,7 +203,7 @@ fun MoviesDisplay(
         contentDescription = null,
         onFailure = { exception ->
             coroutineScope.launch {
-                Logger.d("JIMX  6   ${exception.message.toString()}")
+                Logger.d("Kamel EXCEPTION=${exception.message.toString()}")
             }
         }
     )

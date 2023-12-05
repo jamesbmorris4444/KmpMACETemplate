@@ -6,8 +6,8 @@ import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
-import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
+import com.jetbrains.handson.kmm.shared.network.MoviePagingSource
 import kotlinx.coroutines.CoroutineScope
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -16,7 +16,7 @@ interface Repository {
     var screenWidth: Int
     var screenHeight: Int
     suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String>
-    suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movie>, String>
+    fun getMoviePagingSource(): MoviePagingSource
     fun initializeDatabase()
     fun insertDonorIntoDatabase(donor: Donor)
     fun insertProductsIntoDatabase(products: List<Product>)
@@ -51,17 +51,8 @@ class RepositoryImpl : Repository, KoinComponent {
         return Pair(result, message)
     }
 
-    override suspend fun getMovies(composableScope: CoroutineScope): Pair<List<Movie>, String> {
-        var result: List<Movie> = listOf()
-        var message = ""
-        try {
-            result = sdk.getMovies(false)
-            Logger.i("MACELOG: movies success: ${result.size}")
-        } catch (e: Exception) {
-            message = e.message ?: "NULL message"
-            Logger.e("MACELOG: movies failure: ${e.message}")
-        }
-        return Pair(result, message)
+    override fun getMoviePagingSource(): MoviePagingSource {
+        return sdk.getMoviePagingSource()
     }
 
     override fun initializeDatabase() {
