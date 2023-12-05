@@ -3,7 +3,6 @@ package com.jetbrains.handson.kmm.shared
 import com.jetbrains.handson.kmm.shared.cache.Database
 import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
-import com.jetbrains.handson.kmm.shared.network.MoviePagingSource
 import com.jetbrains.handson.kmm.shared.network.SpaceXApi
 
 class SpaceXSDK (databaseDriverFactory: DatabaseDriverFactory) {
@@ -21,9 +20,5 @@ class SpaceXSDK (databaseDriverFactory: DatabaseDriverFactory) {
             }
 
         }
-    }
-
-    fun getMoviePagingSource(): MoviePagingSource {
-        return MoviePagingSource()
     }
 }
