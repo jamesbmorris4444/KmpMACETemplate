@@ -2,12 +2,12 @@ package ui
 
 import BloodViewModel
 import Strings
-import Strings.format
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -177,25 +177,35 @@ fun MoviesDisplay(
     posterPath: String,
     coroutineScope: CoroutineScope
 ) {
-    val x = format("%.2f", 1.22222)
     Text(
-        modifier = Modifier.testTag("item"),
-        text = "Title: $title",
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Title", title),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body1
     )
     Text(
-        text = "Genre: $genre",
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Genre", genre.toString()),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body1
     )
     Text(
-        text = "Vote Average: $voteAverage",
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Vote Average", voteAverage.toString()),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body1
     )
     Text(
-        text = "Popularity: $popularity",
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Popularity", popularity.toString()),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body1
     )
@@ -211,7 +221,8 @@ fun MoviesDisplay(
     KamelImage(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 24.dp),
+            .padding(top = 12.dp, bottom = 4.dp)
+            .width(240.dp),
         resource = painterResource,
         contentDescription = null,
         onFailure = { exception ->

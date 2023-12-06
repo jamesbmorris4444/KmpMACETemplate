@@ -18,7 +18,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.jetbrains.handson.kmm.shared.cache.Product
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -147,24 +151,9 @@ fun ProductListScreen(
 }
 
 @Composable
-fun DonorElementText(
-    donorFirstName: String,
-    donorMiddleName: String,
-    donorLastName: String,
-    dob: String,
-    aboRh: String,
-    branch: String,
-    gender: Boolean
-) {
-    Text(
-        modifier = Modifier.testTag("item"),
-        text = "$donorLastName, $donorFirstName $donorMiddleName (${if (gender) "Male" else "Female"})",
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
-    Text(
-        text = "DOB:$dob  AboRh:$aboRh  Branch:$branch",
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
+fun AnnotatedLabelledStringBuilder(label: String, body: String): AnnotatedString {
+    return buildAnnotatedString {
+        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append("$label: ") }
+        append(body)
+    }
 }

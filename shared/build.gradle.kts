@@ -73,6 +73,7 @@ kotlin {
                 implementation(libs.kamel)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
+                implementation(libs.datetime)
             }
         }
         val iosArm64Main by getting

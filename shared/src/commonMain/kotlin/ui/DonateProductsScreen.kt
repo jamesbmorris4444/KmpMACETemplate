@@ -14,15 +14,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.MaterialTheme.shapes
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -42,7 +44,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
-import extraBlack
 
 @Composable
 fun DonateProductsScreen(
@@ -147,7 +148,7 @@ fun DonateProductsHandler(
                         it.gender
                     )
                 }
-                Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
+                Divider(color = colors.onBackground, thickness = 2.dp)
             }
         }
     }
@@ -192,7 +193,7 @@ fun DonateProductsHandler(
         ) {
             val keyboardController = LocalSoftwareKeyboardController.current
             var text by remember { mutableStateOf("") }
-            Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Row {
                 OutlinedTextField(
                     modifier = Modifier
@@ -203,14 +204,18 @@ fun DonateProductsHandler(
                     onValueChange = {
                         text = it
                     },
-                    shape = RoundedCornerShape(10.dp),
+                    shape = shapes.medium,
                     label = {
                         Text(
                             Strings.get("initial_letters_of_last_name_text"),
-                            color = MaterialTheme.colors.extraBlack,
-                            style = MaterialTheme.typography.body1
+                            color = colors.primary,
+                            style = typography.body2
                         )
                     },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = colors.primary,
+                        unfocusedBorderColor = colors.primary
+                    ),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(
@@ -226,6 +231,7 @@ fun DonateProductsHandler(
                     keyboardController?.hide()
                     handleSearchClick(text)
                 },
+                enabled = text.isNotEmpty(),
                 buttonText = Strings.get("search_button_text")
             )
             WidgetButton(
@@ -237,9 +243,78 @@ fun DonateProductsHandler(
             )
             Spacer(modifier = Modifier.height(20.dp))
             if (foundDonors.isNotEmpty()) {
-                Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
+                Divider(color = colors.onBackground, thickness = 2.dp)
             }
             DonorList(foundDonors, onItemButtonClicked)
         }
     }
+}
+
+@Composable
+fun DonorElementText(
+    donorFirstName: String,
+    donorMiddleName: String,
+    donorLastName: String,
+    dob: String,
+    aboRh: String,
+    branch: String,
+    gender: Boolean
+) {
+
+    Text(
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Last Name", donorLastName),
+        color = colors.onBackground,
+        style = typography.body1
+    )
+    Text(
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Middle Name", donorMiddleName),
+        color = colors.onBackground,
+        style = typography.body1
+    )
+    Text(
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("First Name", donorFirstName),
+        color = colors.onBackground,
+        style = typography.body1
+    )
+    Text(
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Gender", if (gender) "Male" else "Female"),
+        color = colors.onBackground,
+        style = typography.body1
+    )
+    Text(
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Date of Birth", dob),
+        color = colors.onBackground,
+        style = typography.body1
+    )
+    Text(
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("ABO Rh", aboRh),
+        color = colors.onBackground,
+        style = typography.body1
+    )
+    Text(
+        modifier = Modifier
+            .padding(top = 1.dp, bottom = 4.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Branch of Service", branch),
+        color = colors.onBackground,
+        style = typography.body1
+    )
 }

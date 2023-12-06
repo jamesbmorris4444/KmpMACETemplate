@@ -2,8 +2,8 @@
     <string name="app_name">KmpMACETemplate</string>
     <string name="rocket_launch_complete_title">SpaceX Rocket Launches</string>
     <string name="rocket_launch_pending_title">Fetching SpaceX Launches …</string>
-    <string name="rocket_launch_screen_name">Rocket Launch Screen</string>
-    <string name="donate_products_search_screen_name">Donate Products Search Screen</string>
+    <string name="rocket_launch_screen_name">SpaceX Rocket Launches</string>
+    <string name="donate_products_search_screen_name">Donate Products Screen</string>
     <string name="donate_products_no_list">donate_products_no_list</string>
     <string name="donate_products">donate_products</string>
     <string name="back_button_content_description">back button</string>
@@ -33,10 +33,10 @@
     <string name="walking_blood_bank_text">Walking Blood Bank</string>
     <string name="Search_for_donor_title">Search Donors by Last Name</string>
     <string name="create_blood_product_title">Create Blood Product</string>
-    <string name="manage_donor_after_search_title">Manage Donor After Search</string>
-    <string name="manage_donor_from_drawer_title">Manage Donor From Drawer</string>
+    <string name="manage_donor_after_search_title">Manage Blood Donor</string>
+    <string name="manage_donor_from_drawer_title">Manage Full Donor</string>
     <string name="manage_donor_title">Manage Donor</string>
-    <string name="reassociate_donation_title">Reassociate Donation</string>
+    <string name="reassociate_donation_title">Move to Correct Donor</string>
     <string name="view_donor_list_title">View Donor List</string>
     <string name="incorrect_donor_title">Incorrect Donor</string>
     <string name="incorrect_donor_and_product_title">Incorrect Donor and Product</string>
@@ -64,6 +64,6 @@
     <string name="std_modal_noconfirm_title">Product Entry Not Confirmed</string>
     <string name="std_modal_noconfirm_body">Complete button was clicked without confirming current grid entry. Do you want to confirm?</string>
     
-    <string name="movies_screen_name">Movies Database Screen</string>
+    <string name="movies_screen_name">Movies Database (IMDB)</string>
 
 </resources>

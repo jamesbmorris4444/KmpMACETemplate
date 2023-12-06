@@ -13,7 +13,7 @@
 "din_title" = "DIN";
 "donate_products" = "donate_products";
 "donate_products_no_list" = "donate_products_no_list";
-"donate_products_search_screen_name" = "Donate Products Search Screen";
+"donate_products_search_screen_name" = "Donate Products Screen";
 "donor_fetch_problem_body_text" = "One donor expected, but found zero or more than one donors.";
 "donor_fetch_problem_title_text" = "Donor Fetch Problem";
 "donor_search_view_donor_list_text" = "Donor Search String";
@@ -40,8 +40,8 @@
 "made_db_entries_failure_text" = "Insertion of new donor in database failed";
 "made_db_entries_title_text" = "Staging entry for donor/products insertion";
 "made_reassociate_entries_body_text" = "An entry was made to the staging database for insertion of reassociated product(s)";
-"manage_donor_after_search_title" = "Manage Donor After Search";
-"manage_donor_from_drawer_title" = "Manage Donor From Drawer";
+"manage_donor_after_search_title" = "Manage Blood Donor";
+"manage_donor_from_drawer_title" = "Manage Full Donor";
 "manage_donor_title" = "Manage Donor";
 "menu_content_description" = "menu";
 "negative_button_text_no" = "BKG:No";
@@ -52,14 +52,14 @@
 "positive_button_text_yes" = "BKG:Yes";
 "product_code_title" = "PRODUCT CODE";
 "reassociate_complete_title" = "Reassociation Complete\nCorrect Donor Follows";
-"reassociate_donation_title" = "Reassociate Donation";
+"reassociate_donation_title" = "Move to Correct Donor";
 "rocket_launch_complete_title" = "SpaceX Rocket Launches";
 "rocket_launch_pending_title" = "Fetching SpaceX Launches …";
-"rocket_launch_screen_name" = "Rocket Launch Screen";
+"rocket_launch_screen_name" = "SpaceX Rocket Launches";
 "search_button_text" = "Search";
 "std_modal_noconfirm_body" = "Complete button was clicked without confirming current grid entry. Do you want to confirm?";
 "std_modal_noconfirm_title" = "Product Entry Not Confirmed";
 "update_button_text" = "Update";
 "view_donor_list_title" = "View Donor List";
 "walking_blood_bank_text" = "Walking Blood Bank";
-"movies_screen_name"="Movies Database Screen";
+"movies_screen_name"="Movies Database (IMDB)";

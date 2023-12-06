@@ -18,14 +18,6 @@ import com.github.ajalt.colormath.extensions.android.composecolor.toComposeColor
 import com.github.ajalt.colormath.model.RGB
 import com.mace.kmpmacetemplate.R
 
-private val purple000 = RGB("#eea6fc").toComposeColor()
-private val purple200 = RGB("#bb86fc").toComposeColor()
-private val purple500 = RGB("#6200ee").toComposeColor()
-private val purple700 = RGB("#3700b3").toComposeColor()
-private val black = RGB("#000000").toComposeColor()
-private val white = RGB("#ffffff").toComposeColor()
-private val red = RGB("#ff0000").toComposeColor()
-
 @get:Composable
 actual val Colors.extraRed: Color
     get() = RGB("#ff0000").toComposeColor()
@@ -51,9 +43,9 @@ actual val Colors.extraBlack: Color
 actual val Colors.extraWhite: Color
     get() = RGB("#ffffff").toComposeColor()
 
-actual val avenirFontFamilyRegular: FontFamily = FontFamily(Font(R.font.avenir_regular))
+actual val avenirFontFamilyRegular: FontFamily = FontFamily(Font(R.font.avenir_regular, FontWeight.W500))
 actual val avenirFontFamilyBold: FontFamily = FontFamily(Font(R.font.avenir_bold, FontWeight.Bold))
-actual val avenirFontFamilyMedium: FontFamily = FontFamily(Font(R.font.avenir_book))
+actual val avenirFontFamilyMedium: FontFamily = FontFamily(Font(R.font.avenir_book, FontWeight.W500))
 
 actual val shapes = Shapes(
     small = RoundedCornerShape(8.dp),
@@ -62,49 +54,49 @@ actual val shapes = Shapes(
 )
 
 actual val typography = Typography(
-    h1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 32.sp),
-    h2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 24.sp),
-    h3 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 21.sp),
-    h4 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp),
-    h5 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 13.sp),
-    h6 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 11.sp),
-    body1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp),
+    h1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 36.sp),
+    h2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 30.sp),
+    h3 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 24.sp),
+    h4 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 20.sp),
+    h5 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp),
+    h6 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 12.sp),
+    body1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 20.sp),
     body2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 18.sp),
-    subtitle1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 12.sp),
+    subtitle1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp),
     subtitle2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 14.sp),
-    button = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 20.sp),
-    caption = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 24.sp),
-    overline = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 14.sp)
+    button = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 22.sp),
+    caption = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 26.sp),
+    overline = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp)
 )
 
 actual val darkColorPalette = darkColors(
-    primary = purple700,
-    primaryVariant = purple500,
-    secondary = purple500,
-    secondaryVariant = purple200,
-    background = white,
-    surface = white,
-    error = red,
-    onPrimary = white,
-    onSecondary = white,
-    onBackground = black,
-    onSurface = black,
-    onError = white
+//    primary = RGB("#6200ee").toComposeColor(),
+//    primaryVariant = RGB("#3700b3").toComposeColor(),
+//    secondary = RGB("#03dac6").toComposeColor(),
+//    secondaryVariant = RGB("#018786").toComposeColor(),
+//    background = RGB("#ffffff").toComposeColor(),
+//    surface = RGB("#ffffff").toComposeColor(),
+//    error = RGB("#b00020").toComposeColor(),
+//    onPrimary = RGB("#ffffff").toComposeColor(),
+//    onSecondary = RGB("#000000").toComposeColor(),
+//    onBackground = RGB("#000000").toComposeColor(),
+//    onSurface = RGB("#000000").toComposeColor(),
+//    onError = RGB("#ffffff").toComposeColor(),
 )
 
 actual val lightColorPalette = lightColors(
-    primary = purple700,
-    primaryVariant = purple500,
-    secondary = purple500,
-    secondaryVariant = purple200,
-    background = white,
-    surface = white,
-    error = red,
-    onPrimary = white,
-    onSecondary = white,
-    onBackground = black,
-    onSurface = black,
-    onError = white
+//    primary = RGB("#6200ee").toComposeColor(),
+//    primaryVariant = RGB("#3700b3").toComposeColor(),
+//    secondary = RGB("#03dac6").toComposeColor(),
+//    secondaryVariant = RGB("#018786").toComposeColor(),
+//    background = RGB("#ffffff").toComposeColor(),
+//    surface = RGB("#ffffff").toComposeColor(),
+//    error = RGB("#b00020").toComposeColor(),
+//    onPrimary = RGB("#ffffff").toComposeColor(),
+//    onSecondary = RGB("#000000").toComposeColor(),
+//    onBackground = RGB("#000000").toComposeColor(),
+//    onSurface = RGB("#000000").toComposeColor(),
+//    onError = RGB("#ffffff").toComposeColor(),
 )
 
 @Composable

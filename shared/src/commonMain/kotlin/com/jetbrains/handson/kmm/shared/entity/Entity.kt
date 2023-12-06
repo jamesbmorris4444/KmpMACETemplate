@@ -24,7 +24,7 @@ data class RocketLaunch(
     val links: Links
 ) {
     @Contextual
-    var launchDate = DateTime().getFormattedDate(launchDateUTC, "dd.MM.yyyy")
+    var launchDate = DateTime().getFormattedDate(launchDateUTC)
 }
 
 @Serializable

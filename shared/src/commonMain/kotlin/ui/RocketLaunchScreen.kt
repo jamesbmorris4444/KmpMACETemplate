@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import extraBlue
-import extraGreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.NavOptions
@@ -191,33 +190,43 @@ fun LaunchElementText(
     launchSuccess: Boolean
 ) {
     Text(
-        modifier = Modifier.testTag("item"),
-        text = "flight number: $flightNumber",
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Flight Number", flightNumber),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body1
     )
     Text(
-        modifier = Modifier.testTag("item"),
-        text = "mission name: $missionName",
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Mission Name", missionName),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body1
     )
     Text(
-        modifier = Modifier.testTag("item"),
-        text = "details: $details",
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Details", details),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body1
     )
     Text(
-        modifier = Modifier.testTag("item"),
-        text = "launch date: $launchDate",
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Launch Date", launchDate),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body1
     )
     Text(
-        modifier = Modifier.testTag("item"),
-        text = if (launchSuccess) "Successful" else "Failed",
-        color = if (launchSuccess) MaterialTheme.colors.extraGreen else MaterialTheme.colors.error,
+        modifier = Modifier
+            .padding(top = 1.dp, bottom = 4.dp)
+            .testTag("item"),
+        text = AnnotatedLabelledStringBuilder("Mission Outcome", if (launchSuccess) "Successful" else "Failed"),
+        color = if (launchSuccess) MaterialTheme.colors.onBackground else MaterialTheme.colors.error,
         style = MaterialTheme.typography.body1
     )
     Divider(modifier = Modifier.padding(top = 4.dp, bottom = 4.dp), color = MaterialTheme.colors.onBackground, thickness = 2.dp)
