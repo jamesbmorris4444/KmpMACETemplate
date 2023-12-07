@@ -76,6 +76,15 @@
     <string name="genre">Genre</string>
     <string name="vote_average">Vote Average</string>
     <string name="popularity">Popularity</string>
-    
+    <string name="last_name">Last Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="first_name">First Name</string>
+    <string name="gender">Gender</string>
+    <string name="dob">Date of Birth</string>
+    <string name="abo_rh">ABO Rh</string>
+    <string name="branch">Branch of Service</string>
+    <string name="din">DIN</string>
+    <string name="product_code">Product Code</string>
+    <string name="expiration">Expiration</string>
 
 </resources>

@@ -12,18 +12,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -43,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import extraBlack
-import extraRed
 import extraWhite
 import utils.Utils
 
@@ -79,54 +75,39 @@ fun ViewDonorListScreen(
     fun DonorsAndProductsList(donorsAndProducts: List<DonorWithProducts>) {
         LazyColumn {
             items(items = donorsAndProducts, itemContent = { donorWithProductsLocal ->
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = Modifier.padding(top = 4.dp))
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min)
                     .padding(PaddingValues(start = 24.dp, end = 24.dp))
                 ) {
-                    Row {
-                        Text(
-                            text = "${donorWithProductsLocal.donor.lastName}, ${donorWithProductsLocal.donor.firstName} ${donorWithProductsLocal.donor.middleName} (${if (donorWithProductsLocal.donor.gender) "Male" else "Female"})",
-                            color = MaterialTheme.colors.extraBlack,
-                            style = MaterialTheme.typography.body1
-                        )
-                    }
-                    Row {
-                        Text(
-                            text = "DOB:${donorWithProductsLocal.donor.dob}  AboRh:${donorWithProductsLocal.donor.aboRh}  Branch:${donorWithProductsLocal.donor.branch}",
-                            color = MaterialTheme.colors.extraBlack,
-                            style = MaterialTheme.typography.body1
-                        )
-                    }
+                    ListDisplayText("item_lastname", Strings.get("last_name"), donorWithProductsLocal.donor.lastName)
+                    ListDisplayText("item_middleName", Strings.get("middle_name"), donorWithProductsLocal.donor.middleName)
+                    ListDisplayText("item_firstName", Strings.get("first_name"), donorWithProductsLocal.donor.firstName)
+                    ListDisplayText("item_gender", Strings.get("gender"), if (donorWithProductsLocal.donor.gender) "Male" else "Female")
+                    ListDisplayText("item_dob", Strings.get("dob"), donorWithProductsLocal.donor.dob)
+                    ListDisplayText("item_abo_rh", Strings.get("abo_rh"), donorWithProductsLocal.donor.aboRh)
+                    ListDisplayText("item_branch", Strings.get("branch"), donorWithProductsLocal.donor.branch)
                     if (donorWithProductsLocal.products.isNotEmpty()) {
-                        Spacer(modifier = Modifier.padding(top = 8.dp))
-                        Divider(color = MaterialTheme.colors.extraRed, thickness = 2.dp)
+                        Spacer(modifier = Modifier.padding(top = 4.dp))
+                        Divider(color = MaterialTheme.colors.error, thickness = 2.dp)
                     }
-                    donorWithProductsLocal.products.forEach { product ->
+                    donorWithProductsLocal.products.forEachIndexed { index, product ->
                         Column(modifier = Modifier
                             .height(IntrinsicSize.Min)
                         ) {
-                            Spacer(modifier = Modifier.padding(top = 8.dp))
-                            Row {
-                                Text(
-                                    text = "DIN: ${product.din}   Blood Type: ${product.aboRh}",
-                                    color = MaterialTheme.colors.extraBlack,
-                                    style = MaterialTheme.typography.body1
-                                )
+                            if (index > 0) {
+                                Spacer(modifier = Modifier.padding(top = 16.dp))
                             }
-                            Row {
-                                Text(
-                                    text = "Product Code: ${product.productCode}    Expires: ${product.expirationDate}",
-                                    color = MaterialTheme.colors.extraBlack,
-                                    style = MaterialTheme.typography.body1
-                                )
-                            }
+                            ListDisplayText("item_din", Strings.get("din"), product.din)
+                            ListDisplayText("item_abo_rh", Strings.get("abo_rh"), product.aboRh)
+                            ListDisplayText("item_product_code", Strings.get("product_code"), product.productCode)
+                            ListDisplayText("item_expiration", Strings.get("expiration"), product.expirationDate)
                         }
                     }
                 }
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-                Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)
+                Spacer(modifier = Modifier.padding(top = 4.dp))
+                Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
             })
         }
     }
@@ -176,22 +157,18 @@ fun ViewDonorListScreen(
         Spacer(modifier = Modifier.height(24.dp))
         var aboRhExpanded by remember { mutableStateOf(false) }
         Row {
-            OutlinedTextField(
-                modifier = Modifier
-                    .height(60.dp),
+            StandardEditText(
+                testTag = "otf_last_name",
                 value = lastNameTextEntered,
-                onValueChange = {
-                    lastNameTextEntered = it
-                },
-                shape = RoundedCornerShape(10.dp),
-                label = { Text(Strings.get("donor_search_view_donor_list_text")) },
-                singleLine = true,
+                onValueChange = { lastNameTextEntered = it },
+                label = Strings.get("donor_search_view_donor_list_text"),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(
                     onDone = {
                         keyboardController?.hide()
                         handleNameOrAboRhTextEntry(lastNameTextEntered, aboRhTextState)
-                    })
+                    }
+                )
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -201,21 +178,7 @@ fun ViewDonorListScreen(
                 aboRhExpanded = !aboRhExpanded
             }
         ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .height(60.dp),
-                value = aboRhTextState,
-                readOnly = true,
-                onValueChange = { },
-                shape = RoundedCornerShape(10.dp),
-                label = { Text(Strings.get("enter_blood_type_text")) },
-                singleLine = true,
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(
-                        expanded = aboRhExpanded
-                    )
-                }
-            )
+            StandardEditText(testTag = "otf_abo_rh", value = aboRhTextState, onValueChange = { }, label = Strings.get("enter_blood_type_text"))
             ExposedDropdownMenu(
                 expanded = aboRhExpanded,
                 onDismissRequest = { aboRhExpanded = false }

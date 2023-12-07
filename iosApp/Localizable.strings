@@ -74,3 +74,13 @@
 "genre" = "Genre";
 "vote_average" = "Vote Average";
 "popularity" = "Popularity";
+"last_name" = "Last Name";
+"middle_name" = "Middle Name";
+"first_name" = "First Name";
+"gender" = "Gender";
+"dob" = "Date of Birth";
+"abo_rh" = "ABO Rh";
+"branch" = "Branch of Service";
+"din" = "DIN";
+"product_code" = "Product Code";
+"expiration" = "Expiration";

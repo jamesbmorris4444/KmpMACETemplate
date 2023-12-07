@@ -1,5 +1,6 @@
 package ui
 
+import Strings
 import ViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -11,10 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
@@ -55,7 +61,7 @@ fun ProductListContent(
             ) {
                 Image(
                     modifier = Modifier
-                        .padding(start = 40.dp)
+                        .padding(start = 30.dp)
                         .height(40.dp)
                         .width(30.dp)
                         .clickable(
@@ -74,7 +80,7 @@ fun ProductListContent(
                 )
                 Image(
                     modifier = Modifier
-                        .padding(start = 40.dp)
+                        .padding(start = 30.dp)
                         .height(40.dp)
                         .width(40.dp)
                         .clickable(
@@ -96,28 +102,12 @@ fun ProductListContent(
                 )
                 Column(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 40.dp)
+                    .padding(start = 30.dp)
                 ) {
-                    Text(
-                        text = item.din,
-                        color = MaterialTheme.colors.onBackground,
-                        style = MaterialTheme.typography.body1
-                    )
-                    Text(
-                        text = item.aboRh,
-                        color = MaterialTheme.colors.onBackground,
-                        style = MaterialTheme.typography.body1
-                    )
-                    Text(
-                        text = item.productCode,
-                        color = MaterialTheme.colors.onBackground,
-                        style = MaterialTheme.typography.body1
-                    )
-                    Text(
-                        text = item.expirationDate,
-                        color = MaterialTheme.colors.onBackground,
-                        style = MaterialTheme.typography.body1
-                    )
+                    ListDisplayText("item_din", Strings.get("din"), item.din)
+                    ListDisplayText("item_abo_rh", Strings.get("abo_rh"), item.aboRh)
+                    ListDisplayText("item_product_code", Strings.get("product_code"), item.productCode)
+                    ListDisplayText("item_expiration", Strings.get("expiration"), item.expirationDate)
                 }
             }
             Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
@@ -169,5 +159,36 @@ fun ListDisplayText(testTag: String, label: String, body: String, color: Color =
         text = AnnotatedLabelledStringBuilder(label, body),
         color = color,
         style = MaterialTheme.typography.body1
+    )
+}
+
+@Composable
+fun StandardEditText(
+    modifier: Modifier = Modifier,
+    testTag: String, value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default
+) {
+    OutlinedTextField(
+        modifier = modifier
+            .height(72.dp)
+            .testTag(testTag),
+        value = value,
+        textStyle = TextStyle(
+            color = MaterialTheme.colors.primary,
+            fontSize = MaterialTheme.typography.body2.fontSize
+        ),
+        onValueChange = onValueChange,
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = MaterialTheme.colors.primary,
+            unfocusedBorderColor = MaterialTheme.colors.primary
+        ),
+        shape = MaterialTheme.shapes.medium,
+        label = { Text(label, color = MaterialTheme.colors.primary, style = MaterialTheme.typography.body2) },
+        singleLine = true,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions
     )
 }

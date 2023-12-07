@@ -17,15 +17,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -39,7 +36,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
@@ -117,6 +113,15 @@ fun ManageDonorScreen(
         var radioButtonChanged by remember { mutableStateOf(false) }
         var aboRhExpanded by remember { mutableStateOf(false) }
         var branchExpanded  by remember { mutableStateOf(false) }
+
+        fun databaseIsReadyToUpdate(donor: Donor?= null): Boolean {
+            return donor?.let {
+                it.firstName.isNotEmpty() && it.middleName.isNotEmpty() && it.lastName.isNotEmpty() && it.dob.isNotEmpty() && it.aboRh.isNotEmpty() && it.branch.isNotEmpty()
+            } ?: run {
+                currentFirstNameText.isNotEmpty() && currentMiddleNameText.isNotEmpty() && currentLastNameText.isNotEmpty() &&
+                        currentDobText.isNotEmpty() && currentAboRhText.isNotEmpty() && currentBranchText.isNotEmpty()
+            }
+        }
         if (showStandardModalState.topIconId.isNotEmpty()) {
             StandardModal(
                 showStandardModalState.topIconId,
@@ -131,125 +136,21 @@ fun ManageDonorScreen(
             if (transitionToCreateProductsScreen.not()) {
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row {
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .height(72.dp)
-                            .testTag("OutlinedTextField"),
-                        value = currentLastNameText,
-                        textStyle = TextStyle(
-                            color = MaterialTheme.colors.primary,
-                            fontSize = MaterialTheme.typography.body2.fontSize
-                        ),
-                        onValueChange = {
-                            currentLastNameText = it
-                            databaseModified = true
-                        },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = MaterialTheme.colors.primary,
-                            unfocusedBorderColor = MaterialTheme.colors.primary
-                        ),
-                        shape = MaterialTheme.shapes.medium,
-                        label = {
-                            Text(
-                                enterLastNameText,
-                                color = MaterialTheme.colors.primary,
-                                style = MaterialTheme.typography.body2
-                            )
-                        },
-                        singleLine = true
-                    )
+                    StandardEditText(testTag = "otf_last_name", value = currentLastNameText, onValueChange = { currentLastNameText = it ; databaseModified = true }, label = enterLastNameText)
                 }
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
             Row {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .height(72.dp)
-                        .testTag("OutlinedTextField"),
-                    value = currentFirstNameText,
-                    textStyle = TextStyle(
-                        color = MaterialTheme.colors.primary,
-                        fontSize = MaterialTheme.typography.body2.fontSize
-                    ),
-                    onValueChange = {
-                        currentFirstNameText = it
-                        databaseModified = true
-                    },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = MaterialTheme.colors.primary,
-                        unfocusedBorderColor = MaterialTheme.colors.primary
-                    ),
-                    shape = MaterialTheme.shapes.medium,
-                    label = {
-                        Text(
-                            enterFirstNameText,
-                            color = MaterialTheme.colors.primary,
-                            style = MaterialTheme.typography.body2
-                        )
-                    },
-                    singleLine = true
-                )
+                StandardEditText(testTag = "otf_first_name", value = currentFirstNameText, onValueChange = { currentFirstNameText = it ; databaseModified = true }, label = enterFirstNameText)
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
             Row {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .height(72.dp)
-                        .testTag("OutlinedTextField"),
-                    value = currentMiddleNameText,
-                    textStyle = TextStyle(
-                        color = MaterialTheme.colors.primary,
-                        fontSize = MaterialTheme.typography.body2.fontSize
-                    ),
-                    onValueChange = {
-                        currentMiddleNameText = it
-                        databaseModified = true
-                    },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = MaterialTheme.colors.primary,
-                        unfocusedBorderColor = MaterialTheme.colors.primary
-                    ),
-                    shape = MaterialTheme.shapes.medium,
-                    label = {
-                        Text(
-                            enterMiddleNameText,
-                            color = MaterialTheme.colors.primary,
-                            style = MaterialTheme.typography.body2
-                        )
-                    },
-                    singleLine = true
-                )
+                StandardEditText(testTag = "otf_middle_name", value = currentMiddleNameText, onValueChange = { currentMiddleNameText = it ; databaseModified = true }, label = enterMiddleNameText)
             }
             if (transitionToCreateProductsScreen.not()) {
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row {
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .height(72.dp)
-                            .testTag("OutlinedTextField"),
-                        value = currentDobText,
-                        textStyle = TextStyle(
-                            color = MaterialTheme.colors.primary,
-                            fontSize = MaterialTheme.typography.body2.fontSize
-                        ),
-                        onValueChange = {
-                            currentDobText = it
-                            databaseModified = true
-                        },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = MaterialTheme.colors.primary,
-                            unfocusedBorderColor = MaterialTheme.colors.primary
-                        ),
-                        shape = MaterialTheme.shapes.medium,
-                        label = {
-                            Text(
-                                enterDobText,
-                                color = MaterialTheme.colors.primary,
-                                style = MaterialTheme.typography.body2
-                            )
-                        },
-                        singleLine = true
-                    )
+                    StandardEditText(testTag = "otf_dob", value = currentDobText, onValueChange = { currentDobText = it ; databaseModified = true }, label = enterDobText)
                 }
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
@@ -265,36 +166,7 @@ fun ManageDonorScreen(
                     aboRhExpanded = !aboRhExpanded
                 }
             ) {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .height(72.dp)
-                        .testTag("OutlinedTextField"),
-                    value = currentAboRhText,
-                    textStyle = TextStyle(
-                        color = MaterialTheme.colors.primary,
-                        fontSize = MaterialTheme.typography.body2.fontSize
-                    ),
-                    readOnly = true,
-                    onValueChange = { },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = MaterialTheme.colors.primary,
-                        unfocusedBorderColor = MaterialTheme.colors.primary
-                    ),
-                    shape = MaterialTheme.shapes.medium,
-                    label = {
-                        Text(
-                            enterBloodTypeText,
-                            color = MaterialTheme.colors.primary,
-                            style = MaterialTheme.typography.body2
-                        )
-                    },
-                    singleLine = true,
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded = aboRhExpanded
-                        )
-                    }
-                )
+                StandardEditText(testTag = "otf_aborh", value = currentAboRhText, onValueChange = { currentAboRhText = it ; databaseModified = true }, label = enterBloodTypeText)
                 ExposedDropdownMenu(
                     expanded = aboRhExpanded,
                     onDismissRequest = { aboRhExpanded = false }
@@ -311,7 +183,7 @@ fun ManageDonorScreen(
                     )
                     aboRhArray.forEach { label ->
                         DropdownMenuItem(
-                            modifier = Modifier.background(MaterialTheme.colors.secondary),
+                            modifier = Modifier.background(MaterialTheme.colors.primary),
                             onClick = {
                                 aboRhExpanded = false
                                 currentAboRhText = label
@@ -334,36 +206,7 @@ fun ManageDonorScreen(
                     branchExpanded = !branchExpanded
                 }
             ) {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .height(72.dp)
-                        .testTag("OutlinedTextField"),
-                    value = currentBranchText,
-                    textStyle = TextStyle(
-                        color = MaterialTheme.colors.primary,
-                        fontSize = MaterialTheme.typography.body2.fontSize
-                    ),
-                    readOnly = true,
-                    onValueChange = { },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = MaterialTheme.colors.primary,
-                        unfocusedBorderColor = MaterialTheme.colors.primary
-                    ),
-                    shape = MaterialTheme.shapes.medium,
-                    label = {
-                        Text(
-                            enterBranchText,
-                            color = MaterialTheme.colors.primary,
-                            style = MaterialTheme.typography.body2
-                        )
-                    },
-                    singleLine = true,
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded = branchExpanded
-                        )
-                    }
-                )
+                StandardEditText(testTag = "otf_branch", value = currentBranchText, onValueChange = { currentBranchText = it ; databaseModified = true }, label = enterBranchText)
                 ExposedDropdownMenu(
                     expanded = branchExpanded,
                     onDismissRequest = { branchExpanded = false }
@@ -396,15 +239,10 @@ fun ManageDonorScreen(
             }
             WidgetButton(
                 padding = PaddingValues(top = 16.dp, bottom = 24.dp),
+                enabled = databaseIsReadyToUpdate(),
                 onClick = {
                     if ((databaseModified || radioButtonChanged)) {
-                        val legalEntry = donor?.let {
-                            it.firstName.isNotEmpty() && it.middleName.isNotEmpty() && it.lastName.isNotEmpty() && it.dob.isNotEmpty() &&it.aboRh.isNotEmpty() && it.branch.isNotEmpty()
-                        } ?: run {
-                            currentFirstNameText.isNotEmpty() && currentMiddleNameText.isNotEmpty() && currentLastNameText.isNotEmpty() &&
-                                currentDobText.isNotEmpty() && currentAboRhText.isNotEmpty() && currentBranchText.isNotEmpty()
-                        }
-                        if (legalEntry) {
+                        if (databaseIsReadyToUpdate(donor)) {
                             if (transitionToCreateProductsScreen) {
                                 viewModel.updateDonor(
                                     firstName = currentFirstNameText,

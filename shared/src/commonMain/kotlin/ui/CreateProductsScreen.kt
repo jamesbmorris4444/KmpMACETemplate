@@ -12,13 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -39,7 +36,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.jetbrains.handson.kmm.shared.cache.Donor
@@ -47,6 +43,7 @@ import com.jetbrains.handson.kmm.shared.cache.Product
 import ui.AppBarState
 import ui.DismissSelector
 import ui.ProductListScreen
+import ui.StandardEditText
 import ui.StandardModal
 import ui.StandardModalArgs
 import ui.WidgetButton
@@ -259,15 +256,15 @@ fun CreateProductsScreen(
                 ) {
                     Text (
                         modifier = Modifier
-                            .padding(PaddingValues(start = leftGridPadding)),
+                            .padding(start = leftGridPadding),
                         text = Strings.format("create_products_header_text", donor.lastName, donor.firstName),
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.body2,
                         fontFamily = avenirFontFamilyBold
                     )
                 }
                 LazyVerticalGrid(
                     modifier = Modifier
-                        .padding(PaddingValues(start = leftGridPadding, end = rightGridPadding)),
+                        .padding(start = leftGridPadding, end = rightGridPadding),
                     columns = GridCells.Fixed(2)
                 ) {
                     item {
@@ -282,35 +279,17 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, top = true, bottom = true)
                                 ) {
-                                    OutlinedTextField(
+                                    StandardEditText(testTag = "otf_din", value = dinText, onValueChange = { dinText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterDinText,
                                         modifier = Modifier
-                                            .height(80.dp)
-                                            .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
-                                            .align(Alignment.BottomStart),
-                                        value = dinText,
-                                        readOnly = screenIsReadOnly,
-                                        onValueChange = {
-                                            dinText = it
-                                            handleTextEntry(dinText, productCodeText, expirationText)
-                                        },
-                                        shape = RoundedCornerShape(10.dp),
-                                        label = {
-                                            Text(
-                                                text = enterDinText,
-                                                style = MaterialTheme.typography.body1,
-                                                color =  MaterialTheme.colors.extraBlack
-                                            )
-                                        },
-                                        singleLine = true,
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                                    )
+                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                                            .align(Alignment.BottomStart))
                                     Text(
                                         modifier = Modifier
                                             .padding(PaddingValues(start = 8.dp))
                                             .align(Alignment.TopStart),
                                         text = dinTitle,
-                                        style = MaterialTheme.typography.body1,
-                                        color =  MaterialTheme.colors.extraBlack,
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color =  MaterialTheme.colors.onBackground,
                                         fontFamily = avenirFontFamilyBold
 
                                     )
@@ -322,34 +301,17 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, bottom = true)
                                 ) {
-                                    OutlinedTextField(
+                                    StandardEditText(testTag = "otf_product_code", value = productCodeText, onValueChange = { productCodeText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterProductCodeText,
                                         modifier = Modifier
-                                            .height(80.dp)
-                                            .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
-                                            .align(Alignment.BottomStart),
-                                        value = productCodeText,
-                                        readOnly = screenIsReadOnly,
-                                        onValueChange = {
-                                            productCodeText = it
-                                            handleTextEntry(dinText, productCodeText, expirationText)
-                                        },
-                                        shape = RoundedCornerShape(10.dp),
-                                        label = {
-                                            Text(
-                                                text = enterProductCodeText,
-                                                style = MaterialTheme.typography.body1,
-                                                color =  MaterialTheme.colors.extraBlack,
-                                            )
-                                        },
-                                        singleLine = true,
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                                    )
+                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                                            .align(Alignment.BottomStart))
                                     Text(
                                         modifier = Modifier
                                             .padding(PaddingValues(start = 8.dp))
                                             .align(Alignment.TopStart),
                                         text = productCodeTitle,
-                                        style = MaterialTheme.typography.body1,
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color =  MaterialTheme.colors.onBackground,
                                         fontFamily = avenirFontFamilyBold
                                     )
                                 }
@@ -368,7 +330,7 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(
                                             2.dp,
-                                            DarkGray,
+                                            MaterialTheme.colors.primary,
                                             left = true,
                                             top = true,
                                             right = true,
@@ -380,8 +342,7 @@ fun CreateProductsScreen(
                                             .padding(PaddingValues(start = 8.dp))
                                             .align(Alignment.TopStart),
                                         text = aboRhTitle,
-                                        style = MaterialTheme.typography.body1,
-
+                                        style = MaterialTheme.typography.subtitle1,
                                         fontFamily = avenirFontFamilyBold
                                     )
                                     Text(
@@ -390,6 +351,7 @@ fun CreateProductsScreen(
                                             .align(Alignment.BottomCenter),
                                         text = donor.aboRh,
                                         style = MaterialTheme.typography.body1,
+                                        color = MaterialTheme.colors.primary,
                                         fontFamily = avenirFontFamilyBold
                                     )
                                 }
@@ -400,28 +362,17 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, right = true, bottom = true)
                                 ) {
-                                    OutlinedTextField(
+                                    StandardEditText(testTag = "otf_expiration", value = expirationText, onValueChange = { expirationText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterExpirationText,
                                         modifier = Modifier
-                                            .height(80.dp)
-                                            .padding(PaddingValues(start = 8.dp, end = 8.dp, bottom = 8.dp))
-                                            .align(Alignment.BottomStart),
-                                        value = expirationText,
-                                        readOnly = screenIsReadOnly,
-                                        onValueChange = {
-                                            expirationText = it
-                                            handleTextEntry(dinText, productCodeText, expirationText)
-                                        },
-                                        shape = RoundedCornerShape(10.dp),
-                                        label = { Text(enterExpirationText) },
-                                        singleLine = true,
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                                    )
+                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                                            .align(Alignment.BottomStart))
                                     Text(
                                         modifier = Modifier
                                             .padding(PaddingValues(start = 8.dp))
                                             .align(Alignment.TopStart),
                                         text = expirationTitle,
-                                        style = MaterialTheme.typography.body1,
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color =  MaterialTheme.colors.onBackground,
                                         fontFamily = avenirFontFamilyBold
                                     )
                                 }

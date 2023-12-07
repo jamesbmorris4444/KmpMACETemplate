@@ -20,11 +20,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.MaterialTheme.shapes
-import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -40,7 +35,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
@@ -131,6 +125,7 @@ fun DonateProductsHandler(
 
     @Composable
     fun DonorList(donors: List<Donor>, onItemButtonClicked: (donor: Donor) -> Unit) {
+        Spacer(modifier = Modifier.height(4.dp))
         LazyColumn(
             modifier = Modifier.testTag("LazyColumn")
         ) {
@@ -149,7 +144,7 @@ fun DonateProductsHandler(
                         it.gender
                     )
                 }
-                Divider(color = colors.onBackground, thickness = 2.dp)
+                Divider(modifier = Modifier.padding(top = 4.dp, bottom = 4.dp), color = colors.onBackground, thickness = 2.dp)
             }
         }
     }
@@ -196,38 +191,18 @@ fun DonateProductsHandler(
             var text by remember { mutableStateOf("") }
             Spacer(modifier = Modifier.height(20.dp))
             Row {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .weight(0.7f)
-                        .height(60.dp)
-                        .testTag("OutlinedTextField"),
+                StandardEditText(
+                    testTag = "otf_last_name",
                     value = text,
-                    textStyle = TextStyle(
-                        color = colors.primary,
-                        fontSize = typography.body2.fontSize
-                    ),
-                    onValueChange = {
-                        text = it
-                    },
-                    shape = shapes.medium,
-                    label = {
-                        Text(
-                            Strings.get("initial_letters_of_last_name_text"),
-                            color = colors.primary,
-                            style = typography.body2
-                        )
-                    },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = colors.primary,
-                        unfocusedBorderColor = colors.primary
-                    ),
-                    singleLine = true,
+                    onValueChange = { text = it },
+                    label = Strings.get("initial_letters_of_last_name_text"),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(
                         onDone = {
                             keyboardController?.hide()
                             handleSearchClick(text)
-                        })
+                        }
+                    )
                 )
             }
             WidgetButton(
@@ -265,61 +240,11 @@ fun DonorElementText(
     branch: String,
     gender: Boolean
 ) {
-
-    Text(
-        modifier = Modifier
-            .padding(top = 4.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Last Name", donorLastName),
-        color = colors.onBackground,
-        style = typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Middle Name", donorMiddleName),
-        color = colors.onBackground,
-        style = typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("First Name", donorFirstName),
-        color = colors.onBackground,
-        style = typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Gender", if (gender) "Male" else "Female"),
-        color = colors.onBackground,
-        style = typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Date of Birth", dob),
-        color = colors.onBackground,
-        style = typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("ABO Rh", aboRh),
-        color = colors.onBackground,
-        style = typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp, bottom = 4.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Branch of Service", branch),
-        color = colors.onBackground,
-        style = typography.body1
-    )
+    ListDisplayText("item_lastname", Strings.get("last_name"), donorLastName)
+    ListDisplayText("item_middleName", Strings.get("middle_name"), donorMiddleName)
+    ListDisplayText("item_firstName", Strings.get("first_name"), donorFirstName)
+    ListDisplayText("item_gender", Strings.get("gender"), if (gender) "Male" else "Female")
+    ListDisplayText("item_dob", Strings.get("date_of_birth"), dob)
+    ListDisplayText("item_abo_rh", Strings.get("abo_rh"), aboRh)
+    ListDisplayText("item_branch", Strings.get("branch"), branch)
 }
