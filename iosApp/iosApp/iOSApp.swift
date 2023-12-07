@@ -9,7 +9,7 @@ struct iOSApp: App {
         HelperKt.doInitKoin()
         SentrySDK.start { options in
             options.dsn = "https://cf41e9b6a3a72a9aa0517d51e5a2f89e@o4506251182604288.ingest.sentry.io/4506251420237824"
-            options.debug = true // Enabled debug when first installing is always helpful
+            options.debug = false
             options.enableTracing = true 
 
             // Uncomment the following lines to add more data to your events

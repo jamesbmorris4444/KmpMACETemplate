@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -24,7 +23,9 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.RadioButton
+import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -38,10 +39,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
-import extraWhite
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
@@ -132,15 +133,29 @@ fun ManageDonorScreen(
                 Row {
                     OutlinedTextField(
                         modifier = Modifier
-                            .height(60.dp)
+                            .height(72.dp)
                             .testTag("OutlinedTextField"),
                         value = currentLastNameText,
+                        textStyle = TextStyle(
+                            color = MaterialTheme.colors.primary,
+                            fontSize = MaterialTheme.typography.body2.fontSize
+                        ),
                         onValueChange = {
                             currentLastNameText = it
                             databaseModified = true
                         },
-                        shape = RoundedCornerShape(10.dp),
-                        label = { Text(enterLastNameText) },
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = MaterialTheme.colors.primary,
+                            unfocusedBorderColor = MaterialTheme.colors.primary
+                        ),
+                        shape = MaterialTheme.shapes.medium,
+                        label = {
+                            Text(
+                                enterLastNameText,
+                                color = MaterialTheme.colors.primary,
+                                style = MaterialTheme.typography.body2
+                            )
+                        },
                         singleLine = true
                     )
                 }
@@ -149,15 +164,29 @@ fun ManageDonorScreen(
             Row {
                 OutlinedTextField(
                     modifier = Modifier
-                        .height(60.dp)
+                        .height(72.dp)
                         .testTag("OutlinedTextField"),
                     value = currentFirstNameText,
+                    textStyle = TextStyle(
+                        color = MaterialTheme.colors.primary,
+                        fontSize = MaterialTheme.typography.body2.fontSize
+                    ),
                     onValueChange = {
                         currentFirstNameText = it
                         databaseModified = true
                     },
-                    shape = RoundedCornerShape(10.dp),
-                    label = { Text(enterFirstNameText) },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = MaterialTheme.colors.primary,
+                        unfocusedBorderColor = MaterialTheme.colors.primary
+                    ),
+                    shape = MaterialTheme.shapes.medium,
+                    label = {
+                        Text(
+                            enterFirstNameText,
+                            color = MaterialTheme.colors.primary,
+                            style = MaterialTheme.typography.body2
+                        )
+                    },
                     singleLine = true
                 )
             }
@@ -165,15 +194,29 @@ fun ManageDonorScreen(
             Row {
                 OutlinedTextField(
                     modifier = Modifier
-                        .height(60.dp)
+                        .height(72.dp)
                         .testTag("OutlinedTextField"),
                     value = currentMiddleNameText,
+                    textStyle = TextStyle(
+                        color = MaterialTheme.colors.primary,
+                        fontSize = MaterialTheme.typography.body2.fontSize
+                    ),
                     onValueChange = {
                         currentMiddleNameText = it
                         databaseModified = true
                     },
-                    shape = RoundedCornerShape(10.dp),
-                    label = { Text(enterMiddleNameText) },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = MaterialTheme.colors.primary,
+                        unfocusedBorderColor = MaterialTheme.colors.primary
+                    ),
+                    shape = MaterialTheme.shapes.medium,
+                    label = {
+                        Text(
+                            enterMiddleNameText,
+                            color = MaterialTheme.colors.primary,
+                            style = MaterialTheme.typography.body2
+                        )
+                    },
                     singleLine = true
                 )
             }
@@ -182,15 +225,29 @@ fun ManageDonorScreen(
                 Row {
                     OutlinedTextField(
                         modifier = Modifier
-                            .height(60.dp)
+                            .height(72.dp)
                             .testTag("OutlinedTextField"),
                         value = currentDobText,
+                        textStyle = TextStyle(
+                            color = MaterialTheme.colors.primary,
+                            fontSize = MaterialTheme.typography.body2.fontSize
+                        ),
                         onValueChange = {
                             currentDobText = it
                             databaseModified = true
                         },
-                        shape = RoundedCornerShape(10.dp),
-                        label = { Text(enterDobText) },
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = MaterialTheme.colors.primary,
+                            unfocusedBorderColor = MaterialTheme.colors.primary
+                        ),
+                        shape = MaterialTheme.shapes.medium,
+                        label = {
+                            Text(
+                                enterDobText,
+                                color = MaterialTheme.colors.primary,
+                                style = MaterialTheme.typography.body2
+                            )
+                        },
                         singleLine = true
                     )
                 }
@@ -210,13 +267,27 @@ fun ManageDonorScreen(
             ) {
                 OutlinedTextField(
                     modifier = Modifier
-                        .height(60.dp)
+                        .height(72.dp)
                         .testTag("OutlinedTextField"),
                     value = currentAboRhText,
+                    textStyle = TextStyle(
+                        color = MaterialTheme.colors.primary,
+                        fontSize = MaterialTheme.typography.body2.fontSize
+                    ),
                     readOnly = true,
                     onValueChange = { },
-                    shape = RoundedCornerShape(10.dp),
-                    label = { Text(enterBloodTypeText) },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = MaterialTheme.colors.primary,
+                        unfocusedBorderColor = MaterialTheme.colors.primary
+                    ),
+                    shape = MaterialTheme.shapes.medium,
+                    label = {
+                        Text(
+                            enterBloodTypeText,
+                            color = MaterialTheme.colors.primary,
+                            style = MaterialTheme.typography.body2
+                        )
+                    },
                     singleLine = true,
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
@@ -249,7 +320,7 @@ fun ManageDonorScreen(
                         ) {
                             Text(
                                 text = label,
-                                color = MaterialTheme.colors.extraWhite,
+                                color = MaterialTheme.colors.onPrimary,
                                 style = MaterialTheme.typography.body1
                             )
                         }
@@ -265,13 +336,27 @@ fun ManageDonorScreen(
             ) {
                 OutlinedTextField(
                     modifier = Modifier
-                        .height(60.dp)
+                        .height(72.dp)
                         .testTag("OutlinedTextField"),
                     value = currentBranchText,
+                    textStyle = TextStyle(
+                        color = MaterialTheme.colors.primary,
+                        fontSize = MaterialTheme.typography.body2.fontSize
+                    ),
                     readOnly = true,
                     onValueChange = { },
-                    shape = RoundedCornerShape(10.dp),
-                    label = { Text(enterBranchText) },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = MaterialTheme.colors.primary,
+                        unfocusedBorderColor = MaterialTheme.colors.primary
+                    ),
+                    shape = MaterialTheme.shapes.medium,
+                    label = {
+                        Text(
+                            enterBranchText,
+                            color = MaterialTheme.colors.primary,
+                            style = MaterialTheme.typography.body2
+                        )
+                    },
                     singleLine = true,
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
@@ -302,8 +387,8 @@ fun ManageDonorScreen(
                         ) {
                             Text(
                                 text = label,
-                                color = MaterialTheme.colors.extraWhite,
-                                style = MaterialTheme.typography.body1
+                                color = MaterialTheme.colors.onPrimary,
+                                style = MaterialTheme.typography.body2
                             )
                         }
                     }
@@ -410,6 +495,10 @@ fun HorizontalRadioButtons(isMale: Boolean, setRadioButton: (text: String) -> Un
             ) {
                 RadioButton(
                     selected = (text == selectedOption),
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = MaterialTheme.colors.primary,
+                        unselectedColor = MaterialTheme.colors.onBackground
+                    ),
                     onClick = {
                         onOptionSelected(text)
                         setRadioButton(text)
@@ -417,7 +506,9 @@ fun HorizontalRadioButtons(isMale: Boolean, setRadioButton: (text: String) -> Un
                 )
                 Text(
                     modifier = Modifier.padding(top = 10.dp),
-                    text = text
+                    text = text,
+                    color = MaterialTheme.colors.primary,
+                    style = MaterialTheme.typography.body2
                 )
             }
         }

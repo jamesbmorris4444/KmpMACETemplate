@@ -4,8 +4,10 @@ import BloodViewModel
 import Strings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,7 +15,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -24,7 +25,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import app.cash.paging.LoadStateError
 import app.cash.paging.compose.LazyPagingItems
@@ -98,6 +98,7 @@ fun MoviesHandler(
     @Composable
     fun LaunchesList() {
         val movies: LazyPagingItems<Movie> = viewModel.moviesAvailableState.collectAsLazyPagingItems()
+        Spacer(modifier = Modifier.height(4.dp))
         LazyColumn {
             items(count = movies.itemCount) { index ->
                 val genres = movies[index]?.genreIds?.filter { genreMap[it].isNullOrEmpty().not() }
@@ -177,38 +178,10 @@ fun MoviesDisplay(
     posterPath: String,
     coroutineScope: CoroutineScope
 ) {
-    Text(
-        modifier = Modifier
-            .padding(top = 4.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Title", title),
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Genre", genre.toString()),
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Vote Average", voteAverage.toString()),
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Popularity", popularity.toString()),
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
+    ListDisplayText("item_title", Strings.get("title"), title)
+    ListDisplayText("item_genre", Strings.get("genre"), genre.toString())
+    ListDisplayText("item_vote_average", Strings.get("vote_average"), voteAverage.toString())
+    ListDisplayText("item_popularity", Strings.get("popularity"), popularity.toString())
     val fullPath = "https://image.tmdb.org/t/p/w500$posterPath" // or 185
     val painterResource: Resource<Painter> = asyncPainterResource(fullPath) {
         coroutineContext = coroutineScope.coroutineContext

@@ -4,8 +4,10 @@ import Strings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,7 +16,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -24,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
@@ -129,6 +129,7 @@ fun RocketLaunchHandler(
 
     @Composable
     fun LaunchesList(launches: List<RocketLaunch>) {
+        Spacer(modifier = Modifier.height(4.dp))
         LazyColumn {
             launches.forEachIndexed { index, _ ->
                 item {
@@ -189,45 +190,15 @@ fun LaunchElementText(
     launchDate: String,
     launchSuccess: Boolean
 ) {
-    Text(
-        modifier = Modifier
-            .padding(top = 4.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Flight Number", flightNumber),
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Mission Name", missionName),
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Details", details),
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Launch Date", launchDate),
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1
-    )
-    Text(
-        modifier = Modifier
-            .padding(top = 1.dp, bottom = 4.dp)
-            .testTag("item"),
-        text = AnnotatedLabelledStringBuilder("Mission Outcome", if (launchSuccess) "Successful" else "Failed"),
-        color = if (launchSuccess) MaterialTheme.colors.onBackground else MaterialTheme.colors.error,
-        style = MaterialTheme.typography.body1
+    ListDisplayText("item_flight_number", Strings.get("flight_number"), flightNumber)
+    ListDisplayText("item_mission_name", Strings.get("mission_name"), missionName)
+    ListDisplayText("item_details", Strings.get("details"), details)
+    ListDisplayText("item_launch_date", Strings.get("launch_date"), launchDate)
+    ListDisplayText(
+        "item_mission_outcome",
+        Strings.get("mission_outcome"),
+        if (launchSuccess) Strings.get("successful") else Strings.get("failed"),
+        if (launchSuccess) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.error
     )
     Divider(modifier = Modifier.padding(top = 4.dp, bottom = 4.dp), color = MaterialTheme.colors.onBackground, thickness = 2.dp)
 }

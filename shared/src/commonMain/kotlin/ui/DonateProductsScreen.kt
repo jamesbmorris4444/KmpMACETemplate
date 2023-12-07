@@ -40,6 +40,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
@@ -201,6 +202,10 @@ fun DonateProductsHandler(
                         .height(60.dp)
                         .testTag("OutlinedTextField"),
                     value = text,
+                    textStyle = TextStyle(
+                        color = colors.primary,
+                        fontSize = typography.body2.fontSize
+                    ),
                     onValueChange = {
                         text = it
                     },

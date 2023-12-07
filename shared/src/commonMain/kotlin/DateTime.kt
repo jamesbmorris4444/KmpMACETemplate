@@ -13,9 +13,6 @@ class DateTime {
         val day = date.dayOfMonth
         val month = date.monthNumber
         val year = date.year
-
-        // This format should be generated based on an argument.
-        // For now, we're hardcoding this to the 'dd.MM.yyyy' format.
         return "${zeroPrefixed(day)}.${zeroPrefixed(month)}.${year}"
     }
 

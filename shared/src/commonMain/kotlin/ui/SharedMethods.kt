@@ -18,6 +18,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -156,4 +158,16 @@ fun AnnotatedLabelledStringBuilder(label: String, body: String): AnnotatedString
         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append("$label: ") }
         append(body)
     }
+}
+
+@Composable
+fun ListDisplayText(testTag: String, label: String, body: String, color: Color = MaterialTheme.colors.onBackground) {
+    Text(
+        modifier = Modifier
+            .padding(top = 1.dp)
+            .testTag(testTag),
+        text = AnnotatedLabelledStringBuilder(label, body),
+        color = color,
+        style = MaterialTheme.typography.body1
+    )
 }

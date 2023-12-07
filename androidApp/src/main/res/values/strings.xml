@@ -16,16 +16,16 @@
     <string name="complete_button_text">Complete</string>
     <string name="search_button_text">Search</string>
     <string name="create_products_header_text">DONOR: %s, %s</string>
-    <string name="no_db_entries_title_text">No entries made into the staging database</string>
-    <string name="made_db_entries_title_text">Staging entry for donor/products insertion</string>
-    <string name="made_db_entries_body_text">An entry was made to the staging database for insertion of new donor product(s)</string>
-    <string name="not_made_db_entries_body_text">An entry was not made to the staging database because product has empty last name or dob</string>
+    <string name="no_db_entries_title_text">No entries made into the database</string>
+    <string name="made_db_entries_title_text">Database entry made for donor or products</string>
+    <string name="made_db_entries_body_text">An entry was made to the database for insertion of new donor product(s)</string>
+    <string name="not_made_db_entries_body_text">An entry was not made to the database because product has empty last name or dob</string>
     <string name="donor_fetch_problem_title_text">Donor Fetch Problem</string>
     <string name="donor_fetch_problem_body_text">One donor expected, but found zero or more than one donors.</string>
     <string name="failure_db_entries_title_text">Main database initialization failure</string>
     <string name="failure_api_title_text">SpaceX Launches API failure</string>
     <string name="failure_db_entries_body_text">Failure Message is: %1$s</string>
-    <string name="made_reassociate_entries_body_text">An entry was made to the staging database for insertion of reassociated product(s)</string>
+    <string name="made_reassociate_entries_body_text">An entry was made to the database to move a product to correct donor</string>
     <string name="made_db_entries_failure_text">Insertion of new donor in database failed</string>
     <string name="positive_button_text_ok">BKG:OK</string>
     <string name="positive_button_text_yes">BKG:Yes</string>
@@ -65,5 +65,17 @@
     <string name="std_modal_noconfirm_body">Complete button was clicked without confirming current grid entry. Do you want to confirm?</string>
     
     <string name="movies_screen_name">Movies Database (IMDB)</string>
+    <string name="flight_number">Flight Number</string>
+    <string name="mission_name">Mission Name</string>
+    <string name="details">Details</string>
+    <string name="launch_date">Launch Date</string>
+    <string name="mission_outcome">Mission Outcome</string>
+    <string name="successful">Successful</string>
+    <string name="failed">Failed</string>
+    <string name="title">Title</string>
+    <string name="genre">Genre</string>
+    <string name="vote_average">Vote Average</string>
+    <string name="popularity">Popularity</string>
+    
 
 </resources>
