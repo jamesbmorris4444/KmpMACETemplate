@@ -104,7 +104,7 @@ fun CreateProductsScreen(
     }
 
     fun processNewProduct() {
-        val product = Product(id = 0, donorId = donor.id, din = dinText, aboRh = donor.aboRh, productCode = productCodeText, expirationDate = expirationText, removedForReassociation = false)
+        val product = Product(id = 0, donorId = donor.id, din = dinText, aboRh = donor.aboRh, productCode = productCodeText, expirationDate = expirationText)
         products.add(product)
     }
 

@@ -80,10 +80,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         return repository.donorFromNameAndDateWithProducts(donor)
     }
 
-    fun updateProductRemovedForReassociation(newValue: Boolean, productId: Long) {
-        repository.updateProductRemovedForReassociation(newValue, productId)
-    }
-
     fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts> {
         return repository.donorAndProductsList(lastNameSearchKey)
     }

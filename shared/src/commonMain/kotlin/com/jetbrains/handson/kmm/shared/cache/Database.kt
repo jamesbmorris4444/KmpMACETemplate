@@ -84,8 +84,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
             din = product.din,
             aboRh = product.aboRh,
             productCode = product.productCode,
-            expirationDate = product.expirationDate,
-            removedForReassociation = false
+            expirationDate = product.expirationDate
         )
     }
 
@@ -99,8 +98,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
         din: String,
         aboRh: String,
         productCode: String,
-        expirationDate: String,
-        removedForReassociation: Boolean
+        expirationDate: String
     ): Product {
         return Product(
             id = id,
@@ -108,8 +106,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
             din = din,
             aboRh = aboRh,
             productCode = productCode,
-            expirationDate = expirationDate,
-            removedForReassociation = removedForReassociation
+            expirationDate = expirationDate
         )
     }
 
@@ -127,10 +124,6 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
 
     internal fun insertProductsIntoDatabase(products: List<Product>) {
         createProduct(products)
-    }
-
-    internal fun updateProductRemovedForReassociation(newValue: Boolean, id: Long) {
-        dbQuery.updateProductRemovedForReassociation(newValue, id)
     }
 
     internal fun updateDonorIdInProduct(newValue: Long, id: Long) {

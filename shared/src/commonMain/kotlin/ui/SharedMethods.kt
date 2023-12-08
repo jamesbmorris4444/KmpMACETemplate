@@ -72,7 +72,6 @@ fun ProductListContent(
                             } else {
                                 val productSelectedAsList = products.filterIndexed { filterIndex, _ -> filterIndex == index }
                                 onProductSelected(productSelectedAsList)
-                                viewModel.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
                             }
                         },
                     painter = painterResource("drawable/delete_icon.png"),
@@ -94,7 +93,6 @@ fun ProductListContent(
                             } else {
                                 val productSelectedAsList = products.filterIndexed { filterIndex, _ -> filterIndex == index }
                                 onProductSelected(productSelectedAsList)
-                                viewModel.updateProductRemovedForReassociation(true, productSelectedAsList[0].id)
                             }
                         },
                     painter = painterResource("drawable/edit_icon.png"),

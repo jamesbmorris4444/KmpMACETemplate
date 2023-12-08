@@ -33,7 +33,6 @@ interface Repository {
     fun handleSearchClick(searchKey: String) : List<Donor>
     fun handleSearchClickWithProducts(searchKey: String) : List<DonorWithProducts>
     fun donorFromNameAndDateWithProducts(donor: Donor): DonorWithProducts?
-    fun updateProductRemovedForReassociation(newValue: Boolean, id: Long)
     fun updateDonorIdInProduct(newValue: Long, id: Long)
     fun updateDonor(firstName: String, middleName: String, lastName: String, dob: String, aboRh: String, branch: String, gender: Boolean, id: Long)
 }
@@ -269,10 +268,6 @@ class RepositoryImpl : Repository, KoinComponent {
 
     override fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts? {
         return Database(databaseDriverFactory).donorFromNameAndDateWithProducts(searchLast, dob)
-    }
-
-    override fun updateProductRemovedForReassociation(newValue: Boolean, id: Long) {
-        Database(databaseDriverFactory).updateProductRemovedForReassociation(newValue = newValue, id = id)
     }
 
     override fun updateDonorIdInProduct(newValue: Long, id: Long) {

@@ -40,7 +40,6 @@ CREATE TABLE Product (
     aboRh TEXT NOT NULL,
     productCode TEXT NOT NULL,
     expirationDate TEXT NOT NULL,
-    removedForReassociation INTEGER AS Boolean NOT NULL,
     FOREIGN KEY (donorId) REFERENCES Donor(id)
 );
 
@@ -49,14 +48,11 @@ SELECT Product.*
 FROM Product;
 
 insertProduct:
-INSERT INTO Product(id, donorId, din, aboRh, productCode, expirationDate, removedForReassociation)
-VALUES(?, ?, ?, ?, ?, ?, ?);
+INSERT INTO Product(id, donorId, din, aboRh, productCode, expirationDate)
+VALUES(?, ?, ?, ?, ?, ?);
 
 updateDonorIdInProduct:
 UPDATE Product SET donorId = :newValue WHERE id = :id;
-
-updateProductRemovedForReassociation:
-UPDATE Product SET removedForReassociation = :newValue WHERE id = :id;
 
 donorFromNameAndDateWithProducts:
 SELECT * FROM Donor
