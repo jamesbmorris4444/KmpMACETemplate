@@ -28,7 +28,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import extraBlack
-import extraMagenta
 import extraWhite
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.PreComposeApp
@@ -94,7 +93,7 @@ fun DrawerAppComponent(
                                 color = if (currentScreen.value == screen) {
                                     MaterialTheme.colors.extraWhite
                                 } else {
-                                    MaterialTheme.colors.extraMagenta
+                                    MaterialTheme.colors.primary
                                 }
                             ) {
                                 Text(

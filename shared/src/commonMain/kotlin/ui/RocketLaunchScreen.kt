@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
-import extraBlue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.NavOptions
@@ -47,7 +46,7 @@ fun RocketLaunchScreen(
     fun CustomCircularProgressBar() {
         CircularProgressIndicator(
             modifier = Modifier.size(60.dp),
-            color = MaterialTheme.colors.extraBlue,
+            color = MaterialTheme.colors.primary,
             strokeWidth = 6.dp
         )
     }

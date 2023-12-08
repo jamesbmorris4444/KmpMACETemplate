@@ -149,7 +149,7 @@ fun DonateProductsHandler(
         }
     }
 
-    Logger.i("launch DonateProductsScreen=$title    donors=$foundDonors")
+    Logger.i("MACELOG: launch DonateProductsScreen=$title")
 
     LaunchedEffect(key1 = true) {
         configAppBar(

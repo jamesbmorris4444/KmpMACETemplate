@@ -12,14 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -35,14 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
-import extraBlack
-import extraRed
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -77,21 +74,16 @@ fun ReassociateDonationScreen(
     }
 
     fun moveProductsToCorrectDonor(correctDonor: Donor) {
-        incorrectDonorsWithProducts.map { donorWithProducts ->
-            donorWithProducts.products.map { product ->
-                if (product.removedForReassociation) {
-                    viewModel.updateDonorIdInProduct(correctDonor.id, product.id)
-                }
-            }
-            showStandardModalState = StandardModalArgs(
-                topIconId = "drawable/notification.xml",
-                titleText = Strings.get("made_reassociate_entries_body_text"),
-                positiveText = Strings.get("positive_button_text_ok")
-            ) {
-                correctDonorWithProducts = viewModel.donorFromNameAndDateWithProducts(correctDonor) ?: DonorWithProducts(viewModel.emptyDonor)
-                isReassociateCompleted = true
-                showStandardModalState = StandardModalArgs()
-            }
+        val product = singleSelectedProductList[0]
+        viewModel.updateDonorIdInProduct(correctDonor.id, product.id)
+        showStandardModalState = StandardModalArgs(
+            topIconId = "drawable/notification.xml",
+            titleText = Strings.get("made_reassociate_entries_body_text"),
+            positiveText = Strings.get("positive_button_text_ok")
+        ) {
+            correctDonorWithProducts = viewModel.donorFromNameAndDateWithProducts(correctDonor) ?: DonorWithProducts(viewModel.emptyDonor)
+            isReassociateCompleted = true
+            showStandardModalState = StandardModalArgs()
         }
     }
 
@@ -162,13 +154,14 @@ fun ReassociateDonationScreen(
             }
         }
     }
+
     fun goBack() {
         resetReassociatedScreen()
         navigateUp()
     }
 
     LaunchedEffect(key1 = true) {
-        Logger.i("launch ReassociateDonationScreen=$reassociateDonationSearchStringName")
+        Logger.i("MACELOG: launch ReassociateDonationScreen=$reassociateDonationSearchStringName")
         onComposing(
             AppBarState(
                 title = title,
@@ -198,7 +191,7 @@ fun ReassociateDonationScreen(
         .fillMaxSize()
         .padding(start = 24.dp, end = 24.dp)
     ) {
-        Logger.i("Compose: ${ScreenNames.ReassociateDonation.name}")
+        Logger.i("MACELOG: Compose: ${ScreenNames.ReassociateDonation.name}")
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -206,15 +199,25 @@ fun ReassociateDonationScreen(
         ) {
             when {
                 isReassociateCompleted -> {
-                    // Fourth (Last) run
+                    // Fourth (Last) run (Move product to correct donor)
+                    Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         modifier = Modifier.align(Alignment.Start),
                         text = Strings.get("reassociate_complete_title"),
-                        color = MaterialTheme.colors.extraBlack,
-                        style = MaterialTheme.typography.body1
+                        color = MaterialTheme.colors.primary,
+                        style = MaterialTheme.typography.body1,
+                        fontWeight = FontWeight.Bold
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        modifier = Modifier.align(Alignment.Start),
+                        text = Strings.get("reassociate_complete_body"),
+                        color = MaterialTheme.colors.secondary,
+                        style = MaterialTheme.typography.body1,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                     DonorListWithProducts(
                         true,
                         listOf(correctDonorWithProducts),
@@ -222,7 +225,6 @@ fun ReassociateDonationScreen(
                         enablerForDonor = { false },
                         enablerForProducts = { false }
                     )
-
                 }
                 showStandardModalState.topIconId.isNotEmpty() -> {
                     StandardModal(
@@ -237,17 +239,19 @@ fun ReassociateDonationScreen(
                 }
                 else -> {
                     if (incorrectDonorSelected) {
-                        // Second run
+                        // Second or third run
                         if (isProductSelected) {
-                            // Third run
+                            // Third run (Display Incorrect Donor and Product)
+                            Spacer(modifier = Modifier.height(12.dp))
                             Text(
                                 modifier = Modifier.align(Alignment.Start),
                                 text = Strings.get("incorrect_donor_and_product_title"),
-                                color = MaterialTheme.colors.extraBlack,
-                                style = MaterialTheme.typography.body1
+                                color = MaterialTheme.colors.primary,
+                                style = MaterialTheme.typography.body1,
+                                fontWeight = FontWeight.Bold
                             )
                             Spacer(modifier = Modifier.height(10.dp))
-                            Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)
+                            Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                             DonorListWithProducts(
                                 true,
                                 listOf(DonorWithProducts(donor = incorrectDonorWithProducts.donor, products = singleSelectedProductList)),
@@ -256,21 +260,25 @@ fun ReassociateDonationScreen(
                                 enablerForProducts = { false }
                             )
                         } else {
-                            // Second run
+                            // Second run (Choose incorrect donor)
+                            Spacer(modifier = Modifier.height(12.dp))
                             Text(
                                 modifier = Modifier.align(Alignment.Start),
                                 text = Strings.get("incorrect_donor_title"),
-                                color = MaterialTheme.colors.extraBlack,
-                                style = MaterialTheme.typography.body1
+                                color = MaterialTheme.colors.primary,
+                                style = MaterialTheme.typography.body1,
+                                fontWeight = FontWeight.Bold
                             )
+                            Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 modifier = Modifier.align(Alignment.Start),
                                 text = Strings.get("choose_product_for_reassociation_title"),
-                                color = MaterialTheme.colors.extraRed,
-                                style = MaterialTheme.typography.body1
+                                color = MaterialTheme.colors.secondary,
+                                style = MaterialTheme.typography.body1,
+                                fontWeight = FontWeight.Bold
                             )
                             Spacer(modifier = Modifier.height(10.dp))
-                            Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)
+                            Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                             DonorListWithProducts(
                                 true,
                                 incorrectDonorsWithProducts,
@@ -280,37 +288,34 @@ fun ReassociateDonationScreen(
                             )
                         }
                         if (isProductSelected) {
-                            // Third run
-                            Spacer(modifier = Modifier.height(4.dp))
+                            // Third run (Choose correct donor)
+                            Spacer(modifier = Modifier.height(8.dp))
                             var text by rememberSaveable { mutableStateOf("") }
-                            OutlinedTextField(
-                                modifier = Modifier
-                                    .height(60.dp),
+                            StandardEditText(
+                                testTag = "otf_correct_donor",
                                 value = text,
-                                onValueChange = {
-                                    text = it
-                                },
-                                shape = RoundedCornerShape(10.dp),
-                                label = { Text(Strings.get("initial_letters_of_correct_donor_last_name_text")) },
-                                singleLine = true,
+                                onValueChange = { text = it },
+                                label = Strings.get("initial_letters_of_correct_donor_last_name_text"),
                                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                                 keyboardActions = KeyboardActions(
                                     onDone = {
                                         keyboardController?.hide()
                                         handleSearchClickWithProducts(true, text)
-                                    })
+                                    }
+                                )
                             )
-                            Spacer(modifier = Modifier.height(10.dp))
+                            Spacer(modifier = Modifier.height(12.dp))
                             if (correctDonorsWithProducts.isNotEmpty()) {
                                 Text(
                                     modifier = Modifier.align(Alignment.Start),
                                     text = Strings.get("choose_correct_donor_title"),
-                                    color = MaterialTheme.colors.extraRed,
-                                    style = MaterialTheme.typography.body1
+                                    color = MaterialTheme.colors.secondary,
+                                    style = MaterialTheme.typography.body1,
+                                    fontWeight = FontWeight.Bold
                                 )
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Spacer(modifier = Modifier.height(12.dp))
                             }
-                            Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)
+                            Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                             DonorListWithProducts(
                                 true,
                                 correctDonorsWithProducts,
@@ -321,37 +326,34 @@ fun ReassociateDonationScreen(
 
                         }
                     } else {
-                        // First run
+                        // First run (Enter incorrect donor name and choose the incorrect donor)
                         var text by remember { mutableStateOf("") }
-                        OutlinedTextField(
-                            modifier = Modifier
-                                .height(60.dp),
+                        Spacer(modifier = Modifier.height(12.dp))
+                        StandardEditText(
+                            testTag = "otf_correct_donor",
                             value = text,
-                            onValueChange = {
-                                text = it
-                            },
-
-                            shape = RoundedCornerShape(10.dp),
-                            label = { Text(Strings.get("initial_letters_of_incorrect_donor_last_name_text")) },
-                            singleLine = true,
+                            onValueChange = { text = it },
+                            label = Strings.get("initial_letters_of_incorrect_donor_last_name_text"),
                             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                             keyboardActions = KeyboardActions(
                                 onDone = {
                                     keyboardController?.hide()
                                     handleSearchClickWithProducts(false, text)
-                                })
+                                }
+                            )
                         )
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
                         if (incorrectDonorsWithProducts.isNotEmpty()) {
                             Text(
                                 modifier = Modifier
                                     .align(Alignment.Start),
                                 text = Strings.get("choose_incorrect_donor_title"),
-                                color = MaterialTheme.colors.extraRed,
-                                style = MaterialTheme.typography.body1
+                                color = MaterialTheme.colors.secondary,
+                                style = MaterialTheme.typography.body1,
+                                fontWeight = FontWeight.Bold
                             )
-                            Spacer(modifier = Modifier.height(12.dp))
-                            Divider(color = MaterialTheme.colors.extraBlack, thickness = 2.dp)
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                         }
                         DonorListWithProducts(
                             false,

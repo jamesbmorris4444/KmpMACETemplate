@@ -4,7 +4,7 @@
 "back_button_content_description" = "back button";
 "choose_correct_donor_title" = "Choose the correct Donor";
 "choose_incorrect_donor_title" = "Choose the incorrect Donor";
-"choose_product_for_reassociation_title" = "Choose product for reassociation";
+"choose_product_for_reassociation_title" = "Choose product to Move";
 "clear_button_text" = "Clear";
 "complete_button_text" = "Complete";
 "confirm_button_text" = "Confirm";
@@ -32,7 +32,7 @@
 "failure_db_entries_title_text" = "Main database initialization failure";
 "fs_logo_content_description" = "Florida Software Logo";
 "incorrect_donor_and_product_title" = "Incorrect Donor and Product";
-"incorrect_donor_title" = "Incorrect Donor";
+"incorrect_donor_title" = "Incorrect Donor Selected";
 "initial_letters_of_correct_donor_last_name_text" = "Correct donor last name";
 "initial_letters_of_incorrect_donor_last_name_text" = "Incorrect donor last name";
 "initial_letters_of_last_name_text" = "Initial letters of last name";
@@ -51,7 +51,8 @@
 "positive_button_text_ok" = "BKG:OK";
 "positive_button_text_yes" = "BKG:Yes";
 "product_code_title" = "PRODUCT CODE";
-"reassociate_complete_title" = "Reassociation Complete\nCorrect Donor Follows";
+"reassociate_complete_title" = "Move to Correct Donor Complete";
+"reassociate_complete_body" = "Correct Donor and Product Follows";
 "reassociate_donation_title" = "Move to Correct Donor";
 "rocket_launch_complete_title" = "SpaceX Rocket Launches";
 "rocket_launch_pending_title" = "Fetching SpaceX Launches …";

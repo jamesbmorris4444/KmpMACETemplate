@@ -19,24 +19,6 @@ import com.github.ajalt.colormath.model.RGB
 import com.mace.kmpmacetemplate.R
 
 @get:Composable
-actual val Colors.extraRed: Color
-    get() = RGB("#ff0000").toComposeColor()
-@get:Composable
-actual val Colors.extraGreen: Color
-    get() = RGB("#00ff00").toComposeColor()
-@get:Composable
-actual val Colors.extraBlue: Color
-    get() = RGB("#0000ff").toComposeColor()
-@get:Composable
-actual val Colors.extraMagenta: Color
-    get() = RGB("#ff00ff").toComposeColor()
-@get:Composable
-actual val Colors.extraCyan: Color
-    get() = RGB("#00ffff").toComposeColor()
-@get:Composable
-actual val Colors.extraYellow: Color
-    get() = RGB("#ffff00").toComposeColor()
-@get:Composable
 actual val Colors.extraBlack: Color
     get() = RGB("#000000").toComposeColor()
 @get:Composable

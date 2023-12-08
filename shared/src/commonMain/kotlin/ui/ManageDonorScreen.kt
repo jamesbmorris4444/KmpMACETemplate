@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
+import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -34,6 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
@@ -43,7 +45,7 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ManageDonorScreen(
     navigator: Navigator,
@@ -62,7 +64,7 @@ fun ManageDonorScreen(
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
 
     val stateVertical = rememberScrollState(0)
-    Logger.i("launch ManageDonorScreen=${ScreenNames.ManageDonorAfterSearch.name}")
+    Logger.i("MACELOG: launch ManageDonorScreen=${ScreenNames.ManageDonorAfterSearch.name}")
     LaunchedEffect(key1 = true) {
         configAppBar(
             AppBarState(
@@ -166,7 +168,14 @@ fun ManageDonorScreen(
                     aboRhExpanded = !aboRhExpanded
                 }
             ) {
-                StandardEditText(testTag = "otf_aborh", value = currentAboRhText, onValueChange = { currentAboRhText = it ; databaseModified = true }, label = enterBloodTypeText)
+                StandardEditText(
+                    testTag = "otf_aborh",
+                    value = currentAboRhText,
+                    onValueChange = { currentAboRhText = it ; databaseModified = true },
+                    label = enterBloodTypeText,
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = branchExpanded) }
+                )
                 ExposedDropdownMenu(
                     expanded = aboRhExpanded,
                     onDismissRequest = { aboRhExpanded = false }
@@ -206,7 +215,14 @@ fun ManageDonorScreen(
                     branchExpanded = !branchExpanded
                 }
             ) {
-                StandardEditText(testTag = "otf_branch", value = currentBranchText, onValueChange = { currentBranchText = it ; databaseModified = true }, label = enterBranchText)
+                StandardEditText(
+                    testTag = "otf_branch",
+                    value = currentBranchText,
+                    onValueChange = { currentBranchText = it ; databaseModified = true },
+                    label = enterBranchText,
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = branchExpanded) }
+                )
                 ExposedDropdownMenu(
                     expanded = branchExpanded,
                     onDismissRequest = { branchExpanded = false }
@@ -221,7 +237,7 @@ fun ManageDonorScreen(
                     )
                     branchArray.forEach { label ->
                         DropdownMenuItem(
-                            modifier = Modifier.background(MaterialTheme.colors.secondary),
+                            modifier = Modifier.background(MaterialTheme.colors.primary),
                             onClick = {
                                 branchExpanded = false
                                 currentBranchText = label

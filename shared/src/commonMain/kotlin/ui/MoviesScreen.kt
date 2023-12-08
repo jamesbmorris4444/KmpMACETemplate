@@ -200,7 +200,7 @@ fun MoviesDisplay(
         contentDescription = null,
         onFailure = { exception ->
             coroutineScope.launch {
-                Logger.d("Kamel EXCEPTION=${exception.message.toString()}")
+                Logger.i("MACELOG: Kamel EXCEPTION=${exception.message.toString()}")
             }
         }
     )

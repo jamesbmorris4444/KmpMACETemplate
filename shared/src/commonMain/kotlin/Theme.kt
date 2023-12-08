@@ -8,18 +8,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 
 @get:Composable
-expect val Colors.extraRed: Color
-@get:Composable
-expect val Colors.extraGreen: Color
-@get:Composable
-expect val Colors.extraBlue: Color
-@get:Composable
-expect val Colors.extraMagenta: Color
-@get:Composable
-expect val Colors.extraCyan: Color
-@get:Composable
-expect val Colors.extraYellow: Color
-@get:Composable
 expect val Colors.extraBlack: Color
 @get:Composable
 expect val Colors.extraWhite: Color

@@ -168,14 +168,18 @@ fun StandardEditText(
     testTag: String, value: String,
     onValueChange: (String) -> Unit,
     label: String,
+    readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    trailingIcon: @Composable (() -> Unit)? = null,
+
 ) {
     OutlinedTextField(
         modifier = modifier
             .height(72.dp)
             .testTag(testTag),
         value = value,
+        readOnly = readOnly,
         textStyle = TextStyle(
             color = MaterialTheme.colors.primary,
             fontSize = MaterialTheme.typography.body2.fontSize
@@ -189,6 +193,7 @@ fun StandardEditText(
         label = { Text(label, color = MaterialTheme.colors.primary, style = MaterialTheme.typography.body2) },
         singleLine = true,
         keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions
+        keyboardActions = keyboardActions,
+        trailingIcon = trailingIcon
     )
 }

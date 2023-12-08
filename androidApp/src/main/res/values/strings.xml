@@ -38,10 +38,11 @@
     <string name="manage_donor_title">Manage Donor</string>
     <string name="reassociate_donation_title">Move to Correct Donor</string>
     <string name="view_donor_list_title">View Donor List</string>
-    <string name="incorrect_donor_title">Incorrect Donor</string>
+    <string name="incorrect_donor_title">Incorrect Donor Selected</string>
     <string name="incorrect_donor_and_product_title">Incorrect Donor and Product</string>
-    <string name="reassociate_complete_title">Reassociation Complete\nCorrect Donor Follows</string>
-    <string name="choose_product_for_reassociation_title">Choose product for reassociation</string>
+    <string name="reassociate_complete_title">Move to Correct Donor Complete</string>
+    <string name="reassociate_complete_body">Correct Donor and Product Follows</string>
+    <string name="choose_product_for_reassociation_title">"Choose Product to Move</string>
     <string name="choose_incorrect_donor_title">Choose the incorrect Donor</string>
     <string name="choose_correct_donor_title">Choose the correct Donor</string>
     <string name="enter_din_text">Enter DIN</string>
