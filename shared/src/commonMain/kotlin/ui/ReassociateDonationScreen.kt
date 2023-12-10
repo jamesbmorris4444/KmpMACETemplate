@@ -140,7 +140,6 @@ fun ReassociateDonationScreen(
                     }
                     Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                     ProductListScreen(
-                        viewModel = viewModel,
                         canScrollVertically = false,
                         productList = it.products,
                         useOnProductsChange = false,

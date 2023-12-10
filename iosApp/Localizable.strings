@@ -17,7 +17,9 @@
 "donor_fetch_problem_body_text" = "One donor expected, but found zero or more than one donors.";
 "donor_fetch_problem_title_text" = "Donor Fetch Problem";
 "donor_search_view_donor_list_text" = "Donor Search String";
+"destination_search_view_text" = "Enter City or Country";
 "enter_blood_type_text" = "Enter Blood Type";
+"enter_region_text" = "Select Region";
 "enter_branch_text" = "Enter Branch";
 "enter_din_text" = "Enter DIN";
 "enter_dob_text" = "Enter Date of Birth";
@@ -27,8 +29,8 @@
 "enter_middle_name_text" = "Enter Middle Name";
 "enter_product_code" = "Enter Prod Code";
 "expiration_title" = "EXPIRATION DATE";
-"failure_api_title_text" = "SpaceX Launches API failure";
-"failure_db_entries_body_text" = "Failure Message is: %1$s";
+"failure_api_title_text" = "Movies API failure";
+"failure_db_entries_body_text" = "Failure Message is: %@";
 "failure_db_entries_title_text" = "Main database initialization failure";
 "fs_logo_content_description" = "Florida Software Logo";
 "incorrect_donor_and_product_title" = "Incorrect Donor and Product";
@@ -57,6 +59,9 @@
 "rocket_launch_complete_title" = "SpaceX Rocket Launches";
 "rocket_launch_pending_title" = "Fetching SpaceX Launches …";
 "rocket_launch_screen_name" = "SpaceX Rocket Launches";
+"rocket_launch_type" = "SpaceX Launches";
+"destination_id_type" = "Destination IDs";
+"region_type" = "Regions";
 "search_button_text" = "Search";
 "std_modal_noconfirm_body" = "Complete button was clicked without confirming current grid entry. Do you want to confirm?";
 "std_modal_noconfirm_title" = "Product Entry Not Confirmed";
@@ -64,6 +69,7 @@
 "view_donor_list_title" = "View Donor List";
 "walking_blood_bank_text" = "Walking Blood Bank";
 "movies_screen_name" = "Movies Database (IMDB)";
+"travel_destinations_screen_name" = "Travel Destinations";
 "flight_number" = "Flight Number";
 "mission_name" = "Mission Name";
 "details" = "Details";

@@ -1,20 +1,23 @@
 package ui
 
+import BloodViewModel
 import Strings
-import ViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TabRowDefaults.Divider
@@ -33,13 +36,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.jetbrains.handson.kmm.shared.cache.Product
+import com.rickclephas.kmm.viewmodel.coroutineScope
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ProductListContent(
-    viewModel: ViewModel,
     canScrollVertically: Boolean,
     products: List<Product>,
     useOnProductsChange: Boolean,
@@ -115,7 +119,6 @@ fun ProductListContent(
 
 @Composable
 fun ProductListScreen(
-    viewModel: ViewModel,
     canScrollVertically: Boolean,
     productList: List<Product>,
     useOnProductsChange: Boolean,
@@ -127,7 +130,6 @@ fun ProductListScreen(
     enablerForProducts: (Product) -> Boolean
 ) {
     ProductListContent(
-        viewModel = viewModel,
         canScrollVertically = canScrollVertically,
         products = productList,
         useOnProductsChange = useOnProductsChange,
@@ -194,4 +196,74 @@ fun StandardEditText(
         keyboardActions = keyboardActions,
         trailingIcon = trailingIcon
     )
+}
+
+@Composable
+fun progressBar() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(60.dp),
+            color = MaterialTheme.colors.primary,
+            strokeWidth = 6.dp
+        )
+    }
+}
+
+fun genericApiCall(
+    searchKey: String = "",
+    searchType: String = "",
+    apiType: ApiCalls,
+    viewModel: BloodViewModel
+) {
+    val composableScope = viewModel.viewModelScope.coroutineScope
+    when (apiType) {
+        ApiCalls.SpaceX -> {
+            composableScope.launch {
+                val pair = viewModel.getSpaceXLaunches(composableScope)
+                if (pair.second.isEmpty()) {
+                    // success
+                    viewModel.launchesAvailable.value = pair.first
+                } else {
+                    // failure
+                    viewModel.launchesFailure.value = pair.second
+                }
+            }
+        }
+        ApiCalls.TravelDestinations -> {
+            composableScope.launch {
+                val pair = viewModel.getHotelDestinationIds(searchKey, composableScope)
+                if (pair.second.isEmpty()) {
+                    // success
+                    viewModel.destinationIdsAvailable.value = pair.first
+                } else {
+                    // failure
+                    viewModel.destinationIdsFailure.value = pair.second
+                }
+            }
+        }
+
+        ApiCalls.TravelRegions -> {
+            composableScope.launch {
+                val pair = viewModel.getHotels(searchKey, searchType, composableScope)
+                if (pair.second.isEmpty()) {
+                    // success
+                    viewModel.hotelsAvailable.value = pair.first
+                } else {
+                    // failure
+                    viewModel.regionsFailure.value = pair.second
+                }
+            }
+        }
+    }
+}
+
+enum class ApiCalls(val string: String) {
+    SpaceX(Strings.get("rocket_launch_type")),
+    TravelRegions(Strings.get("region_type")),
+    TravelDestinations(Strings.get("destination_id_type"))
+
 }

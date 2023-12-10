@@ -50,59 +50,16 @@ fun DonateProductsScreen(
     viewModel: BloodViewModel,
     title: String
 ) {
-    // state variables
-    val completed by viewModel.refreshCompletedState.collectAsState()
-    val isInvalid by viewModel.databaseInvalidState.collectAsState()
-    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
-    val failure by viewModel.refreshFailureState.collectAsState()
-
-    when {
-        isInvalid -> {
-            viewModel.initializeDatabase()
-            viewModel.refreshCompletedState.value = true
-            viewModel.databaseInvalidState.value = false
-            viewModel.refreshFailureState.value = ""
-        }
-        failure.isNotEmpty() -> {
-            if (showStandardModalState.topIconId.isNotEmpty()) {
-                StandardModal(
-                    showStandardModalState.topIconId,
-                    showStandardModalState.titleText,
-                    showStandardModalState.bodyText,
-                    showStandardModalState.positiveText,
-                    showStandardModalState.negativeText,
-                    showStandardModalState.neutralText,
-                    showStandardModalState.onDismiss
-                )
-            } else {
-                viewModel.showStandardModalState.value = StandardModalArgs(
-                    topIconId = "drawable/notification.xml",
-                    titleText = Strings.get("failure_db_entries_title_text"),
-                    bodyText = failure,
-                    positiveText = Strings.get("positive_button_text_ok")
-                ) {
-                    navigateUp()
-                    viewModel.showStandardModalState.value = StandardModalArgs()
-                    viewModel.refreshFailureState.value = ""
-                }
-            }
-        }
-        completed -> {
-            DonateProductsHandler(
-                configAppBar = configAppBar,
-                canNavigateBack = canNavigateBack,
-                navigateUp = navigateUp,
-                openDrawer = openDrawer,
-                viewModel = viewModel,
-                title = title,
-                onItemButtonClicked = onItemButtonClicked)
-        }
-        else -> {
-            viewModel.refreshCompletedState.value = false
-            viewModel.databaseInvalidState.value = true
-            viewModel.refreshFailureState.value = ""
-        }
-    }
+    viewModel.initializeDatabase()
+    DonateProductsHandler(
+        configAppBar = configAppBar,
+        canNavigateBack = canNavigateBack,
+        navigateUp = navigateUp,
+        openDrawer = openDrawer,
+        viewModel = viewModel,
+        title = title,
+        onItemButtonClicked = onItemButtonClicked
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class)

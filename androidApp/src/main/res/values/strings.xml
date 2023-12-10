@@ -3,6 +3,9 @@
     <string name="rocket_launch_complete_title">SpaceX Rocket Launches</string>
     <string name="rocket_launch_pending_title">Fetching SpaceX Launches …</string>
     <string name="rocket_launch_screen_name">SpaceX Rocket Launches</string>
+    <string name="rocket_launch_type">SpaceX Launches</string>
+    <string name="destination_id_type">Destination IDs</string>
+    <string name="region_type">Regions</string>
     <string name="donate_products_search_screen_name">Donate Products Screen</string>
     <string name="donate_products_no_list">donate_products_no_list</string>
     <string name="donate_products">donate_products</string>
@@ -23,7 +26,7 @@
     <string name="donor_fetch_problem_title_text">Donor Fetch Problem</string>
     <string name="donor_fetch_problem_body_text">One donor expected, but found zero or more than one donors.</string>
     <string name="failure_db_entries_title_text">Main database initialization failure</string>
-    <string name="failure_api_title_text">SpaceX Launches API failure</string>
+    <string name="failure_api_title_text">Movies API failure</string>
     <string name="failure_db_entries_body_text">Failure Message is: %1$s</string>
     <string name="made_reassociate_entries_body_text">An entry was made to the database to move a product to correct donor</string>
     <string name="made_db_entries_failure_text">Insertion of new donor in database failed</string>
@@ -57,15 +60,18 @@
     <string name="enter_last_name_text">Enter Last Name</string>
     <string name="enter_dob_text">Enter Date of Birth</string>
     <string name="enter_blood_type_text">Enter Blood Type</string>
+    <string name="enter_region_text">Select Region</string>
     <string name="enter_branch_text">Enter Branch</string>
     <string name="initial_letters_of_last_name_text">Initial letters of last name</string>
     <string name="initial_letters_of_incorrect_donor_last_name_text">Incorrect donor last name</string>
     <string name="initial_letters_of_correct_donor_last_name_text">Correct donor last name</string>
     <string name="donor_search_view_donor_list_text">Donor Search String</string>
+    <string name="destination_search_view_text">Enter City or Country</string>
     <string name="std_modal_noconfirm_title">Product Entry Not Confirmed</string>
     <string name="std_modal_noconfirm_body">Complete button was clicked without confirming current grid entry. Do you want to confirm?</string>
     
     <string name="movies_screen_name">Movies Database (IMDB)</string>
+    <string name="travel_destinations_screen_name">Travel Destinations</string>
     <string name="flight_number">Flight Number</string>
     <string name="mission_name">Mission Name</string>
     <string name="details">Details</string>

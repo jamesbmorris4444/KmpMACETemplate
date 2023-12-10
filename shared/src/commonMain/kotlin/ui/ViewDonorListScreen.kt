@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import extraBlack
-import extraWhite
 import utils.Utils
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
@@ -194,7 +193,7 @@ fun ViewDonorListScreen(
                     ) {
                         Text(
                             text = label,
-                            color = MaterialTheme.colors.extraWhite,
+                            color = MaterialTheme.colors.onPrimary,
                             style = MaterialTheme.typography.body1
                         )
                     }

@@ -419,7 +419,6 @@ fun CreateProductsScreen(
                 }
                 Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
                 ProductListScreen(
-                    viewModel = viewModel,
                     canScrollVertically = true,
                     productList = products,
                     useOnProductsChange = true,

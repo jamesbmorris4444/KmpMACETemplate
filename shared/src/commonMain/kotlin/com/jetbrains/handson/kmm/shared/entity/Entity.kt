@@ -71,3 +71,21 @@ data class DonorWithProducts(
     val products: List<Product> = listOf()
 )
 
+@Serializable
+data class HotelDestinationId(
+    @SerialName(value = "dest_id") val destId: String = "",
+    @SerialName(value = "dest_type") val searchType: String = "",
+    @SerialName(value = "name") val name: String = ""
+)
+
+@Serializable
+data class HotelRegion(
+    @SerialName(value = "result") val hotelResult: List<HotelResult> = listOf(),
+)
+
+@Serializable
+data class HotelResult(
+    @SerialName(value = "hotel_name_trans") val hotelName: String = "",
+    @SerialName(value = "main_photo_url") val photoUrl: String = ""
+)
+

@@ -6,6 +6,8 @@ import app.cash.paging.cachedIn
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
+import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
+import com.jetbrains.handson.kmm.shared.entity.HotelRegion
 import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.rickclephas.kmm.viewmodel.KMMViewModel
@@ -28,20 +30,22 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val emptyDonor = Donor(0,"", "", "", "", "", "", gender = false)
     val noValue = "NO VALUE"
 
-    var rocketLaunchesInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    var refreshCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var refreshFailureState: MutableStateFlow<String> = MutableStateFlow("")
-    var launchesAvailableState: MutableStateFlow<List<RocketLaunch>> = MutableStateFlow(listOf())
+    var launchesAvailable: MutableStateFlow<List<RocketLaunch>?> = MutableStateFlow(null)
+    var launchesFailure: MutableStateFlow<String> = MutableStateFlow("")
+    var destinationIdsAvailable: MutableStateFlow<List<HotelDestinationId>?> = MutableStateFlow(null)
+    var destinationIdsFailure: MutableStateFlow<String> = MutableStateFlow("")
+    var hotelsAvailable: MutableStateFlow<HotelRegion?> = MutableStateFlow(null)
+    var regionsFailure: MutableStateFlow<String> = MutableStateFlow("")
 
     val moviesAvailableState: Flow<PagingData<Movie>> = Pager(
-        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-        pagingSourceFactory = { repository.getMoviePagingSource() }
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { repository.getMoviePagingSource() }
         )
         .flow
         .cachedIn(viewModelScope.coroutineScope)
 
     val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
-    var databaseInvalidState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    var progressBarState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var donorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
 
     fun initializeDatabase() {
@@ -50,6 +54,14 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
 
     suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String> {
         return repository.getSpaceXLaunches(composableScope)
+    }
+
+    suspend fun getHotelDestinationIds(destinationSearchKey: String, composableScope: CoroutineScope): Pair<List<HotelDestinationId>, String> {
+        return repository.getHotelDestinationIds(destinationSearchKey, composableScope)
+    }
+
+    suspend fun getHotels(regionSearchKey: String, regionSearchType: String, composableScope: CoroutineScope): Pair<HotelRegion, String> {
+        return repository.getHotels(regionSearchKey, regionSearchType, composableScope)
     }
 
     fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts? {

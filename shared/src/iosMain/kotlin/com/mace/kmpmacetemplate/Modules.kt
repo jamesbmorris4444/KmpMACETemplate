@@ -9,5 +9,5 @@ import org.koin.dsl.module
 fun appModule() = module {
     single<Repository> { RepositoryImpl() }
     single { DatabaseDriverFactory() }
-    single { SpaceXSDK(get()) }
+    single { SpaceXSDK() }
 }
