@@ -17,9 +17,9 @@
 "donor_fetch_problem_body_text" = "One donor expected, but found zero or more than one donors.";
 "donor_fetch_problem_title_text" = "Donor Fetch Problem";
 "donor_search_view_donor_list_text" = "Donor Search String";
-"destination_search_view_text" = "Enter City or Country";
+"destination_search_view_text" = "City, Country, or Region";
 "enter_blood_type_text" = "Enter Blood Type";
-"enter_region_text" = "Select Region";
+"enter_region_text" = "Enter City, Country, Region";
 "enter_branch_text" = "Enter Branch";
 "enter_din_text" = "Enter DIN";
 "enter_dob_text" = "Enter Date of Birth";
@@ -69,7 +69,7 @@
 "view_donor_list_title" = "View Donor List";
 "walking_blood_bank_text" = "Walking Blood Bank";
 "movies_screen_name" = "Movies Database (IMDB)";
-"travel_destinations_screen_name" = "Travel Destinations";
+"travel_destinations_screen_name" = "Destinations (City, Country, Region)";
 "flight_number" = "Flight Number";
 "mission_name" = "Mission Name";
 "details" = "Details";
@@ -77,7 +77,7 @@
 "mission_outcome" = "Mission Outcome";
 "successful" = "Successful";
 "failed" = "Failed";
-"title" = "Title";
+"title" = "Hotel Name";
 "genre" = "Genre";
 "vote_average" = "Vote Average";
 "popularity" = "Popularity";
@@ -91,3 +91,7 @@
 "din" = "DIN";
 "product_code" = "Product Code";
 "expiration" = "Expiration";
+"travel_destination_id" = "Choose City, Country, Region";
+"travel_hotels" = "Travel (List of Hotels)";
+"travel_you_are_going" = "You are going to %@!";
+"list_of_hotels" = "List of Hotels";

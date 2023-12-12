@@ -36,6 +36,8 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     var destinationIdsFailure: MutableStateFlow<String> = MutableStateFlow("")
     var hotelsAvailable: MutableStateFlow<HotelRegion?> = MutableStateFlow(null)
     var regionsFailure: MutableStateFlow<String> = MutableStateFlow("")
+    var regionsSearchKey: MutableStateFlow<String> = MutableStateFlow("")
+
 
     val moviesAvailableState: Flow<PagingData<Movie>> = Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),

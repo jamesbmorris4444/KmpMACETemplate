@@ -59,13 +59,4 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.kmm.viewmodel.lifecycle)
     implementation(libs.kmm.viewmodel)
-
-//    implementation(libs.androidx.activity.compose) {
-//        //exclude("org.jetbrains.compose.runtime", "runtime-desktop")
-//        exclude("androidx.compose.runtime", "runtime")
-//        exclude("androidx.compose.runtime", "runtime-saveable")
-//       // exclude("org.jetbrains.compose.runtime", "runtime-saveable-desktop")
-//        exclude("androidx.compose.ui", "ui")
-//       // exclude("org.jetbrains.compose.ui", "ui-desktop")
-//    }
 }

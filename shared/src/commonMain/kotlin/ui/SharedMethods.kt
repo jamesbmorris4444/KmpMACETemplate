@@ -239,6 +239,7 @@ fun genericApiCall(
                 if (pair.second.isEmpty()) {
                     // success
                     viewModel.destinationIdsAvailable.value = pair.first
+                    viewModel.regionsSearchKey.value = searchKey
                 } else {
                     // failure
                     viewModel.destinationIdsFailure.value = pair.second

@@ -2,14 +2,14 @@ package ui
 import BloodViewModel
 import Strings
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
@@ -140,6 +141,7 @@ fun TravelDestinationsScreen(
         destinationIds: List<HotelDestinationId>? = null
     ) {
         // state variables
+        val regionsSearchKey  by viewModel.regionsSearchKey.collectAsState()
         var regionTextEntered by remember { mutableStateOf("") }
         LaunchedEffect(key1 = true) {
             Logger.i("MACELOG: launch Travel Destinations Handler=${ScreenNames.TravelDestinations.name}")
@@ -167,14 +169,17 @@ fun TravelDestinationsScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(18.dp))
             Text(
-                modifier = Modifier.align(Alignment.Start),
-                text = Strings.get("reassociate_complete_title"),
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 24.dp),
+                text = Strings.format("travel_you_are_going", regionsSearchKey),
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.height(18.dp))
             var regionExpanded by remember { mutableStateOf(false) }
             when {
                 progressBarState -> progressBar()
@@ -189,6 +194,7 @@ fun TravelDestinationsScreen(
                             testTag = "otf_region",
                             value = regionTextEntered,
                             onValueChange = { },
+                            readOnly = true,
                             label = Strings.get("enter_region_text"),
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = regionExpanded) }
                         )
@@ -198,7 +204,7 @@ fun TravelDestinationsScreen(
                         ) {
                             destinationIds?.forEach { label ->
                                 DropdownMenuItem(
-                                    modifier = Modifier.background(MaterialTheme.colors.secondary),
+                                    modifier = Modifier.background(MaterialTheme.colors.primary),
                                     onClick = {
                                         regionExpanded = false
                                         regionTextEntered = label.name
@@ -238,35 +244,65 @@ fun TravelDestinationsScreen(
             posterPath: String,
             coroutineScope: CoroutineScope
         ) {
-            ListDisplayText("item_title", Strings.get("title"), name)
-            val painterResource: Resource<Painter> = asyncPainterResource(posterPath) {
-                coroutineContext = coroutineScope.coroutineContext
-                requestBuilder {
-                    header("Key", "Value")
-                    parameter("Key", "Value")
-                    cacheControl(CacheControl.MAX_AGE)
-                }
-            }
-            KamelImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp, bottom = 4.dp)
-                    .width(120.dp)
-                    .height(120.dp),
-                resource = painterResource,
-                contentScale = ContentScale.FillBounds,
-                contentDescription = null,
-                onFailure = { exception ->
-                    coroutineScope.launch {
-                        Logger.i("MACELOG: Kamel EXCEPTION=${exception.message.toString()}")
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                ListDisplayText("item_title", Strings.get("title"), name)
+                val painterResource: Resource<Painter> = asyncPainterResource(posterPath) {
+                    coroutineContext = coroutineScope.coroutineContext
+                    requestBuilder {
+                        header("Key", "Value")
+                        parameter("Key", "Value")
+                        cacheControl(CacheControl.MAX_AGE)
                     }
                 }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    KamelImage(
+                        modifier = Modifier
+                            .padding(top = 8.dp, bottom = 4.dp)
+                            .size(100.dp),
+                        resource = painterResource,
+                        contentScale = ContentScale.FillBounds,
+                        contentDescription = null,
+                        onFailure = { exception ->
+                            coroutineScope.launch {
+                                Logger.i("MACELOG: Kamel EXCEPTION=${exception.message.toString()}")
+                            }
+                        }
+                    )
+                }
+
+                Divider(
+                    modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
+                    color = MaterialTheme.colors.onBackground,
+                    thickness = 2.dp
+                )
+            }
+        }
+
+        @Composable
+        fun HotelsList() {
+            Spacer(modifier = Modifier.height(18.dp))
+            Text(
+                text = Strings.get("list_of_hotels"),
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colors.primary,
+                style = MaterialTheme.typography.body1,
+                fontWeight = FontWeight.Bold
             )
-            Divider(
-                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
-                color = MaterialTheme.colors.onBackground,
-                thickness = 2.dp
-            )
+            Spacer(modifier = Modifier.height(18.dp))
+            LazyColumn {
+                items(count = hotelRegion?.hotelResult?.size ?: 0) { index ->
+                    HotelsDisplay(
+                        name = hotelRegion?.hotelResult?.get(index)?.hotelName ?: "",
+                        posterPath = hotelRegion?.hotelResult?.get(index)?.photoUrl ?: "",
+                        coroutineScope = coroutineScope
+                    )
+                }
+            }
         }
 
         LaunchedEffect(key1 = true) {
@@ -296,39 +332,41 @@ fun TravelDestinationsScreen(
             )
         }
 
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 24.dp, end = 24.dp)
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.TopCenter),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text = Strings.get("reassociate_complete_title"),
-                    color = MaterialTheme.colors.primary,
-                    style = MaterialTheme.typography.body1,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                LazyColumn(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    items(count = hotelRegion?.hotelResult?.size ?: 0) { index ->
-                        HotelsDisplay(
-                            name = hotelRegion?.hotelResult?.get(index)?.hotelName ?: "",
-                            posterPath = hotelRegion?.hotelResult?.get(index)?.photoUrl ?: "",
-                            coroutineScope = coroutineScope
-                        )
-                    }
-                }
-            }
+            HotelsList()
         }
+
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 24.dp, end = 24.dp),
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            Spacer(modifier = Modifier.height(18.dp))
+//            Text(
+//                modifier = Modifier
+//                    .align(Alignment.Start),
+//                text = Strings.get("list_of_hotels"),
+//                color = MaterialTheme.colors.primary,
+//                style = MaterialTheme.typography.body1,
+//                fontWeight = FontWeight.Bold
+//            )
+//            Spacer(modifier = Modifier.height(18.dp))
+//            LazyColumn {
+//                items(count = hotelRegion?.hotelResult?.size ?: 0) { index ->
+//                    HotelsDisplay(
+//                        name = hotelRegion?.hotelResult?.get(index)?.hotelName ?: "",
+//                        posterPath = hotelRegion?.hotelResult?.get(index)?.photoUrl ?: "",
+//                        coroutineScope = coroutineScope
+//                    )
+//                }
+//            }
+//        }
     }
 
     @Composable
@@ -357,6 +395,8 @@ fun TravelDestinationsScreen(
         }
     }
 
+    val destinationTitle = Strings.get("travel_destination_id")
+    val hotelsTitle = Strings.get("travel_hotels")
     val destinationIdsAvailable: List<HotelDestinationId>? by viewModel.destinationIdsAvailable.collectAsState()
     val hotelsAvailable: HotelRegion? by viewModel.hotelsAvailable.collectAsState()
     val destinationIdsFailure by viewModel.destinationIdsFailure.collectAsState()
@@ -375,11 +415,11 @@ fun TravelDestinationsScreen(
         }
         destinationIdsAvailable != null -> {
             viewModel.progressBarState.value = false
-            TravelDestinationsHandler(navigator = navigator, configAppBar = configAppBar, viewModel = viewModel, title = title, destinationIds = destinationIdsAvailable, progressBarState = progressBarState)
+            TravelDestinationsHandler(navigator = navigator, configAppBar = configAppBar, viewModel = viewModel, title = destinationTitle, destinationIds = destinationIdsAvailable, progressBarState = progressBarState)
         }
         hotelsAvailable != null -> {
             viewModel.progressBarState.value = false
-            TravelRegionsHandler(navigator = navigator, configAppBar = configAppBar, title = title, hotelRegion = hotelsAvailable)
+            TravelRegionsHandler(navigator = navigator, configAppBar = configAppBar, title = hotelsTitle, hotelRegion = hotelsAvailable)
         }
         else -> {
             TravelStartHandler(navigator = navigator, configAppBar = configAppBar, viewModel = viewModel, title = title, progressBarState = progressBarState)

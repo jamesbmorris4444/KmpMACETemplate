@@ -95,7 +95,7 @@ class RepositoryImpl : Repository, KoinComponent {
             }
             val responseBody = response.bodyAsText()
             result = jsonSerializer.decodeFromString(responseBody)
-            Logger.i("MACELOG: getHotelDestinationIds success: $result")
+            Logger.i("MACELOG: getHotelDestinationIds success: ${result.size}")
         } catch (e: Exception) {
             message = e.message ?: "NULL message"
             Logger.e("MACELOG: getHotelDestinationIds failure: ${e.message}")
@@ -149,7 +149,7 @@ class RepositoryImpl : Repository, KoinComponent {
             }
             val responseBody = response.bodyAsText()
             result = jsonSerializer.decodeFromString(responseBody)
-            Logger.i("MACELOG: getHotels success: $responseBody    $result")
+            Logger.i("MACELOG: getHotels success: ${result.hotelResult.size}")
         } catch (e: Exception) {
             result = HotelRegion()
             message = e.message ?: "NULL message"

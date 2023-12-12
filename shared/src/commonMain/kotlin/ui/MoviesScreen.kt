@@ -2,10 +2,8 @@ package ui
 
 import BloodViewModel
 import Strings
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -139,7 +137,7 @@ fun MoviesHandler(
     }
 
     @Composable
-    fun LaunchesList() {
+    fun MoviesList() {
         val movies: LazyPagingItems<Movie> = viewModel.moviesAvailableState.collectAsLazyPagingItems()
         if (movies.itemCount > 0) {
             Spacer(modifier = Modifier.height(4.dp))
@@ -198,20 +196,14 @@ fun MoviesHandler(
         )
     }
 
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 24.dp, end = 24.dp)
+            .fillMaxWidth()
+            .padding(start = 24.dp, end = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.TopCenter),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            if (apiFailure.not()) {
-                LaunchesList()
-            }
+        if (apiFailure.not()) {
+            MoviesList()
         }
     }
 }

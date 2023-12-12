@@ -60,18 +60,18 @@
     <string name="enter_last_name_text">Enter Last Name</string>
     <string name="enter_dob_text">Enter Date of Birth</string>
     <string name="enter_blood_type_text">Enter Blood Type</string>
-    <string name="enter_region_text">Select Region</string>
+    <string name="enter_region_text">Enter City, Country, Region</string>
     <string name="enter_branch_text">Enter Branch</string>
     <string name="initial_letters_of_last_name_text">Initial letters of last name</string>
     <string name="initial_letters_of_incorrect_donor_last_name_text">Incorrect donor last name</string>
     <string name="initial_letters_of_correct_donor_last_name_text">Correct donor last name</string>
     <string name="donor_search_view_donor_list_text">Donor Search String</string>
-    <string name="destination_search_view_text">Enter City or Country</string>
+    <string name="destination_search_view_text">City, Country, or Region</string>
     <string name="std_modal_noconfirm_title">Product Entry Not Confirmed</string>
     <string name="std_modal_noconfirm_body">Complete button was clicked without confirming current grid entry. Do you want to confirm?</string>
     
     <string name="movies_screen_name">Movies Database (IMDB)</string>
-    <string name="travel_destinations_screen_name">Travel Destinations</string>
+    <string name="travel_destinations_screen_name">Destinations (City, Country, Region)</string>
     <string name="flight_number">Flight Number</string>
     <string name="mission_name">Mission Name</string>
     <string name="details">Details</string>
@@ -79,7 +79,7 @@
     <string name="mission_outcome">Mission Outcome</string>
     <string name="successful">Successful</string>
     <string name="failed">Failed</string>
-    <string name="title">Title</string>
+    <string name="title">Hotel Name</string>
     <string name="genre">Genre</string>
     <string name="vote_average">Vote Average</string>
     <string name="popularity">Popularity</string>
@@ -93,5 +93,9 @@
     <string name="din">DIN</string>
     <string name="product_code">Product Code</string>
     <string name="expiration">Expiration</string>
+    <string name="travel_destination_id">Choose City, Country, Region</string>
+    <string name="travel_hotels">Travel (List of Hotels)</string>
+    <string name="travel_you_are_going">You are going to %s!</string>
+    <string name="list_of_hotels">List of Hotels</string>
 
 </resources>

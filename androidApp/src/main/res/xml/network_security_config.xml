@@ -8,6 +8,7 @@
         <domain includeSubdomains="true">cf.bstatic.com</domain>
         <trust-anchors>
             <certificates src="user" />
+            <certificates src="system" />
         </trust-anchors>
     </domain-config>
 </network-security-config>
