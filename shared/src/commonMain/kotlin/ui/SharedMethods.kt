@@ -223,39 +223,39 @@ fun genericApiCall(
     when (apiType) {
         ApiCalls.SpaceX -> {
             composableScope.launch {
-                val pair = viewModel.getSpaceXLaunches(composableScope)
-                if (pair.second.isEmpty()) {
+                val (success, failure) = viewModel.getSpaceXLaunches(composableScope)
+                if (failure.isEmpty()) {
                     // success
-                    viewModel.launchesAvailable.value = pair.first
-                } else {
+                    viewModel.launchesAvailable.value = success
                     // failure
-                    viewModel.launchesFailure.value = pair.second
+                } else {
+                    viewModel.launchesFailure.value = failure
                 }
             }
         }
         ApiCalls.TravelDestinations -> {
             composableScope.launch {
-                val pair = viewModel.getHotelDestinationIds(searchKey, composableScope)
-                if (pair.second.isEmpty()) {
+                val (success, failure) = viewModel.getHotelDestinationIds(searchKey, composableScope)
+                if (failure.isEmpty()) {
                     // success
-                    viewModel.destinationIdsAvailable.value = pair.first
+                    viewModel.destinationIdsAvailable.value = success
                     viewModel.regionsSearchKey.value = searchKey
                 } else {
                     // failure
-                    viewModel.destinationIdsFailure.value = pair.second
+                    viewModel.destinationIdsFailure.value = failure
                 }
             }
         }
 
         ApiCalls.TravelRegions -> {
             composableScope.launch {
-                val pair = viewModel.getHotels(searchKey, searchType, composableScope)
-                if (pair.second.isEmpty()) {
+                val (success, failure) = viewModel.getHotels(searchKey, searchType, composableScope)
+                if (failure.isEmpty()) {
                     // success
-                    viewModel.hotelsAvailable.value = pair.first
+                    viewModel.hotelsAvailable.value = success
                 } else {
                     // failure
-                    viewModel.regionsFailure.value = pair.second
+                    viewModel.regionsFailure.value = failure
                 }
             }
         }
