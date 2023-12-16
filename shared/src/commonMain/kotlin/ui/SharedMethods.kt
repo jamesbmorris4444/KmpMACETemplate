@@ -30,7 +30,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
@@ -143,7 +142,7 @@ fun ProductListScreen(
 }
 
 @Composable
-fun AnnotatedLabelledStringBuilder(label: String, body: String): AnnotatedString {
+private fun AnnotatedLabelledStringBuilder(label: String, body: String): AnnotatedString {
     return buildAnnotatedString {
         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append("$label: ") }
         append(body)
@@ -160,57 +159,6 @@ fun ListDisplayText(testTag: String, label: String, body: String, color: Color =
         color = color,
         style = MaterialTheme.typography.body1
     )
-}
-
-@Composable
-fun StandardEditText(
-    modifier: Modifier = Modifier,
-    testTag: String, value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    readOnly: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    trailingIcon: @Composable (() -> Unit)? = null,
-
-) {
-    OutlinedTextField(
-        modifier = modifier
-            .height(72.dp)
-            .testTag(testTag),
-        value = value,
-        readOnly = readOnly,
-        textStyle = TextStyle(
-            color = MaterialTheme.colors.primary,
-            fontSize = MaterialTheme.typography.body2.fontSize
-        ),
-        onValueChange = onValueChange,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = MaterialTheme.colors.primary,
-            unfocusedBorderColor = MaterialTheme.colors.primary
-        ),
-        shape = MaterialTheme.shapes.medium,
-        label = { Text(label, color = MaterialTheme.colors.primary, style = MaterialTheme.typography.body2) },
-        singleLine = true,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-        trailingIcon = trailingIcon
-    )
-}
-
-@Composable
-fun progressBar() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.size(60.dp),
-            color = MaterialTheme.colors.primary,
-            strokeWidth = 6.dp
-        )
-    }
 }
 
 fun genericApiCall(

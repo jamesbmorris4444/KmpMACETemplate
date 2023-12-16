@@ -43,10 +43,8 @@ import com.jetbrains.handson.kmm.shared.cache.Product
 import ui.AppBarState
 import ui.DismissSelector
 import ui.ProductListScreen
-import ui.StandardEditText
 import ui.StandardModal
 import ui.StandardModalArgs
-import ui.WidgetButton
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

@@ -27,6 +27,7 @@ import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
+import progressBar
 
 @Composable
 fun RocketLaunchScreen(
