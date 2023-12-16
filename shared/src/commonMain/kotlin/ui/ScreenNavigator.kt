@@ -31,16 +31,6 @@ data class AppBarState(
     val navigationIcon: (@Composable () -> Unit)? = null
 )
 
-data class StandardModalArgs(
-    val topIconId: String = "",
-    val titleText: String = "",
-    val bodyText: String = "",
-    val positiveText: String = "",
-    val negativeText: String = "",
-    val neutralText: String = "",
-    val onDismiss: (DismissSelector) -> Unit = { }
-)
-
 // Called one time at app startup
 @Composable
 fun ScreenNavigator(

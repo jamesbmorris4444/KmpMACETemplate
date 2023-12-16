@@ -32,6 +32,8 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.Movie
+import com.mace.corelib.StandardModal
+import com.mace.corelib.StandardModalArgs
 import io.kamel.core.Resource
 import io.kamel.core.utils.cacheControl
 import io.kamel.image.KamelImage

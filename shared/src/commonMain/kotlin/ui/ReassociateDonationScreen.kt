@@ -41,6 +41,8 @@ import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
+import com.mace.corelib.StandardModal
+import com.mace.corelib.StandardModalArgs
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

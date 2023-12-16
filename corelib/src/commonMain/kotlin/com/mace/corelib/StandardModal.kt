@@ -1,4 +1,4 @@
-package ui
+package com.mace.corelib
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,6 +34,16 @@ import androidx.compose.ui.window.DialogProperties
 import avenirFontFamilyBold
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+
+data class StandardModalArgs(
+    val topIconId: String = "",
+    val titleText: String = "",
+    val bodyText: String = "",
+    val positiveText: String = "",
+    val negativeText: String = "",
+    val neutralText: String = "",
+    val onDismiss: (DismissSelector) -> Unit = { }
+)
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -250,14 +260,3 @@ enum class DismissSelector {
     NEGATIVE,
     NEUTRAL
 }
-
-//@Preview
-//@Composable
-//fun StandardModalPreview() {
-//    StandardModal(
-//        R.drawable.notification,
-//        titleText = "Staging entry for donor insertion",
-//        bodyText = "An entry was made to the staging database for insertion of a new donor into the remote database",
-//        positiveText = "BKG:OK"
-//    ) {}
-//}

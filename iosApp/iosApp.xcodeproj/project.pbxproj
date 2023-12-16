@@ -49,9 +49,9 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD0FAC972B090186006B869C /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		BDAC40A42B06391400E3EE03 /* avenir_bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_bold.otf; path = ../../shared/src/main/res/font/avenir_bold.otf; sourceTree = "<group>"; };
-		BDAC40A52B06391400E3EE03 /* avenir_book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_book.otf; path = ../../shared/src/main/res/font/avenir_book.otf; sourceTree = "<group>"; };
-		BDAC40A62B06391500E3EE03 /* avenir_regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_regular.otf; path = ../../shared/src/main/res/font/avenir_regular.otf; sourceTree = "<group>"; };
+		BDAC40A42B06391400E3EE03 /* avenir_bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_bold.otf; path = ../../corelib/src/main/res/font/avenir_bold.otf; sourceTree = "<group>"; };
+		BDAC40A52B06391400E3EE03 /* avenir_book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_book.otf; path = ../../corelib/src/main/res/font/avenir_book.otf; sourceTree = "<group>"; };
+		BDAC40A62B06391500E3EE03 /* avenir_regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_regular.otf; path = ../../corelib/src/main/res/font/avenir_regular.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

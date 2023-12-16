@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.ajalt.colormath.extensions.android.composecolor.toComposeColor
 import com.github.ajalt.colormath.model.RGB
-import com.mace.kmpmacetemplate.R
+import com.mace.corelib.R
 
 @get:Composable
 actual val Colors.extraBlack: Color

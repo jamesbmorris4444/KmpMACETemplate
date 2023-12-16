@@ -40,11 +40,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
+import com.mace.corelib.DismissSelector
+import com.mace.corelib.StandardModal
+import com.mace.corelib.StandardModalArgs
 import ui.AppBarState
-import ui.DismissSelector
 import ui.ProductListScreen
-import ui.StandardModal
-import ui.StandardModalArgs
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

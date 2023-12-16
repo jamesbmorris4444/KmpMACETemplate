@@ -46,6 +46,8 @@ import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
 import com.jetbrains.handson.kmm.shared.entity.HotelRegion
+import com.mace.corelib.StandardModal
+import com.mace.corelib.StandardModalArgs
 import io.kamel.core.Resource
 import io.kamel.core.utils.cacheControl
 import io.kamel.image.KamelImage
