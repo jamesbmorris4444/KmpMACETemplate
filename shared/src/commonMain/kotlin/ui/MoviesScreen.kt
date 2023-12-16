@@ -107,7 +107,7 @@ fun MoviesHandler(
         posterPath: String,
         coroutineScope: CoroutineScope
     ) {
-        ListDisplayText("item_title", Strings.get("title"), title)
+        ListDisplayText("item_title", Strings.get("movie_name"), title)
         ListDisplayText("item_genre", Strings.get("genre"), genre.toString())
         ListDisplayText("item_vote_average", Strings.get("vote_average"), voteAverage.toString())
         ListDisplayText("item_popularity", Strings.get("popularity"), popularity.toString())

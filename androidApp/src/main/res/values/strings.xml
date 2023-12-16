@@ -79,7 +79,8 @@
     <string name="mission_outcome">Mission Outcome</string>
     <string name="successful">Successful</string>
     <string name="failed">Failed</string>
-    <string name="title">Hotel Name</string>
+    <string name="movie_name">Movie Name</string>
+    <string name="hotel_name">Hotel Name</string>
     <string name="genre">Genre</string>
     <string name="vote_average">Vote Average</string>
     <string name="popularity">Popularity</string>

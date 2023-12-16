@@ -77,7 +77,8 @@
 "mission_outcome" = "Mission Outcome";
 "successful" = "Successful";
 "failed" = "Failed";
-"title" = "Hotel Name";
+"movie_name" = "Movie Name";
+"hotel_name" = "Hotel Name";
 "genre" = "Genre";
 "vote_average" = "Vote Average";
 "popularity" = "Popularity";

@@ -247,7 +247,7 @@ fun TravelDestinationsScreen(
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                ListDisplayText("item_title", Strings.get("title"), name)
+                ListDisplayText("item_title", Strings.get("hotel_name"), name)
                 val painterResource: Resource<Painter> = asyncPainterResource(posterPath) {
                     coroutineContext = coroutineScope.coroutineContext
                     requestBuilder {
