@@ -11,6 +11,8 @@ import androidx.compose.ui.text.font.FontFamily
 expect val Colors.extraBlack: Color
 @get:Composable
 expect val Colors.extraWhite: Color
+@get:Composable
+expect val Colors.extraPrimary: Color
 
 expect val avenirFontFamilyRegular: FontFamily
 expect val avenirFontFamilyBold: FontFamily

@@ -1,6 +1,6 @@
 package ui
 import BloodViewModel
-import StandardEditText
+import MaceEditText
 import Strings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -157,7 +157,7 @@ fun ViewDonorListScreen(
         Spacer(modifier = Modifier.height(24.dp))
         var aboRhExpanded by remember { mutableStateOf(false) }
         Row {
-            StandardEditText(
+            MaceEditText(
                 testTag = "otf_last_name",
                 value = lastNameTextEntered,
                 onValueChange = { lastNameTextEntered = it },
@@ -178,7 +178,7 @@ fun ViewDonorListScreen(
                 aboRhExpanded = !aboRhExpanded
             }
         ) {
-            StandardEditText(testTag = "otf_abo_rh", value = aboRhTextState, onValueChange = { }, label = Strings.get("enter_blood_type_text"))
+            MaceEditText(testTag = "otf_abo_rh", value = aboRhTextState, onValueChange = { }, label = Strings.get("enter_blood_type_text"))
             ExposedDropdownMenu(
                 expanded = aboRhExpanded,
                 onDismissRequest = { aboRhExpanded = false }

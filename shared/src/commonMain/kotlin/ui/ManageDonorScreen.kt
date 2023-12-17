@@ -1,9 +1,9 @@
 package ui
 
 import BloodViewModel
-import StandardEditText
+import MaceEditText
 import Strings
-import WidgetButton
+import MaceButton
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -142,21 +142,21 @@ fun ManageDonorScreen(
             if (transitionToCreateProductsScreen.not()) {
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row {
-                    StandardEditText(testTag = "otf_last_name", value = currentLastNameText, onValueChange = { currentLastNameText = it ; databaseModified = true }, label = enterLastNameText)
+                    MaceEditText(testTag = "otf_last_name", value = currentLastNameText, onValueChange = { currentLastNameText = it ; databaseModified = true }, label = enterLastNameText)
                 }
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
             Row {
-                StandardEditText(testTag = "otf_first_name", value = currentFirstNameText, onValueChange = { currentFirstNameText = it ; databaseModified = true }, label = enterFirstNameText)
+                MaceEditText(testTag = "otf_first_name", value = currentFirstNameText, onValueChange = { currentFirstNameText = it ; databaseModified = true }, label = enterFirstNameText)
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
             Row {
-                StandardEditText(testTag = "otf_middle_name", value = currentMiddleNameText, onValueChange = { currentMiddleNameText = it ; databaseModified = true }, label = enterMiddleNameText)
+                MaceEditText(testTag = "otf_middle_name", value = currentMiddleNameText, onValueChange = { currentMiddleNameText = it ; databaseModified = true }, label = enterMiddleNameText)
             }
             if (transitionToCreateProductsScreen.not()) {
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row {
-                    StandardEditText(testTag = "otf_dob", value = currentDobText, onValueChange = { currentDobText = it ; databaseModified = true }, label = enterDobText)
+                    MaceEditText(testTag = "otf_dob", value = currentDobText, onValueChange = { currentDobText = it ; databaseModified = true }, label = enterDobText)
                 }
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
@@ -172,7 +172,7 @@ fun ManageDonorScreen(
                     aboRhExpanded = !aboRhExpanded
                 }
             ) {
-                StandardEditText(
+                MaceEditText(
                     testTag = "otf_aborh",
                     value = currentAboRhText,
                     onValueChange = { currentAboRhText = it ; databaseModified = true },
@@ -219,7 +219,7 @@ fun ManageDonorScreen(
                     branchExpanded = !branchExpanded
                 }
             ) {
-                StandardEditText(
+                MaceEditText(
                     testTag = "otf_branch",
                     value = currentBranchText,
                     onValueChange = { currentBranchText = it ; databaseModified = true },
@@ -257,7 +257,7 @@ fun ManageDonorScreen(
                     }
                 }
             }
-            WidgetButton(
+            MaceButton(
                 padding = PaddingValues(top = 16.dp, bottom = 24.dp),
                 enabled = databaseIsReadyToUpdate(),
                 onClick = {

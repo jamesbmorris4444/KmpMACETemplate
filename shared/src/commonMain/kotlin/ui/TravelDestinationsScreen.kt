@@ -1,6 +1,6 @@
 package ui
 import BloodViewModel
-import StandardEditText
+import MaceEditText
 import Strings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -60,7 +60,7 @@ import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
-import progressBar
+import MaceProgressBar
 
 @Composable
 fun TravelDestinationsScreen(
@@ -112,9 +112,9 @@ fun TravelDestinationsScreen(
             val keyboardController = LocalSoftwareKeyboardController.current
 
             when {
-                progressBarState -> progressBar()
+                progressBarState -> MaceProgressBar()
                 else -> {
-                    StandardEditText(
+                    MaceEditText(
                         testTag = "otf_place_before",
                         value = textEntered,
                         onValueChange = { textEntered = it },
@@ -186,7 +186,7 @@ fun TravelDestinationsScreen(
             Spacer(modifier = Modifier.height(18.dp))
             var regionExpanded by remember { mutableStateOf(false) }
             when {
-                progressBarState -> progressBar()
+                progressBarState -> MaceProgressBar()
                 else -> {
                     ExposedDropdownMenuBox(
                         expanded = regionExpanded,
@@ -194,7 +194,7 @@ fun TravelDestinationsScreen(
                             regionExpanded = !regionExpanded
                         }
                     ) {
-                        StandardEditText(
+                        MaceEditText(
                             testTag = "otf_region",
                             value = regionTextEntered,
                             onValueChange = { },

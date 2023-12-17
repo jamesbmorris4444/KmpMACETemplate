@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import avenirFontFamilyBold
+import extraPrimary
+import extraWhite
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -61,10 +63,10 @@ fun StandardModal(
     fun TextForButton(text: String, isBackgrounded: Boolean) {
         Text(
             text = text,
-            color = if (isBackgrounded) MaterialTheme.colors.surface else  MaterialTheme.colors.primary,
+            color = if (isBackgrounded) MaterialTheme.colors.extraWhite else MaterialTheme.colors.extraPrimary,
             style = TextStyle(
                 fontFamily = avenirFontFamilyBold,
-                color = MaterialTheme.colors.onPrimary,
+//                color = MaterialTheme.colors.onBackground,
                 fontSize = MaterialTheme.typography.body2.fontSize
             )
         )
@@ -97,7 +99,7 @@ fun StandardModal(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(100.dp)
-                                .background(color = MaterialTheme.colors.background),
+                                .background(color = MaterialTheme.colors.extraWhite),
                             contentAlignment = Alignment.Center
                         ) {
                             Image(
@@ -106,7 +108,7 @@ fun StandardModal(
                                     .height(160.dp)
                                     .width(120.dp),
                                 painter = painterResource(topIconId),
-                                colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
+                                colorFilter = ColorFilter.tint(MaterialTheme.colors.extraPrimary),
                                 contentDescription = "Dialog Alert"
                             )
                         }
@@ -146,7 +148,7 @@ fun StandardModal(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = positiveButtonTopSpace, start = 36.dp, end = 36.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.extraPrimary),
                                 onClick = {
                                     shouldShowDialog = false
                                     onDismiss(DismissSelector.POSITIVE)
@@ -184,7 +186,7 @@ fun StandardModal(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(top = otherButtonTopSpace, start = 36.dp, end = 36.dp),
-                                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant),
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.extraPrimary),
                                     onClick = {
                                         shouldShowDialog = false
                                         onDismiss(DismissSelector.NEGATIVE)
@@ -223,7 +225,7 @@ fun StandardModal(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(top = otherButtonTopSpace, start = 36.dp, end = 36.dp),
-                                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant),
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.extraPrimary),
                                     onClick = {
                                         shouldShowDialog = false
                                         onDismiss(DismissSelector.NEUTRAL)

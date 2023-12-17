@@ -29,7 +29,7 @@ import com.mace.corelib.StandardModalArgs
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
-import progressBar
+import MaceProgressBar
 
 @Composable
 fun RocketLaunchScreen(
@@ -74,7 +74,7 @@ fun RocketLaunchScreen(
         launchesFailure.isNotEmpty() -> handleFailure(viewModel, launchesFailure, ApiCalls.SpaceX, showStandardModalState)
         launchesAvailable != null -> launchesAvailable ?.let { RocketLaunchHandler(navigator = navigator, configAppBar = configAppBar, title = title, launches = it) }
         else -> {
-            progressBar()
+            MaceProgressBar()
             genericApiCall(apiType = ApiCalls.SpaceX, viewModel = viewModel)
         }
     }

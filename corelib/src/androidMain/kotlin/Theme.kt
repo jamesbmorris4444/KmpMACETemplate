@@ -24,6 +24,9 @@ actual val Colors.extraBlack: Color
 @get:Composable
 actual val Colors.extraWhite: Color
     get() = RGB("#ffffff").toComposeColor()
+@get:Composable
+actual val Colors.extraPrimary: Color
+    get() = RGB("#6200ee").toComposeColor()
 
 actual val avenirFontFamilyRegular: FontFamily = FontFamily(Font(R.font.avenir_regular, FontWeight.W500))
 actual val avenirFontFamilyBold: FontFamily = FontFamily(Font(R.font.avenir_bold, FontWeight.Bold))
@@ -56,8 +59,8 @@ actual val darkColorPalette = darkColors(
 //    primaryVariant = RGB("#3700b3").toComposeColor(),
 //    secondary = RGB("#03dac6").toComposeColor(),
 //    secondaryVariant = RGB("#018786").toComposeColor(),
-//    background = RGB("#ffffff").toComposeColor(),
-//    surface = RGB("#ffffff").toComposeColor(),
+//    background = RGB("#868686").toComposeColor(),
+    surface = RGB("#ffffff").toComposeColor(),
 //    error = RGB("#b00020").toComposeColor(),
 //    onPrimary = RGB("#ffffff").toComposeColor(),
 //    onSecondary = RGB("#000000").toComposeColor(),

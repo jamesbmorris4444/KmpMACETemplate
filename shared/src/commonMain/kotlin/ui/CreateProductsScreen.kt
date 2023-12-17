@@ -277,7 +277,7 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, top = true, bottom = true)
                                 ) {
-                                    StandardEditText(testTag = "otf_din", value = dinText, onValueChange = { dinText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterDinText,
+                                    MaceEditText(testTag = "otf_din", value = dinText, onValueChange = { dinText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterDinText,
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
@@ -299,7 +299,7 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, bottom = true)
                                 ) {
-                                    StandardEditText(testTag = "otf_product_code", value = productCodeText, onValueChange = { productCodeText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterProductCodeText,
+                                    MaceEditText(testTag = "otf_product_code", value = productCodeText, onValueChange = { productCodeText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterProductCodeText,
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
@@ -360,7 +360,7 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, right = true, bottom = true)
                                 ) {
-                                    StandardEditText(testTag = "otf_expiration", value = expirationText, onValueChange = { expirationText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterExpirationText,
+                                    MaceEditText(testTag = "otf_expiration", value = expirationText, onValueChange = { expirationText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterExpirationText,
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
@@ -386,7 +386,7 @@ fun CreateProductsScreen(
                 ) {
                     val keyboardController = LocalSoftwareKeyboardController.current
                     if (clearButtonVisible) {
-                        WidgetButton(
+                        MaceButton(
                             padding = PaddingValues(start = 8.dp, end = 8.dp),
                             onClick = {
                                 onClearClicked()
@@ -396,7 +396,7 @@ fun CreateProductsScreen(
                         )
                     }
                     if (confirmButtonVisible) {
-                        WidgetButton(
+                        MaceButton(
                             padding = PaddingValues(start = 8.dp, end = 8.dp),
                             onClick = {
                                 onConfirmClicked()
@@ -406,7 +406,7 @@ fun CreateProductsScreen(
                         )
                     }
                     if (completeButtonVisible) {
-                        WidgetButton(
+                        MaceButton(
                             padding = PaddingValues(start = 8.dp, end = 8.dp),
                             onClick = {
                                 onCompleteClicked()

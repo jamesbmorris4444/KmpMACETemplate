@@ -1,7 +1,7 @@
 package ui
 
 import BloodViewModel
-import StandardEditText
+import MaceEditText
 import Strings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -293,7 +293,7 @@ fun ReassociateDonationScreen(
                             // Third run (Choose correct donor)
                             Spacer(modifier = Modifier.height(8.dp))
                             var text by rememberSaveable { mutableStateOf("") }
-                            StandardEditText(
+                            MaceEditText(
                                 testTag = "otf_correct_donor",
                                 value = text,
                                 onValueChange = { text = it },
@@ -331,7 +331,7 @@ fun ReassociateDonationScreen(
                         // First run (Enter incorrect donor name and choose the incorrect donor)
                         var text by remember { mutableStateOf("") }
                         Spacer(modifier = Modifier.height(12.dp))
-                        StandardEditText(
+                        MaceEditText(
                             testTag = "otf_correct_donor",
                             value = text,
                             onValueChange = { text = it },
