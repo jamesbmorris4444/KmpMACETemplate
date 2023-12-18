@@ -4,6 +4,7 @@ import BloodViewModel
 import MaceEditText
 import Strings
 import MaceButton
+import MaceText
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,6 +42,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import avenirFontFamilyBold
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.mace.corelib.StandardModal
@@ -128,6 +130,7 @@ fun ManageDonorScreen(
                         currentDobText.isNotEmpty() && currentAboRhText.isNotEmpty() && currentBranchText.isNotEmpty()
             }
         }
+
         if (showStandardModalState.topIconId.isNotEmpty()) {
             StandardModal(
                 showStandardModalState.topIconId,
@@ -203,10 +206,10 @@ fun ManageDonorScreen(
                                 databaseModified = true
                             }
                         ) {
-                            Text(
+                            MaceText(
                                 text = label,
-                                color = MaterialTheme.colors.onPrimary,
-                                style = MaterialTheme.typography.body1
+                                style = MaterialTheme.typography.body1,
+                                color =  MaterialTheme.colors.onPrimary
                             )
                         }
                     }
@@ -248,10 +251,10 @@ fun ManageDonorScreen(
                                 databaseModified = true
                             }
                         ) {
-                            Text(
+                            MaceText(
                                 text = label,
-                                color = MaterialTheme.colors.onPrimary,
-                                style = MaterialTheme.typography.body2
+                                style = MaterialTheme.typography.body1,
+                                color =  MaterialTheme.colors.onPrimary
                             )
                         }
                     }

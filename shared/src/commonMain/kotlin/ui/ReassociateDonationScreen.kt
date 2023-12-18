@@ -2,6 +2,7 @@ package ui
 
 import BloodViewModel
 import MaceEditText
+import MaceText
 import Strings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -37,6 +38,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import avenirFontFamilyBold
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
@@ -203,20 +205,20 @@ fun ReassociateDonationScreen(
                 isReassociateCompleted -> {
                     // Fourth (Last) run (Move product to correct donor)
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text(
+                    MaceText(
                         modifier = Modifier.align(Alignment.Start),
                         text = Strings.get("reassociate_complete_title"),
                         color = MaterialTheme.colors.primary,
                         style = MaterialTheme.typography.body1,
-                        fontWeight = FontWeight.Bold
+                        fontFamily = avenirFontFamilyBold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(
+                    MaceText(
                         modifier = Modifier.align(Alignment.Start),
                         text = Strings.get("reassociate_complete_body"),
                         color = MaterialTheme.colors.secondary,
                         style = MaterialTheme.typography.body1,
-                        fontWeight = FontWeight.Bold
+                        fontFamily = avenirFontFamilyBold
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
@@ -245,12 +247,12 @@ fun ReassociateDonationScreen(
                         if (isProductSelected) {
                             // Third run (Display Incorrect Donor and Product)
                             Spacer(modifier = Modifier.height(12.dp))
-                            Text(
+                            MaceText(
                                 modifier = Modifier.align(Alignment.Start),
                                 text = Strings.get("incorrect_donor_and_product_title"),
                                 color = MaterialTheme.colors.primary,
                                 style = MaterialTheme.typography.body1,
-                                fontWeight = FontWeight.Bold
+                                fontFamily = avenirFontFamilyBold
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
@@ -264,20 +266,20 @@ fun ReassociateDonationScreen(
                         } else {
                             // Second run (Choose incorrect donor)
                             Spacer(modifier = Modifier.height(12.dp))
-                            Text(
+                            MaceText(
                                 modifier = Modifier.align(Alignment.Start),
                                 text = Strings.get("incorrect_donor_title"),
                                 color = MaterialTheme.colors.primary,
                                 style = MaterialTheme.typography.body1,
-                                fontWeight = FontWeight.Bold
+                                fontFamily = avenirFontFamilyBold
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(
+                            MaceText(
                                 modifier = Modifier.align(Alignment.Start),
                                 text = Strings.get("choose_product_for_reassociation_title"),
                                 color = MaterialTheme.colors.secondary,
                                 style = MaterialTheme.typography.body1,
-                                fontWeight = FontWeight.Bold
+                                fontFamily = avenirFontFamilyBold
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
@@ -308,12 +310,12 @@ fun ReassociateDonationScreen(
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             if (correctDonorsWithProducts.isNotEmpty()) {
-                                Text(
+                                MaceText(
                                     modifier = Modifier.align(Alignment.Start),
                                     text = Strings.get("choose_correct_donor_title"),
                                     color = MaterialTheme.colors.secondary,
                                     style = MaterialTheme.typography.body1,
-                                    fontWeight = FontWeight.Bold
+                                    fontFamily = avenirFontFamilyBold
                                 )
                                 Spacer(modifier = Modifier.height(12.dp))
                             }
@@ -346,13 +348,13 @@ fun ReassociateDonationScreen(
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                         if (incorrectDonorsWithProducts.isNotEmpty()) {
-                            Text(
+                            MaceText(
                                 modifier = Modifier
                                     .align(Alignment.Start),
                                 text = Strings.get("choose_incorrect_donor_title"),
                                 color = MaterialTheme.colors.secondary,
                                 style = MaterialTheme.typography.body1,
-                                fontWeight = FontWeight.Bold
+                                fontFamily = avenirFontFamilyBold
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                             Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)

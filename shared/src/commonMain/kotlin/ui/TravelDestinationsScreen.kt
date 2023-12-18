@@ -1,4 +1,5 @@
 package ui
+
 import BloodViewModel
 import MaceEditText
 import Strings
@@ -61,6 +62,9 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
 import MaceProgressBar
+import MaceText
+import androidx.compose.ui.text.intl.Locale
+import avenirFontFamilyBold
 
 @Composable
 fun TravelDestinationsScreen(
@@ -213,7 +217,6 @@ fun TravelDestinationsScreen(
                                         regionExpanded = false
                                         regionTextEntered = label.name
                                         viewModel.destinationIdsAvailable.value = null
-                                        Logger.d("JIMX  7777 ${label.searchType}")
                                         genericApiCall(searchKey = label.destId, searchType = label.searchType, apiType = ApiCalls.TravelRegions, viewModel = viewModel)
                                         viewModel.progressBarState.value = true
                                     }
@@ -245,6 +248,7 @@ fun TravelDestinationsScreen(
         @Composable
         fun HotelsDisplay(
             name: String,
+            price: String,
             posterPath: String,
             coroutineScope: CoroutineScope
         ) {
@@ -252,6 +256,7 @@ fun TravelDestinationsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 ListDisplayText("item_title", Strings.get("hotel_name"), name)
+                ListDisplayText("item_price", Strings.get("hotel_price"), price)
                 val painterResource: Resource<Painter> = asyncPainterResource(posterPath) {
                     coroutineContext = coroutineScope.coroutineContext
                     requestBuilder {
@@ -290,18 +295,20 @@ fun TravelDestinationsScreen(
         @Composable
         fun HotelsList() {
             Spacer(modifier = Modifier.height(18.dp))
-            Text(
+            MaceText(
                 text = Strings.get("list_of_hotels"),
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.body1,
-                fontWeight = FontWeight.Bold
+                fontFamily = avenirFontFamilyBold
             )
             Spacer(modifier = Modifier.height(18.dp))
             LazyColumn {
                 items(count = hotelRegion?.hotelResult?.size ?: 0) { index ->
+                    val price = hotelRegion?.hotelResult?.get(index)?.price?.hotelPrice
                     HotelsDisplay(
                         name = hotelRegion?.hotelResult?.get(index)?.hotelName ?: "",
+                        price = "$${((price ?: 0.0)/ 10.0).toInt()}",
                         posterPath = hotelRegion?.hotelResult?.get(index)?.photoUrl ?: "",
                         coroutineScope = coroutineScope
                     )
@@ -344,33 +351,6 @@ fun TravelDestinationsScreen(
         ) {
             HotelsList()
         }
-
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 24.dp, end = 24.dp),
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            Spacer(modifier = Modifier.height(18.dp))
-//            Text(
-//                modifier = Modifier
-//                    .align(Alignment.Start),
-//                text = Strings.get("list_of_hotels"),
-//                color = MaterialTheme.colors.primary,
-//                style = MaterialTheme.typography.body1,
-//                fontWeight = FontWeight.Bold
-//            )
-//            Spacer(modifier = Modifier.height(18.dp))
-//            LazyColumn {
-//                items(count = hotelRegion?.hotelResult?.size ?: 0) { index ->
-//                    HotelsDisplay(
-//                        name = hotelRegion?.hotelResult?.get(index)?.hotelName ?: "",
-//                        posterPath = hotelRegion?.hotelResult?.get(index)?.photoUrl ?: "",
-//                        coroutineScope = coroutineScope
-//                    )
-//                }
-//            }
-//        }
     }
 
     @Composable

@@ -1,6 +1,8 @@
 package ui
 
 import BloodViewModel
+import MaceAnnotatedText
+import MaceText
 import Strings
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -151,7 +153,7 @@ private fun AnnotatedLabelledStringBuilder(label: String, body: String): Annotat
 
 @Composable
 fun ListDisplayText(testTag: String, label: String, body: String, color: Color = MaterialTheme.colors.onBackground) {
-    Text(
+    MaceAnnotatedText(
         modifier = Modifier
             .padding(top = 1.dp)
             .testTag(testTag),
@@ -194,7 +196,6 @@ fun genericApiCall(
                 }
             }
         }
-
         ApiCalls.TravelRegions -> {
             composableScope.launch {
                 val (success, failure) = viewModel.getHotels(searchKey, searchType, composableScope)

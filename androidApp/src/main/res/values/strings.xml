@@ -81,6 +81,7 @@
     <string name="failed">Failed</string>
     <string name="movie_name">Movie Name</string>
     <string name="hotel_name">Hotel Name</string>
+    <string name="hotel_price">Room Price</string>
     <string name="genre">Genre</string>
     <string name="vote_average">Vote Average</string>
     <string name="popularity">Popularity</string>

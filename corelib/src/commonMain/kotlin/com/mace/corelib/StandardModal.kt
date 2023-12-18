@@ -66,7 +66,6 @@ fun StandardModal(
             color = if (isBackgrounded) MaterialTheme.colors.extraWhite else MaterialTheme.colors.extraPrimary,
             style = TextStyle(
                 fontFamily = avenirFontFamilyBold,
-//                color = MaterialTheme.colors.onBackground,
                 fontSize = MaterialTheme.typography.body2.fontSize
             )
         )

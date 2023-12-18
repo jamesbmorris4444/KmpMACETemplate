@@ -252,9 +252,8 @@ fun CreateProductsScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text (
-                        modifier = Modifier
-                            .padding(start = leftGridPadding),
+                    MaceText(
+                        modifier = Modifier.padding(start = leftGridPadding),
                         text = Strings.format("create_products_header_text", donor.lastName, donor.firstName),
                         style = MaterialTheme.typography.body2,
                         fontFamily = avenirFontFamilyBold
@@ -281,15 +280,14 @@ fun CreateProductsScreen(
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(start = 8.dp))
+                                            .padding(start = 8.dp, top = 4.dp)
                                             .align(Alignment.TopStart),
                                         text = dinTitle,
                                         style = MaterialTheme.typography.subtitle1,
                                         color =  MaterialTheme.colors.onBackground,
                                         fontFamily = avenirFontFamilyBold
-
                                     )
                                 }
                             }
@@ -303,9 +301,9 @@ fun CreateProductsScreen(
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(start = 8.dp))
+                                            .padding(start = 8.dp, top = 4.dp)
                                             .align(Alignment.TopStart),
                                         text = productCodeTitle,
                                         style = MaterialTheme.typography.subtitle1,
@@ -335,21 +333,22 @@ fun CreateProductsScreen(
                                             bottom = true
                                         )
                                 ) {
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(start = 8.dp))
+                                            .padding(start = 8.dp, top = 4.dp)
                                             .align(Alignment.TopStart),
                                         text = aboRhTitle,
                                         style = MaterialTheme.typography.subtitle1,
+                                        color =  MaterialTheme.colors.onBackground,
                                         fontFamily = avenirFontFamilyBold
                                     )
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(bottom = 32.dp))
+                                            .padding(bottom = 32.dp)
                                             .align(Alignment.BottomCenter),
                                         text = donor.aboRh,
                                         style = MaterialTheme.typography.body1,
-                                        color = MaterialTheme.colors.primary,
+                                        color =  MaterialTheme.colors.onBackground,
                                         fontFamily = avenirFontFamilyBold
                                     )
                                 }
@@ -364,9 +363,9 @@ fun CreateProductsScreen(
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(start = 8.dp))
+                                            .padding(start = 8.dp, top = 4.dp)
                                             .align(Alignment.TopStart),
                                         text = expirationTitle,
                                         style = MaterialTheme.typography.subtitle1,
