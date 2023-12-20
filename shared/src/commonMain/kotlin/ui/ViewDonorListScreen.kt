@@ -1,6 +1,7 @@
 package ui
 import BloodViewModel
 import MaceEditText
+import MaceText
 import Strings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -192,7 +193,7 @@ fun ViewDonorListScreen(
                             handleNameOrAboRhTextEntry(lastNameTextEntered, aboRhTextState)
                         }
                     ) {
-                        Text(
+                        MaceText(
                             text = label,
                             color = MaterialTheme.colors.onPrimary,
                             style = MaterialTheme.typography.body1

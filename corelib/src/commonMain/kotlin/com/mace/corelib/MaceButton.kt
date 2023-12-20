@@ -23,7 +23,7 @@ fun MaceButton(padding: PaddingValues, buttonText: String, enabled: Boolean = tr
         enabled = enabled,
         onClick = onClick
     ) {
-        Text(
+        MaceText(
             text = buttonText,
             style = MaterialTheme.typography.body1
         )

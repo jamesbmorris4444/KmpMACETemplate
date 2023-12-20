@@ -1,6 +1,7 @@
 package ui
 import BloodViewModel
 import CreateProductsScreen
+import MaceText
 import Strings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -227,7 +228,7 @@ fun StartScreenAppBar(
     appBarState: AppBarState
 ) {
     TopAppBar(
-        title = { Text(
+        title = { MaceText(
             modifier = Modifier.testTag("item"),
             text = appBarState.title,
             color = MaterialTheme.colors.onPrimary,

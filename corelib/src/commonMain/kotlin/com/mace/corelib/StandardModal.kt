@@ -1,5 +1,6 @@
 package com.mace.corelib
 
+import MaceText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -61,7 +62,7 @@ fun StandardModal(
 
     @Composable
     fun TextForButton(text: String, isBackgrounded: Boolean) {
-        Text(
+        MaceText(
             text = text,
             color = if (isBackgrounded) MaterialTheme.colors.extraWhite else MaterialTheme.colors.extraPrimary,
             style = TextStyle(
@@ -114,18 +115,18 @@ fun StandardModal(
                     }
 
                     if (titleText.isNotEmpty()) {
-                        Text(
+                        MaceText(
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = if (bodyText.isEmpty()) 8.dp else 16.dp),
                             text = titleText,
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colors.secondaryVariant,
                             style = MaterialTheme.typography.body1,
-                            fontWeight = FontWeight.Bold
+                            fontFamily = avenirFontFamilyBold
                         )
                     }
 
                     if (bodyText.isNotEmpty()) {
-                        Text(
+                        MaceText(
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
                             text = bodyText,
                             textAlign = TextAlign.Center,

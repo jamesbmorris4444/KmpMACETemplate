@@ -1,5 +1,6 @@
 package ui
 import BloodViewModel
+import MaceText
 import Strings
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -69,7 +70,7 @@ fun DrawerAppComponent(
                     contentDescription = Strings.get("fs_logo_content_description"),
                     contentScale = ContentScale.Fit
                 )
-                Text(
+                MaceText(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(top = 110.dp),
@@ -96,7 +97,7 @@ fun DrawerAppComponent(
                                     MaterialTheme.colors.primary
                                 }
                             ) {
-                                Text(
+                                MaceText(
                                     text = screen.string,
                                     modifier = Modifier.padding(16.dp),
                                     color = if (currentScreen.value == screen) {

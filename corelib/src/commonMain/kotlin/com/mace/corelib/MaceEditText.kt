@@ -3,7 +3,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,7 +38,7 @@ fun MaceEditText(
             unfocusedBorderColor = MaterialTheme.colors.primary
         ),
         shape = MaterialTheme.shapes.medium,
-        label = { Text(label, color = MaterialTheme.colors.primary, style = MaterialTheme.typography.body2) },
+        label = { MaceText(text = label, color = MaterialTheme.colors.primary, style = MaterialTheme.typography.body2) },
         singleLine = true,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
