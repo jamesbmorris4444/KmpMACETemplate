@@ -84,8 +84,14 @@ data class HotelRegion(
 )
 
 @Serializable
+data class HotelPrice(
+    @SerialName(value = "all_inclusive_price") val hotelPrice: Double,
+)
+
+@Serializable
 data class HotelResult(
     @SerialName(value = "hotel_name_trans") val hotelName: String = "",
-    @SerialName(value = "main_photo_url") val photoUrl: String = ""
+    @SerialName(value = "main_photo_url") val photoUrl: String = "",
+    @SerialName(value = "price_breakdown") val price: HotelPrice
 )
 

@@ -247,6 +247,7 @@ fun TravelDestinationsScreen(
         @Composable
         fun HotelsDisplay(
             name: String,
+            price: String,
             posterPath: String,
             coroutineScope: CoroutineScope
         ) {
@@ -254,6 +255,7 @@ fun TravelDestinationsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 ListDisplayText("item_title", Strings.get("hotel_name"), name)
+                ListDisplayText("item_price", Strings.get("hotel_price"), price)
                 val painterResource: Resource<Painter> = asyncPainterResource(posterPath) {
                     coroutineContext = coroutineScope.coroutineContext
                     requestBuilder {
@@ -302,8 +304,10 @@ fun TravelDestinationsScreen(
             Spacer(modifier = Modifier.height(18.dp))
             LazyColumn {
                 items(count = hotelRegion?.hotelResult?.size ?: 0) { index ->
+                    val price = hotelRegion?.hotelResult?.get(index)?.price?.hotelPrice
                     HotelsDisplay(
                         name = hotelRegion?.hotelResult?.get(index)?.hotelName ?: "",
+                        price = "$${((price ?: 0.0)/ 10.0).toInt()}",
                         posterPath = hotelRegion?.hotelResult?.get(index)?.photoUrl ?: "",
                         coroutineScope = coroutineScope
                     )
