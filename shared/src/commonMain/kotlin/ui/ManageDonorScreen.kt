@@ -1,6 +1,9 @@
 package ui
 
 import BloodViewModel
+import MaceButton
+import MaceEditText
+import MaceText
 import Strings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -23,7 +26,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -41,6 +43,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.cache.Donor
+import com.mace.corelib.StandardModal
+import com.mace.corelib.StandardModalArgs
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
@@ -138,21 +142,21 @@ fun ManageDonorScreen(
             if (transitionToCreateProductsScreen.not()) {
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row {
-                    StandardEditText(testTag = "otf_last_name", value = currentLastNameText, onValueChange = { currentLastNameText = it ; databaseModified = true }, label = enterLastNameText)
+                    MaceEditText(testTag = "otf_last_name", value = currentLastNameText, onValueChange = { currentLastNameText = it ; databaseModified = true }, label = enterLastNameText)
                 }
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
             Row {
-                StandardEditText(testTag = "otf_first_name", value = currentFirstNameText, onValueChange = { currentFirstNameText = it ; databaseModified = true }, label = enterFirstNameText)
+                MaceEditText(testTag = "otf_first_name", value = currentFirstNameText, onValueChange = { currentFirstNameText = it ; databaseModified = true }, label = enterFirstNameText)
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
             Row {
-                StandardEditText(testTag = "otf_middle_name", value = currentMiddleNameText, onValueChange = { currentMiddleNameText = it ; databaseModified = true }, label = enterMiddleNameText)
+                MaceEditText(testTag = "otf_middle_name", value = currentMiddleNameText, onValueChange = { currentMiddleNameText = it ; databaseModified = true }, label = enterMiddleNameText)
             }
             if (transitionToCreateProductsScreen.not()) {
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row {
-                    StandardEditText(testTag = "otf_dob", value = currentDobText, onValueChange = { currentDobText = it ; databaseModified = true }, label = enterDobText)
+                    MaceEditText(testTag = "otf_dob", value = currentDobText, onValueChange = { currentDobText = it ; databaseModified = true }, label = enterDobText)
                 }
             }
             Spacer(modifier = Modifier.padding(top = 16.dp))
@@ -168,7 +172,7 @@ fun ManageDonorScreen(
                     aboRhExpanded = !aboRhExpanded
                 }
             ) {
-                StandardEditText(
+                MaceEditText(
                     testTag = "otf_aborh",
                     value = currentAboRhText,
                     onValueChange = { currentAboRhText = it ; databaseModified = true },
@@ -199,7 +203,7 @@ fun ManageDonorScreen(
                                 databaseModified = true
                             }
                         ) {
-                            Text(
+                            MaceText(
                                 text = label,
                                 color = MaterialTheme.colors.onPrimary,
                                 style = MaterialTheme.typography.body1
@@ -215,7 +219,7 @@ fun ManageDonorScreen(
                     branchExpanded = !branchExpanded
                 }
             ) {
-                StandardEditText(
+                MaceEditText(
                     testTag = "otf_branch",
                     value = currentBranchText,
                     onValueChange = { currentBranchText = it ; databaseModified = true },
@@ -244,7 +248,7 @@ fun ManageDonorScreen(
                                 databaseModified = true
                             }
                         ) {
-                            Text(
+                            MaceText(
                                 text = label,
                                 color = MaterialTheme.colors.onPrimary,
                                 style = MaterialTheme.typography.body2
@@ -253,7 +257,7 @@ fun ManageDonorScreen(
                     }
                 }
             }
-            WidgetButton(
+            MaceButton(
                 padding = PaddingValues(top = 16.dp, bottom = 24.dp),
                 enabled = databaseIsReadyToUpdate(),
                 onClick = {
@@ -358,7 +362,7 @@ fun HorizontalRadioButtons(isMale: Boolean, setRadioButton: (text: String) -> Un
                         setRadioButton(text)
                     }
                 )
-                Text(
+                MaceText(
                     modifier = Modifier.padding(top = 10.dp),
                     text = text,
                     color = MaterialTheme.colors.primary,

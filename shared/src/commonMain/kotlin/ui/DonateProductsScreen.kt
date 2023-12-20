@@ -1,6 +1,8 @@
 package ui
 
 import BloodViewModel
+import MaceButton
+import MaceEditText
 import Strings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -148,7 +150,7 @@ fun DonateProductsHandler(
             var text by remember { mutableStateOf("") }
             Spacer(modifier = Modifier.height(20.dp))
             Row {
-                StandardEditText(
+                MaceEditText(
                     testTag = "otf_last_name",
                     value = text,
                     onValueChange = { text = it },
@@ -162,7 +164,7 @@ fun DonateProductsHandler(
                     )
                 )
             }
-            WidgetButton(
+            MaceButton(
                 padding = PaddingValues(top = 16.dp),
                 onClick = {
                     keyboardController?.hide()
@@ -171,7 +173,7 @@ fun DonateProductsHandler(
                 enabled = text.isNotEmpty(),
                 buttonText = Strings.get("search_button_text")
             )
-            WidgetButton(
+            MaceButton(
                 padding = PaddingValues(top = 16.dp),
                 onClick = {
                     onItemButtonClicked(viewModel.emptyDonor)

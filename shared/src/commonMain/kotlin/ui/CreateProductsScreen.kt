@@ -38,15 +38,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.avenirFontFamilyBold
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
+import com.mace.corelib.DismissSelector
+import com.mace.corelib.StandardModal
+import com.mace.corelib.StandardModalArgs
 import ui.AppBarState
-import ui.DismissSelector
 import ui.ProductListScreen
-import ui.StandardEditText
-import ui.StandardModal
-import ui.StandardModalArgs
-import ui.WidgetButton
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -254,7 +253,7 @@ fun CreateProductsScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text (
+                    MaceText(
                         modifier = Modifier
                             .padding(start = leftGridPadding),
                         text = Strings.format("create_products_header_text", donor.lastName, donor.firstName),
@@ -279,11 +278,11 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, top = true, bottom = true)
                                 ) {
-                                    StandardEditText(testTag = "otf_din", value = dinText, onValueChange = { dinText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterDinText,
+                                    MaceEditText(testTag = "otf_din", value = dinText, onValueChange = { dinText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterDinText,
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
                                             .padding(PaddingValues(start = 8.dp))
                                             .align(Alignment.TopStart),
@@ -301,11 +300,11 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, bottom = true)
                                 ) {
-                                    StandardEditText(testTag = "otf_product_code", value = productCodeText, onValueChange = { productCodeText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterProductCodeText,
+                                    MaceEditText(testTag = "otf_product_code", value = productCodeText, onValueChange = { productCodeText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterProductCodeText,
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
                                             .padding(PaddingValues(start = 8.dp))
                                             .align(Alignment.TopStart),
@@ -337,7 +336,7 @@ fun CreateProductsScreen(
                                             bottom = true
                                         )
                                 ) {
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
                                             .padding(PaddingValues(start = 8.dp))
                                             .align(Alignment.TopStart),
@@ -345,7 +344,7 @@ fun CreateProductsScreen(
                                         style = MaterialTheme.typography.subtitle1,
                                         fontFamily = avenirFontFamilyBold
                                     )
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
                                             .padding(PaddingValues(bottom = 32.dp))
                                             .align(Alignment.BottomCenter),
@@ -362,11 +361,11 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, right = true, bottom = true)
                                 ) {
-                                    StandardEditText(testTag = "otf_expiration", value = expirationText, onValueChange = { expirationText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterExpirationText,
+                                    MaceEditText(testTag = "otf_expiration", value = expirationText, onValueChange = { expirationText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterExpirationText,
                                         modifier = Modifier
                                             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                                             .align(Alignment.BottomStart))
-                                    Text(
+                                    MaceText(
                                         modifier = Modifier
                                             .padding(PaddingValues(start = 8.dp))
                                             .align(Alignment.TopStart),
@@ -388,7 +387,7 @@ fun CreateProductsScreen(
                 ) {
                     val keyboardController = LocalSoftwareKeyboardController.current
                     if (clearButtonVisible) {
-                        WidgetButton(
+                        MaceButton(
                             padding = PaddingValues(start = 8.dp, end = 8.dp),
                             onClick = {
                                 onClearClicked()
@@ -398,7 +397,7 @@ fun CreateProductsScreen(
                         )
                     }
                     if (confirmButtonVisible) {
-                        WidgetButton(
+                        MaceButton(
                             padding = PaddingValues(start = 8.dp, end = 8.dp),
                             onClick = {
                                 onConfirmClicked()
@@ -408,7 +407,7 @@ fun CreateProductsScreen(
                         )
                     }
                     if (completeButtonVisible) {
-                        WidgetButton(
+                        MaceButton(
                             padding = PaddingValues(start = 8.dp, end = 8.dp),
                             onClick = {
                                 onCompleteClicked()

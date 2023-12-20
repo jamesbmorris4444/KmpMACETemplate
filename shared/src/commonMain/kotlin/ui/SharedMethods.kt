@@ -1,6 +1,8 @@
 package ui
 
 import BloodViewModel
+import MaceAnnotatedText
+import MaceText
 import Strings
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -152,7 +154,7 @@ fun AnnotatedLabelledStringBuilder(label: String, body: String): AnnotatedString
 
 @Composable
 fun ListDisplayText(testTag: String, label: String, body: String, color: Color = MaterialTheme.colors.onBackground) {
-    Text(
+    MaceAnnotatedText(
         modifier = Modifier
             .padding(top = 1.dp)
             .testTag(testTag),
@@ -160,57 +162,6 @@ fun ListDisplayText(testTag: String, label: String, body: String, color: Color =
         color = color,
         style = MaterialTheme.typography.body1
     )
-}
-
-@Composable
-fun StandardEditText(
-    modifier: Modifier = Modifier,
-    testTag: String, value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    readOnly: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    trailingIcon: @Composable (() -> Unit)? = null,
-
-) {
-    OutlinedTextField(
-        modifier = modifier
-            .height(72.dp)
-            .testTag(testTag),
-        value = value,
-        readOnly = readOnly,
-        textStyle = TextStyle(
-            color = MaterialTheme.colors.primary,
-            fontSize = MaterialTheme.typography.body2.fontSize
-        ),
-        onValueChange = onValueChange,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = MaterialTheme.colors.primary,
-            unfocusedBorderColor = MaterialTheme.colors.primary
-        ),
-        shape = MaterialTheme.shapes.medium,
-        label = { Text(label, color = MaterialTheme.colors.primary, style = MaterialTheme.typography.body2) },
-        singleLine = true,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-        trailingIcon = trailingIcon
-    )
-}
-
-@Composable
-fun progressBar() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.size(60.dp),
-            color = MaterialTheme.colors.primary,
-            strokeWidth = 6.dp
-        )
-    }
 }
 
 fun genericApiCall(

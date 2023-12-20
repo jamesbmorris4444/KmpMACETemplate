@@ -1,4 +1,4 @@
-
+package com
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
@@ -24,6 +24,9 @@ actual val Colors.extraBlack: Color
 @get:Composable
 actual val Colors.extraWhite: Color
     get() = RGB("#ffffff").toComposeColor()
+@get:Composable
+actual val Colors.extraPrimary: Color
+    get() = RGB("#6200ee").toComposeColor()
 
 
 private fun loadCustomFont(name: String): Typeface {

@@ -1,4 +1,4 @@
-
+package com
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.Shapes
@@ -11,6 +11,8 @@ import androidx.compose.ui.text.font.FontFamily
 expect val Colors.extraBlack: Color
 @get:Composable
 expect val Colors.extraWhite: Color
+@get:Composable
+expect val Colors.extraPrimary: Color
 
 expect val avenirFontFamilyRegular: FontFamily
 expect val avenirFontFamilyBold: FontFamily

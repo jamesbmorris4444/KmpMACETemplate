@@ -7,17 +7,10 @@ plugins {
 }
 
 kotlin {
-    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
-    applyDefaultHierarchyTemplate()
-
-    jvmToolchain(17)
-
-    androidTarget()
-
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "17"
+                jvmTarget = "1.8"
             }
         }
     }
@@ -28,31 +21,12 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            baseName = "corelib"
+            isStatic = true
         }
     }
 
     sourceSets {
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.ktor.client.okhttp)
-                implementation(libs.sql.android)
-                implementation(libs.koin.core)
-                implementation(libs.koin.android)
-                implementation(libs.kermit)
-                implementation(projects.corelib)
-            }
-        }
-        val iosMain by getting {
-            dependencies {
-                implementation(libs.ktor.client.darwin)
-                implementation(libs.sql.ios)
-                implementation(libs.koin.core)
-                implementation(libs.kermit)
-                implementation(libs.sentry)
-                implementation(projects.corelib)
-            }
-        }
         val commonMain by getting {
             dependencies {
                 implementation(compose.ui)
@@ -76,8 +50,10 @@ kotlin {
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
                 implementation(libs.datetime)
-                implementation(projects.corelib)
             }
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -86,25 +62,10 @@ kotlin {
     }
 }
 
-kotlin {
-    sourceSets {
-        all {
-            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
-        }
-    }
-}
-
 android {
-    namespace = "com.mace.kmpmacetemplate"
+    namespace = "com.mace.corelib"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
-    }
-    sourceSets["main"].resources.srcDir("src/commonMain/resources")
-}
-
-sqldelight {
-    database("AppDatabase") {
-        packageName = "com.jetbrains.handson.kmm.shared.cache"
     }
 }

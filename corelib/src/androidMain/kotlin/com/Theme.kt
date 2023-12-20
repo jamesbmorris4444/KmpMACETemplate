@@ -1,4 +1,4 @@
-
+package com
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.ajalt.colormath.extensions.android.composecolor.toComposeColor
 import com.github.ajalt.colormath.model.RGB
-import com.mace.kmpmacetemplate.R
+import com.mace.corelib.R
 
 @get:Composable
 actual val Colors.extraBlack: Color
@@ -24,6 +24,9 @@ actual val Colors.extraBlack: Color
 @get:Composable
 actual val Colors.extraWhite: Color
     get() = RGB("#ffffff").toComposeColor()
+@get:Composable
+actual val Colors.extraPrimary: Color
+    get() = RGB("#6200ee").toComposeColor()
 
 actual val avenirFontFamilyRegular: FontFamily = FontFamily(Font(R.font.avenir_regular, FontWeight.W500))
 actual val avenirFontFamilyBold: FontFamily = FontFamily(Font(R.font.avenir_bold, FontWeight.Bold))

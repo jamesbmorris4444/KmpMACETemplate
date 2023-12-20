@@ -10,6 +10,7 @@ import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
 import com.jetbrains.handson.kmm.shared.entity.HotelRegion
 import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
+import com.mace.corelib.StandardModalArgs
 import com.rickclephas.kmm.viewmodel.KMMViewModel
 import com.rickclephas.kmm.viewmodel.coroutineScope
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import ui.StandardModalArgs
 
 abstract class ViewModel : KMMViewModel(), KoinComponent {
 

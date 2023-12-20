@@ -1,6 +1,7 @@
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import com.MaceTemplateTheme
 import ui.DrawerAppComponent
 
 @Composable

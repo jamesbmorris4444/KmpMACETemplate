@@ -1,5 +1,3 @@
-package ui
-
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
@@ -12,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 
 @Composable
-fun WidgetButton(padding: PaddingValues, buttonText: String, enabled: Boolean = true, onClick: () -> Unit) {
+fun MaceButton(padding: PaddingValues, buttonText: String, enabled: Boolean = true, onClick: () -> Unit) {
     Button(
         modifier = Modifier.padding(padding).testTag("WidgetButton"),
         shape = MaterialTheme.shapes.medium,

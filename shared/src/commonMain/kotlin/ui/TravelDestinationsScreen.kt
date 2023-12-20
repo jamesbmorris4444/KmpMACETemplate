@@ -1,5 +1,8 @@
 package ui
 import BloodViewModel
+import MaceEditText
+import MaceProgressBar
+import MaceText
 import Strings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -43,8 +46,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
+import com.avenirFontFamilyBold
 import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
 import com.jetbrains.handson.kmm.shared.entity.HotelRegion
+import com.mace.corelib.StandardModal
+import com.mace.corelib.StandardModalArgs
 import io.kamel.core.Resource
 import io.kamel.core.utils.cacheControl
 import io.kamel.image.KamelImage
@@ -108,9 +114,9 @@ fun TravelDestinationsScreen(
             val keyboardController = LocalSoftwareKeyboardController.current
 
             when {
-                progressBarState -> progressBar()
+                progressBarState -> MaceProgressBar()
                 else -> {
-                    StandardEditText(
+                    MaceEditText(
                         testTag = "otf_place_before",
                         value = textEntered,
                         onValueChange = { textEntered = it },
@@ -170,19 +176,19 @@ fun TravelDestinationsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(18.dp))
-            Text(
+            MaceText(
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 24.dp),
                 text = Strings.format("travel_you_are_going", regionsSearchKey),
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.body1,
-                fontWeight = FontWeight.Bold
+                fontFamily = avenirFontFamilyBold
             )
             Spacer(modifier = Modifier.height(18.dp))
             var regionExpanded by remember { mutableStateOf(false) }
             when {
-                progressBarState -> progressBar()
+                progressBarState -> MaceProgressBar()
                 else -> {
                     ExposedDropdownMenuBox(
                         expanded = regionExpanded,
@@ -190,7 +196,7 @@ fun TravelDestinationsScreen(
                             regionExpanded = !regionExpanded
                         }
                     ) {
-                        StandardEditText(
+                        MaceEditText(
                             testTag = "otf_region",
                             value = regionTextEntered,
                             onValueChange = { },
@@ -214,7 +220,7 @@ fun TravelDestinationsScreen(
                                         viewModel.progressBarState.value = true
                                     }
                                 ) {
-                                    Text(
+                                    MaceText(
                                         text = label.name,
                                         color = MaterialTheme.colors.onPrimary,
                                         style = MaterialTheme.typography.body1
@@ -286,12 +292,12 @@ fun TravelDestinationsScreen(
         @Composable
         fun HotelsList() {
             Spacer(modifier = Modifier.height(18.dp))
-            Text(
+            MaceText(
                 text = Strings.get("list_of_hotels"),
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.body1,
-                fontWeight = FontWeight.Bold
+                fontFamily = avenirFontFamilyBold
             )
             Spacer(modifier = Modifier.height(18.dp))
             LazyColumn {
@@ -340,33 +346,6 @@ fun TravelDestinationsScreen(
         ) {
             HotelsList()
         }
-
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 24.dp, end = 24.dp),
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            Spacer(modifier = Modifier.height(18.dp))
-//            Text(
-//                modifier = Modifier
-//                    .align(Alignment.Start),
-//                text = Strings.get("list_of_hotels"),
-//                color = MaterialTheme.colors.primary,
-//                style = MaterialTheme.typography.body1,
-//                fontWeight = FontWeight.Bold
-//            )
-//            Spacer(modifier = Modifier.height(18.dp))
-//            LazyColumn {
-//                items(count = hotelRegion?.hotelResult?.size ?: 0) { index ->
-//                    HotelsDisplay(
-//                        name = hotelRegion?.hotelResult?.get(index)?.hotelName ?: "",
-//                        posterPath = hotelRegion?.hotelResult?.get(index)?.photoUrl ?: "",
-//                        coroutineScope = coroutineScope
-//                    )
-//                }
-//            }
-//        }
     }
 
     @Composable
