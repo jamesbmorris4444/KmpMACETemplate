@@ -79,6 +79,7 @@
 "failed" = "Failed";
 "movie_name" = "Movie Name";
 "hotel_name" = "Hotel Name";
+"hotel_price" = "Room Price";
 "genre" = "Genre";
 "vote_average" = "Vote Average";
 "popularity" = "Popularity";
