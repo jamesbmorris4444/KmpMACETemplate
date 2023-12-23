@@ -2,13 +2,11 @@ package ui
 import BloodViewModel
 import CreateProductsScreen
 import MaceText
-import Strings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import co.touchlab.kermit.Logger
+import com.Strings
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -248,6 +247,6 @@ enum class ScreenNames(val inDrawer: Boolean, val string: String) {
     CreateProducts(false, Strings.get("create_blood_product_title")),
     ManageDonorAfterSearch(false, Strings.get("manage_donor_after_search_title")),
     ManageDonorFromDrawer(true, Strings.get("manage_donor_from_drawer_title")),
-    ReassociateDonation(true,Strings.get("reassociate_donation_title")),
+    ReassociateDonation(true, Strings.get("reassociate_donation_title")),
     ViewDonorList(true, Strings.get("view_donor_list_title"))
 }

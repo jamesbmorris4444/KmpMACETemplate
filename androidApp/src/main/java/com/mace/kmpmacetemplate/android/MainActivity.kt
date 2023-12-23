@@ -3,7 +3,6 @@ package com.mace.kmpmacetemplate.android
 import BloodViewModel
 import RepositoryImpl
 import StartApplication
-import Strings
 import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
@@ -12,6 +11,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
+import com.Strings
 
 class MainActivity : ComponentActivity() {
     private val repository = RepositoryImpl()

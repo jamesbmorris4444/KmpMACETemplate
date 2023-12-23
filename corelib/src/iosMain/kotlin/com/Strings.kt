@@ -1,4 +1,4 @@
-
+package com
 import platform.Foundation.NSBundle
 import platform.Foundation.NSString
 import platform.Foundation.NSURL
@@ -26,7 +26,6 @@ fun String.localized(): String {
 
 fun String.localized(vararg arguments: Any?): String {
     val format = localized()
-    // Shorten the variable name
     val a = arguments
     // Kotlin does not support passing variadic parameters to Objective-C
     // We implement calling the method with up to 9 arguments which is enough in practice

@@ -1,7 +1,6 @@
 package ui
 import BloodViewModel
 import MaceProgressBar
-import Strings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
+import com.Strings
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.mace.corelib.StandardModal
 import com.mace.corelib.StandardModalArgs

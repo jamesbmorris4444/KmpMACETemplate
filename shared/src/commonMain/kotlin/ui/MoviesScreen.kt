@@ -1,7 +1,6 @@
 package ui
 
 import BloodViewModel
-import Strings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +30,7 @@ import app.cash.paging.LoadStateError
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import co.touchlab.kermit.Logger
+import com.Strings
 import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.mace.corelib.StandardModal
 import com.mace.corelib.StandardModalArgs

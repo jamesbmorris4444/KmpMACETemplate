@@ -3,7 +3,6 @@ package ui
 import BloodViewModel
 import MaceButton
 import MaceEditText
-import Strings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +39,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
+import com.Strings
 import com.jetbrains.handson.kmm.shared.cache.Donor
 
 @Composable

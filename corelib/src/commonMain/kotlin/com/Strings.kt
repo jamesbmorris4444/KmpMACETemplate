@@ -1,3 +1,5 @@
+package com
+
 expect object Strings {
     fun get(id: String, quantity: Int): String
     fun get(id: String): String

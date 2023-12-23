@@ -3,7 +3,6 @@ import BloodViewModel
 import MaceEditText
 import MaceProgressBar
 import MaceText
-import Strings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,6 @@ import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -41,11 +39,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
+import com.Strings
 import com.avenirFontFamilyBold
 import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
 import com.jetbrains.handson.kmm.shared.entity.HotelRegion
@@ -215,7 +213,6 @@ fun TravelDestinationsScreen(
                                         regionExpanded = false
                                         regionTextEntered = label.name
                                         viewModel.destinationIdsAvailable.value = null
-                                        Logger.d("JIMX  7777 ${label.searchType}")
                                         genericApiCall(searchKey = label.destId, searchType = label.searchType, apiType = ApiCalls.TravelRegions, viewModel = viewModel)
                                         viewModel.progressBarState.value = true
                                     }

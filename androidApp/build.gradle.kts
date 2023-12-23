@@ -59,4 +59,5 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.kmm.viewmodel.lifecycle)
     implementation(libs.kmm.viewmodel)
+    implementation(projects.corelib)
 }

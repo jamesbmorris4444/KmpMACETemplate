@@ -37,7 +37,10 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     var hotelsAvailable: MutableStateFlow<HotelRegion?> = MutableStateFlow(null)
     var regionsFailure: MutableStateFlow<String> = MutableStateFlow("")
     var regionsSearchKey: MutableStateFlow<String> = MutableStateFlow("")
-
+    val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
+    var progressBarState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    var donorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
+    var productsListState: MutableStateFlow<MutableList<Product>> = MutableStateFlow(mutableListOf())
 
     val moviesAvailableState: Flow<PagingData<Movie>> = Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
@@ -45,14 +48,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         )
         .flow
         .cachedIn(viewModelScope.coroutineScope)
-
-    val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
-    var progressBarState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var donorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
-
-    fun initializeDatabase() {
-        repository.initializeDatabase()
-    }
 
     suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String> {
         return repository.getSpaceXLaunches(composableScope)
@@ -64,6 +59,10 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
 
     suspend fun getHotels(regionSearchKey: String, regionSearchType: String, composableScope: CoroutineScope): Pair<HotelRegion, String> {
         return repository.getHotels(regionSearchKey, regionSearchType, composableScope)
+    }
+
+    fun initializeDatabase() {
+        repository.initializeDatabase()
     }
 
     fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts? {

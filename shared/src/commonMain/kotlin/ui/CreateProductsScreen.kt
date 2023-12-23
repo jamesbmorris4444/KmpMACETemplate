@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +39,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
+import com.Strings
 import com.avenirFontFamilyBold
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
@@ -75,7 +78,7 @@ fun CreateProductsScreen(
     val aboRhTitle = Strings.get("abo_rh_title")
 
     // state variables
-    var products: MutableList<Product> by remember { mutableStateOf(mutableListOf()) }
+    val products by viewModel.productsListState.collectAsState()
     var dinText by remember { mutableStateOf("") }
     var expirationText by remember { mutableStateOf("") }
     var productCodeText by remember { mutableStateOf("") }
@@ -84,6 +87,8 @@ fun CreateProductsScreen(
     var clearButtonVisible by remember { mutableStateOf(false) }
     var confirmButtonVisible by remember { mutableStateOf(true) }
     var completeButtonVisible by remember { mutableStateOf(true) }
+
+    Logger.i("JIMX  $products")
 
     fun setButtonState(clearVisible: Boolean, confirmVisible: Boolean, completeVisible: Boolean) {
         clearButtonVisible = clearVisible
@@ -105,6 +110,7 @@ fun CreateProductsScreen(
     fun processNewProduct() {
         val product = Product(id = 0, donorId = donor.id, din = dinText, aboRh = donor.aboRh, productCode = productCodeText, expirationDate = expirationText)
         products.add(product)
+        viewModel.productsListState.value = products
     }
 
     fun addDonorWithProductsToDatabase() {
@@ -116,7 +122,7 @@ fun CreateProductsScreen(
             positiveText = Strings.get("positive_button_text_ok")
         ) {
             showStandardModalState = StandardModalArgs()
-            products = mutableListOf()
+            viewModel.productsListState.value = mutableListOf()
             screenIsReadOnly = false
             clearTextState()
             setButtonState(clearVisible = false, confirmVisible = true, completeVisible = true)
@@ -133,7 +139,7 @@ fun CreateProductsScreen(
         if (products.isEmpty() && dinText.isEmpty() && productCodeText.isEmpty() && expirationText.isEmpty()) {
             // all are empty, display donor product list
             viewModel.donorsFromFullNameWithProducts(donor.lastName, donor.dob)?.let {
-                products = it.products.toMutableList()
+                viewModel.productsListState.value = it.products.toMutableList()
                 screenIsReadOnly = true
                 setButtonState(clearVisible = false, confirmVisible = false, completeVisible = true)
             } ?: {
@@ -205,6 +211,8 @@ fun CreateProductsScreen(
         clearButtonVisible = nonePresent.not()
     }
 
+    Logger.i("JIMX aaa $products")
+
     LaunchedEffect(key1 = true) {
         configAppBar(
             AppBarState(
@@ -230,9 +238,11 @@ fun CreateProductsScreen(
             )
         )
     }
+    Logger.i("JIMX bbb $products")
 
     when {
         showStandardModalState.topIconId.isNotEmpty() -> {
+            Logger.i("JIMX  WW1")
             StandardModal(
                 showStandardModalState.topIconId,
                 showStandardModalState.titleText,
@@ -244,6 +254,7 @@ fun CreateProductsScreen(
             )
         }
         else -> {
+            Logger.i("JIMX  WW2")
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -278,13 +289,9 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, top = true, bottom = true)
                                 ) {
-                                    MaceEditText(testTag = "otf_din", value = dinText, onValueChange = { dinText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterDinText,
-                                        modifier = Modifier
-                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
-                                            .align(Alignment.BottomStart))
                                     MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(start = 8.dp))
+                                            .padding(start = 8.dp, top = 8.dp)
                                             .align(Alignment.TopStart),
                                         text = dinTitle,
                                         style = MaterialTheme.typography.subtitle1,
@@ -292,6 +299,10 @@ fun CreateProductsScreen(
                                         fontFamily = avenirFontFamilyBold
 
                                     )
+                                    MaceEditText(testTag = "otf_din", value = dinText, onValueChange = { dinText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterDinText,
+                                        modifier = Modifier
+                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                                            .align(Alignment.BottomStart))
                                 }
                             }
                             item { // lower left
@@ -379,6 +390,7 @@ fun CreateProductsScreen(
                         }
                     }
                 }
+                Logger.i("JIMX  WW3")
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -417,14 +429,15 @@ fun CreateProductsScreen(
                     }
                 }
                 Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
+                Logger.i("JIMX  WW4=${products.size}")
                 ProductListScreen(
                     canScrollVertically = true,
                     productList = products,
                     useOnProductsChange = true,
-                    onProductsChange = { products = it.toMutableList() },
-                    onDinTextChange = { dinText = it },
-                    onProductCodeTextChange = { productCodeText = it },
-                    onExpirationTextChange = { expirationText = it },
+                    onProductsChange = { productList -> viewModel.productsListState.value = productList.toMutableList() },
+                    onDinTextChange = { din -> dinText = din },
+                    onProductCodeTextChange = { productCode -> productCodeText = productCode },
+                    onExpirationTextChange = { expiration -> expirationText = expiration },
                     enablerForProducts = { true }
                 )
             }
