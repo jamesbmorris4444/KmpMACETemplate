@@ -88,8 +88,6 @@ fun CreateProductsScreen(
     var confirmButtonVisible by remember { mutableStateOf(true) }
     var completeButtonVisible by remember { mutableStateOf(true) }
 
-    Logger.i("JIMX  $products")
-
     fun setButtonState(clearVisible: Boolean, confirmVisible: Boolean, completeVisible: Boolean) {
         clearButtonVisible = clearVisible
         if (screenIsReadOnly) {
@@ -211,8 +209,6 @@ fun CreateProductsScreen(
         clearButtonVisible = nonePresent.not()
     }
 
-    Logger.i("JIMX aaa $products")
-
     LaunchedEffect(key1 = true) {
         configAppBar(
             AppBarState(
@@ -238,11 +234,9 @@ fun CreateProductsScreen(
             )
         )
     }
-    Logger.i("JIMX bbb $products")
 
     when {
         showStandardModalState.topIconId.isNotEmpty() -> {
-            Logger.i("JIMX  WW1")
             StandardModal(
                 showStandardModalState.topIconId,
                 showStandardModalState.titleText,
@@ -254,7 +248,6 @@ fun CreateProductsScreen(
             )
         }
         else -> {
-            Logger.i("JIMX  WW2")
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -311,19 +304,19 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, bottom = true)
                                 ) {
-                                    MaceEditText(testTag = "otf_product_code", value = productCodeText, onValueChange = { productCodeText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterProductCodeText,
-                                        modifier = Modifier
-                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
-                                            .align(Alignment.BottomStart))
                                     MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(start = 8.dp))
+                                            .padding(start = 8.dp, top = 8.dp)
                                             .align(Alignment.TopStart),
                                         text = productCodeTitle,
                                         style = MaterialTheme.typography.subtitle1,
                                         color =  MaterialTheme.colors.onBackground,
                                         fontFamily = avenirFontFamilyBold
                                     )
+                                    MaceEditText(testTag = "otf_product_code", value = productCodeText, onValueChange = { productCodeText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterProductCodeText,
+                                        modifier = Modifier
+                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                                            .align(Alignment.BottomStart))
                                 }
                             }
                         }
@@ -349,7 +342,7 @@ fun CreateProductsScreen(
                                 ) {
                                     MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(start = 8.dp))
+                                            .padding(start = 8.dp, top = 8.dp)
                                             .align(Alignment.TopStart),
                                         text = aboRhTitle,
                                         style = MaterialTheme.typography.subtitle1,
@@ -372,25 +365,24 @@ fun CreateProductsScreen(
                                         .size(gridCellWidth, gridCellHeight)
                                         .borders(2.dp, DarkGray, left = true, right = true, bottom = true)
                                 ) {
-                                    MaceEditText(testTag = "otf_expiration", value = expirationText, onValueChange = { expirationText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterExpirationText,
-                                        modifier = Modifier
-                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
-                                            .align(Alignment.BottomStart))
                                     MaceText(
                                         modifier = Modifier
-                                            .padding(PaddingValues(start = 8.dp))
+                                            .padding(start = 8.dp, top = 8.dp)
                                             .align(Alignment.TopStart),
                                         text = expirationTitle,
                                         style = MaterialTheme.typography.subtitle1,
                                         color =  MaterialTheme.colors.onBackground,
                                         fontFamily = avenirFontFamilyBold
                                     )
+                                    MaceEditText(testTag = "otf_expiration", value = expirationText, onValueChange = { expirationText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterExpirationText,
+                                        modifier = Modifier
+                                            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                                            .align(Alignment.BottomStart))
                                 }
                             }
                         }
                     }
                 }
-                Logger.i("JIMX  WW3")
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -429,7 +421,6 @@ fun CreateProductsScreen(
                     }
                 }
                 Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
-                Logger.i("JIMX  WW4=${products.size}")
                 ProductListScreen(
                     canScrollVertically = true,
                     productList = products,

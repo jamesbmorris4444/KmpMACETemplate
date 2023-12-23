@@ -47,12 +47,10 @@ fun ProductListContent(
     onExpirationTextChange: (String) -> Unit,
     enablerForProducts: (Product) -> Boolean
 ) {
-    Logger.i("JIMX   sssss22   ${products.size}")
     Column(
         modifier = if (canScrollVertically) Modifier.verticalScroll(rememberScrollState()) else Modifier
     ) {
         products.forEachIndexed { index, item ->
-            Logger.i("JIMX  index = $index")
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
@@ -124,7 +122,6 @@ fun ProductListScreen(
     onExpirationTextChange: (String) -> Unit = { },
     enablerForProducts: (Product) -> Boolean
 ) {
-    Logger.i("JIMX  WW5")
     ProductListContent(
         canScrollVertically = canScrollVertically,
         products = productList,
@@ -136,7 +133,6 @@ fun ProductListScreen(
         onExpirationTextChange = onExpirationTextChange,
         enablerForProducts = enablerForProducts
     )
-    Logger.i("JIMX  WW6")
 }
 
 @Composable
