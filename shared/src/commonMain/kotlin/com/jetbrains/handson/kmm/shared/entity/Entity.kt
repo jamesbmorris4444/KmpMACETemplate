@@ -1,12 +1,11 @@
 package com.jetbrains.handson.kmm.shared.entity
 
-import DateTime
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
+import com.mace.corelib.DateTime
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 data class RocketLaunch(
