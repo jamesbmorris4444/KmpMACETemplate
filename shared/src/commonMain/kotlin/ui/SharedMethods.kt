@@ -122,6 +122,7 @@ fun ProductListScreen(
     onExpirationTextChange: (String) -> Unit = { },
     enablerForProducts: (Product) -> Boolean
 ) {
+    Logger.i("JIMX Recompose 4")
     ProductListContent(
         canScrollVertically = canScrollVertically,
         products = productList,
@@ -133,6 +134,7 @@ fun ProductListScreen(
         onExpirationTextChange = onExpirationTextChange,
         enablerForProducts = enablerForProducts
     )
+    Logger.i("JIMX Recompose 5")
 }
 
 @Composable

@@ -383,6 +383,7 @@ fun CreateProductsScreen(
                         }
                     }
                 }
+                Logger.i("JIMX Recompose 1")
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -420,7 +421,9 @@ fun CreateProductsScreen(
                         )
                     }
                 }
+                Logger.i("JIMX Recompose 2")
                 Divider(color = MaterialTheme.colors.onBackground, thickness = 2.dp)
+                Logger.i("JIMX Recompose 3")
                 ProductListScreen(
                     canScrollVertically = true,
                     productList = products,
@@ -431,6 +434,7 @@ fun CreateProductsScreen(
                     onExpirationTextChange = { expiration -> expirationText = expiration },
                     enablerForProducts = { true }
                 )
+                Logger.i("JIMX Recompose 6")
             }
         }
     }
