@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -65,7 +66,7 @@ fun DrawerAppComponent(
                 Image(
                     modifier = Modifier
                         .size(120.dp),
-                    painter = painterResource("drawable/fs_logo.png"),
+                    painter = painterResource(DrawableResource("drawable/fs_logo.png")),
                     contentDescription = Strings.get("fs_logo_content_description"),
                     contentScale = ContentScale.Fit
                 )

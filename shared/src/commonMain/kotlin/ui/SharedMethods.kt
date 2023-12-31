@@ -26,11 +26,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import co.touchlab.kermit.Logger
 import com.Strings
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.rickclephas.kmm.viewmodel.coroutineScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -71,7 +71,7 @@ fun ProductListContent(
                                 onProductSelected(productSelectedAsList)
                             }
                         },
-                    painter = painterResource("drawable/delete_icon.png"),
+                    painter = painterResource(DrawableResource("drawable/delete_icon.png")),
                     contentDescription = "Dialog Alert"
                 )
                 Image(
@@ -92,7 +92,7 @@ fun ProductListContent(
                                 onProductSelected(productSelectedAsList)
                             }
                         },
-                    painter = painterResource("drawable/edit_icon.png"),
+                    painter = painterResource(DrawableResource("drawable/edit_icon.png")),
                     contentDescription = "Dialog Alert"
                 )
                 Column(modifier = Modifier

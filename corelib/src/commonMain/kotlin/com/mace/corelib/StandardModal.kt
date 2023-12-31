@@ -15,7 +15,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -35,6 +33,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.avenirFontFamilyBold
 import com.extraPrimary
 import com.extraWhite
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -107,7 +106,7 @@ fun StandardModal(
                                     .padding(top = 22.dp)
                                     .height(160.dp)
                                     .width(120.dp),
-                                painter = painterResource(topIconId),
+                                painter = painterResource(DrawableResource(topIconId)),
                                 colorFilter = ColorFilter.tint(MaterialTheme.colors.extraPrimary),
                                 contentDescription = "Dialog Alert"
                             )
