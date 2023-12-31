@@ -1,6 +1,5 @@
 package ui
 
-import BloodViewModel
 import MaceButton
 import MaceEditText
 import MaceText
@@ -48,6 +47,7 @@ import com.mace.corelib.StandardModalArgs
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
+import viewmodels.BloodViewModel
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable

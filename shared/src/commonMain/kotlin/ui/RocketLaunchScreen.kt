@@ -1,5 +1,4 @@
 package ui
-import BloodViewModel
 import MaceProgressBar
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,17 +29,19 @@ import com.mace.corelib.StandardModalArgs
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
+import viewmodels.BloodViewModel
+import viewmodels.RocketViewModel
 
 @Composable
 fun RocketLaunchScreen(
     navigator: Navigator,
     configAppBar: (AppBarState) -> Unit,
-    viewModel: BloodViewModel,
+    viewModel: RocketViewModel,
     title: String
 ) {
 
     @Composable
-    fun handleFailure(viewModel: BloodViewModel, message: String, typeOfApi: ApiCalls, showStandardModalState: StandardModalArgs) {
+    fun handleFailure(viewModel: RocketViewModel, message: String, typeOfApi: ApiCalls, showStandardModalState: StandardModalArgs) {
         if (showStandardModalState.topIconId.isNotEmpty()) {
             StandardModal(
                 showStandardModalState.topIconId,
@@ -75,7 +76,7 @@ fun RocketLaunchScreen(
         launchesAvailable != null -> launchesAvailable ?.let { RocketLaunchHandler(navigator = navigator, configAppBar = configAppBar, title = title, launches = it) }
         else -> {
             MaceProgressBar()
-            genericApiCall(apiType = ApiCalls.SpaceX, viewModel = viewModel)
+            rocketApiCall(viewModel = viewModel)
         }
     }
 }

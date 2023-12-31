@@ -18,7 +18,6 @@ struct iOSApp: App {
         }
     }
 
-    var bloodViewModel = BloodViewModel()
     var repository: RepositoryImpl {
         let repo = RepositoryImpl()
         var width: Int32 { get { return Int32(UIScreen.main.bounds.width) }}
@@ -30,7 +29,7 @@ struct iOSApp: App {
 
 	var body: some Scene {
 		WindowGroup {
-			ContentView(viewModel: bloodViewModel, repository: repository)
+			ContentView(repository: repository)
 		}
 	}
 }

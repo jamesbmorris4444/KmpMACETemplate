@@ -1,5 +1,4 @@
 package ui
-import BloodViewModel
 import CreateProductsScreen
 import MaceText
 import androidx.compose.foundation.layout.Box
@@ -24,6 +23,10 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
 import moe.tlaster.precompose.navigation.transition.NavTransition
+import viewmodels.BloodViewModel
+import viewmodels.MovieViewModel
+import viewmodels.RocketViewModel
+import viewmodels.TravelViewModel
 
 data class AppBarState(
     val title: String = Strings.get("rocket_launch_pending_title"),
@@ -36,12 +39,12 @@ data class AppBarState(
 fun ScreenNavigator(
     navigator: Navigator,
     initialRoute: String,
-    viewModel: BloodViewModel,
     screenWidth: Dp,
     openDrawer: () -> Unit = { }
 ) {
+    val bloodViewModel = BloodViewModel()
     var appBarState by remember { mutableStateOf(AppBarState()) }
-    var donor by remember { mutableStateOf(viewModel.emptyDonor) }
+    var donor by remember { mutableStateOf(bloodViewModel.emptyDonor) }
     var transitionToCreateProductsScreen by remember { mutableStateOf(true) }
     Scaffold(
         topBar = {
@@ -64,7 +67,7 @@ fun ScreenNavigator(
                         configAppBar = {
                             appBarState = it
                         },
-                        viewModel = viewModel,
+                        viewModel = RocketViewModel(),
                         title = ScreenNames.RocketLaunch.string
                     )
                 }
@@ -78,7 +81,7 @@ fun ScreenNavigator(
                         configAppBar = {
                             appBarState = it
                         },
-                        viewModel = viewModel,
+                        viewModel = MovieViewModel(),
                         title = ScreenNames.Movies.string
                     )
                 }
@@ -89,7 +92,7 @@ fun ScreenNavigator(
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.TravelDestinations.name}")
                     TravelDestinationsScreen(
                         navigator = navigator,
-                        viewModel = viewModel,
+                        viewModel = TravelViewModel(),
                         title = ScreenNames.TravelDestinations.string,
                         configAppBar = {
                             appBarState = it
@@ -118,7 +121,7 @@ fun ScreenNavigator(
                                 navigator.navigate(ScreenNames.ManageDonorAfterSearch.name)
                             }
                         },
-                        viewModel = viewModel,
+                        viewModel = bloodViewModel,
                         title = ScreenNames.DonateProductsSearch.string
                     )
                 }
@@ -136,7 +139,7 @@ fun ScreenNavigator(
                         canNavigateBack = navigator.canGoBack.collectAsState(true).value,
                         navigateUp = { navigator.popBackStack() },
                         openDrawer = openDrawer,
-                        viewModel = viewModel,
+                        viewModel = bloodViewModel,
                         donor = donor,
                         transitionToCreateProductsScreen = transitionToCreateProductsScreen,
                         donateProductsSearchStringName = ScreenNames.DonateProductsSearch.name,
@@ -158,7 +161,7 @@ fun ScreenNavigator(
                         navigateUp = { navigator.popBackStack() },
                         openDrawer = openDrawer,
                         donor = donor,
-                        viewModel = viewModel,
+                        viewModel = bloodViewModel,
                         onCompleteButtonClicked = {
                             navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true)))
                         }
@@ -170,7 +173,7 @@ fun ScreenNavigator(
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ViewDonorList.name}")
                     ViewDonorListScreen(
-                        viewModel = viewModel,
+                        viewModel = bloodViewModel,
                         title = ScreenNames.ViewDonorList.string,
                         configAppBar = {
                             appBarState = it
@@ -194,7 +197,7 @@ fun ScreenNavigator(
                         navigateUp = { navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true))) },
                         openDrawer = openDrawer,
                         title = ScreenNames.ManageDonorFromDrawer.string,
-                        viewModel = viewModel,
+                        viewModel = bloodViewModel,
                         transitionToCreateProductsScreen = false,
                         donateProductsSearchStringName = ScreenNames.DonateProductsSearch.name,
                         createProductsStringName = ScreenNames.CreateProducts.name
@@ -212,7 +215,7 @@ fun ScreenNavigator(
                         canNavigateBack = true,
                         navigateUp = { navigator.navigate(route = ScreenNames.DonateProductsSearch.name, NavOptions(popUpTo = PopUpTo(ScreenNames.DonateProductsSearch.name, inclusive = true))) },
                         openDrawer = openDrawer,
-                        viewModel = viewModel,
+                        viewModel = bloodViewModel,
                         title =  ScreenNames.ReassociateDonation.string
                     )
                 }

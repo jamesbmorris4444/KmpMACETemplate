@@ -1,25 +1,17 @@
-
-import app.cash.paging.Pager
-import app.cash.paging.PagingConfig
-import app.cash.paging.PagingData
-import app.cash.paging.cachedIn
+package viewmodels
+import Repository
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
-import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
-import com.jetbrains.handson.kmm.shared.entity.HotelRegion
-import com.jetbrains.handson.kmm.shared.entity.Movie
-import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.mace.corelib.StandardModalArgs
 import com.rickclephas.kmm.viewmodel.KMMViewModel
-import com.rickclephas.kmm.viewmodel.coroutineScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class ViewModel : KMMViewModel(), KoinComponent {
+class BloodViewModel : AbstractBloodViewModel()
+
+abstract class AbstractBloodViewModel : KMMViewModel(), KoinComponent {
 
     private val repository: Repository by inject()
 
@@ -30,36 +22,9 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     val emptyDonor = Donor(0,"", "", "", "", "", "", gender = false)
     val noValue = "NO VALUE"
 
-    var launchesAvailable: MutableStateFlow<List<RocketLaunch>?> = MutableStateFlow(null)
-    var launchesFailure: MutableStateFlow<String> = MutableStateFlow("")
-    var destinationIdsAvailable: MutableStateFlow<List<HotelDestinationId>?> = MutableStateFlow(null)
-    var destinationIdsFailure: MutableStateFlow<String> = MutableStateFlow("")
-    var hotelsAvailable: MutableStateFlow<HotelRegion?> = MutableStateFlow(null)
-    var regionsFailure: MutableStateFlow<String> = MutableStateFlow("")
-    var regionsSearchKey: MutableStateFlow<String> = MutableStateFlow("")
     val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
-    var progressBarState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var donorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
     var productsListState: MutableStateFlow<MutableList<Product>> = MutableStateFlow(mutableListOf())
-
-    val moviesAvailableState: Flow<PagingData<Movie>> = Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = { repository.getMoviePagingSource() }
-        )
-        .flow
-        .cachedIn(viewModelScope.coroutineScope)
-
-    suspend fun getSpaceXLaunches(composableScope: CoroutineScope): Pair<List<RocketLaunch>, String> {
-        return repository.getSpaceXLaunches(composableScope)
-    }
-
-    suspend fun getHotelDestinationIds(destinationSearchKey: String, composableScope: CoroutineScope): Pair<List<HotelDestinationId>, String> {
-        return repository.getHotelDestinationIds(destinationSearchKey, composableScope)
-    }
-
-    suspend fun getHotels(regionSearchKey: String, regionSearchType: String, composableScope: CoroutineScope): Pair<HotelRegion, String> {
-        return repository.getHotels(regionSearchKey, regionSearchType, composableScope)
-    }
 
     fun initializeDatabase() {
         repository.initializeDatabase()

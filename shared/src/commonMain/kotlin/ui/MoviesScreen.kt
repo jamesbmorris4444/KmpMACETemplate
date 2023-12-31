@@ -1,6 +1,5 @@
 package ui
 
-import BloodViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,12 +45,13 @@ import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
+import viewmodels.MovieViewModel
 
 @Composable
 fun MoviesScreen(
     navigator: Navigator,
     configAppBar: (AppBarState) -> Unit,
-    viewModel: BloodViewModel,
+    viewModel: MovieViewModel,
     title: String
 ) {
     Logger.i("MACELOG: Compose: ${ScreenNames.Movies.name}")
@@ -67,7 +67,7 @@ fun MoviesScreen(
 fun MoviesHandler(
     navigator: Navigator,
     configAppBar: (AppBarState) -> Unit,
-    viewModel: BloodViewModel,
+    viewModel: MovieViewModel,
     title: String
 ) {
     val coroutineScope = rememberCoroutineScope()

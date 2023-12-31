@@ -1,6 +1,5 @@
 package ui
 
-import BloodViewModel
 import MaceEditText
 import MaceText
 import androidx.compose.foundation.clickable
@@ -43,6 +42,7 @@ import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.mace.corelib.StandardModal
 import com.mace.corelib.StandardModalArgs
+import viewmodels.BloodViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

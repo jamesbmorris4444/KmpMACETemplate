@@ -1,5 +1,4 @@
 package ui
-import BloodViewModel
 import MaceText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +32,7 @@ import kotlinx.coroutines.launch
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -41,8 +41,8 @@ import org.jetbrains.compose.resources.painterResource
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun DrawerAppComponent(
-    viewModel: BloodViewModel,
-    screenWidth: Dp
+    screenWidth: Dp,
+    screenHeight: Dp
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val currentScreen = remember { mutableStateOf(ScreenNames.DonateProductsSearch) }
@@ -65,7 +65,7 @@ fun DrawerAppComponent(
                 Image(
                     modifier = Modifier
                         .size(120.dp),
-                    painter = painterResource("drawable/fs_logo.png"),
+                    painter = painterResource(DrawableResource("drawable/fs_logo.png")),
                     contentDescription = Strings.get("fs_logo_content_description"),
                     contentScale = ContentScale.Fit
                 )
@@ -116,11 +116,9 @@ fun DrawerAppComponent(
     @Composable
     fun BodyContentComponent(
         navigator: Navigator,
-        viewModel: BloodViewModel,
         openDrawer: () -> Unit
     ) {
         ScreenNavigator(
-            viewModel = viewModel,
             openDrawer = openDrawer,
             navigator = navigator,
             initialRoute = ScreenNames.RocketLaunch.name,
@@ -143,8 +141,7 @@ fun DrawerAppComponent(
             content = {
                 BodyContentComponent(
                     navigator = navigator,
-                    openDrawer = { coroutineScope.launch { drawerState.open() } },
-                    viewModel = viewModel
+                    openDrawer = { coroutineScope.launch { drawerState.open() } }
                 )
             }
         )

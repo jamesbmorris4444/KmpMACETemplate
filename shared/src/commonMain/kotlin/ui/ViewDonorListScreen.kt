@@ -1,5 +1,4 @@
 package ui
-import BloodViewModel
 import MaceEditText
 import MaceText
 import androidx.compose.foundation.background
@@ -42,6 +41,7 @@ import com.Strings
 import com.extraBlack
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import utils.Utils
+import viewmodels.BloodViewModel
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable

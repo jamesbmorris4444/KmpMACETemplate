@@ -1,5 +1,4 @@
 package ui
-import BloodViewModel
 import MaceEditText
 import MaceProgressBar
 import MaceText
@@ -61,11 +60,12 @@ import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
+import viewmodels.TravelViewModel
 
 @Composable
 fun TravelDestinationsScreen(
     navigator: Navigator,
-    viewModel: BloodViewModel,
+    viewModel: TravelViewModel,
     title: String,
     configAppBar: (AppBarState) -> Unit
 ) {
@@ -73,7 +73,7 @@ fun TravelDestinationsScreen(
     @Composable
     fun TravelStartHandler(
         navigator: Navigator,
-        viewModel: BloodViewModel,
+        viewModel: TravelViewModel,
         title: String,
         progressBarState: Boolean,
         configAppBar: (AppBarState) -> Unit
@@ -124,7 +124,7 @@ fun TravelDestinationsScreen(
                             onDone = {
                                 keyboardController?.hide()
                                 destinationTextEntered = textEntered
-                                genericApiCall(searchKey = destinationTextEntered, apiType = ApiCalls.TravelDestinations, viewModel = viewModel)
+                                travelDestinationsApiCall(searchKey = destinationTextEntered, viewModel = viewModel)
                                 viewModel.progressBarState.value = true
                             }
                         )
@@ -138,7 +138,7 @@ fun TravelDestinationsScreen(
     @Composable
     fun TravelDestinationsHandler(
         navigator: Navigator,
-        viewModel: BloodViewModel,
+        viewModel: TravelViewModel,
         title: String,
         configAppBar: (AppBarState) -> Unit,
         progressBarState: Boolean,
@@ -213,7 +213,7 @@ fun TravelDestinationsScreen(
                                         regionExpanded = false
                                         regionTextEntered = label.name
                                         viewModel.destinationIdsAvailable.value = null
-                                        genericApiCall(searchKey = label.destId, searchType = label.searchType, apiType = ApiCalls.TravelRegions, viewModel = viewModel)
+                                        travelRegionsApiCall(searchKey = label.destId, searchType = label.searchType, viewModel = viewModel)
                                         viewModel.progressBarState.value = true
                                     }
                                 ) {
@@ -350,7 +350,7 @@ fun TravelDestinationsScreen(
     }
 
     @Composable
-    fun handleFailure(viewModel: BloodViewModel, message: String, typeOfApi: ApiCalls, showStandardModalState: StandardModalArgs) {
+    fun handleFailure(viewModel: TravelViewModel, message: String, typeOfApi: ApiCalls, showStandardModalState: StandardModalArgs) {
         if (showStandardModalState.topIconId.isNotEmpty()) {
             StandardModal(
                 showStandardModalState.topIconId,
@@ -384,16 +384,21 @@ fun TravelDestinationsScreen(
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
     val progressBarState by viewModel.progressBarState.collectAsState()
 
+    Logger.i("JIMX 111111  $destinationIdsAvailable")
+
     when {
         destinationIdsFailure.isNotEmpty() -> {
+            Logger.i("JIMX 222222  $destinationIdsFailure")
             viewModel.progressBarState.value = false
             handleFailure(viewModel, destinationIdsFailure, ApiCalls.TravelDestinations, showStandardModalState)
         }
         regionsFailure.isNotEmpty() -> {
+            Logger.i("JIMX 333333  $regionsFailure")
             viewModel.progressBarState.value = false
             handleFailure(viewModel, regionsFailure, ApiCalls.TravelRegions, showStandardModalState)
         }
         destinationIdsAvailable != null -> {
+            Logger.i("JIMX 444444  $destinationIdsAvailable")
             viewModel.progressBarState.value = false
             TravelDestinationsHandler(navigator = navigator, configAppBar = configAppBar, viewModel = viewModel, title = destinationTitle, destinationIds = destinationIdsAvailable, progressBarState = progressBarState)
         }

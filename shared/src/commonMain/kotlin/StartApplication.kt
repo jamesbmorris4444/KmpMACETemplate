@@ -5,8 +5,8 @@ import com.MaceTemplateTheme
 import ui.DrawerAppComponent
 
 @Composable
-fun StartApplication(viewModel: BloodViewModel, repository: Repository) {
+fun StartApplication(repository: Repository) {
     MaceTemplateTheme {
-        DrawerAppComponent(viewModel, repository.screenWidth.dp)
+        DrawerAppComponent(repository.screenWidth.dp, repository.screenHeight.dp)
     }
 }

@@ -1,6 +1,5 @@
 package ui
 
-import BloodViewModel
 import MaceAnnotatedText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -31,8 +30,11 @@ import com.Strings
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.rickclephas.kmm.viewmodel.coroutineScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import viewmodels.RocketViewModel
+import viewmodels.TravelViewModel
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -71,7 +73,7 @@ fun ProductListContent(
                                 onProductSelected(productSelectedAsList)
                             }
                         },
-                    painter = painterResource("drawable/delete_icon.png"),
+                    painter = painterResource(DrawableResource("drawable/delete_icon.png")),
                     contentDescription = "Dialog Alert"
                 )
                 Image(
@@ -92,7 +94,7 @@ fun ProductListContent(
                                 onProductSelected(productSelectedAsList)
                             }
                         },
-                    painter = painterResource("drawable/edit_icon.png"),
+                    painter = painterResource(DrawableResource("drawable/edit_icon.png")),
                     contentDescription = "Dialog Alert"
                 )
                 Column(modifier = Modifier
@@ -155,51 +157,55 @@ fun ListDisplayText(testTag: String, label: String, body: String, color: Color =
     )
 }
 
-fun genericApiCall(
-    searchKey: String = "",
-    searchType: String = "",
-    apiType: ApiCalls,
-    viewModel: BloodViewModel
+fun rocketApiCall(
+    viewModel: RocketViewModel
 ) {
     val composableScope = viewModel.viewModelScope.coroutineScope
-    when (apiType) {
-        ApiCalls.SpaceX -> {
-            composableScope.launch {
-                val (success, failure) = viewModel.getSpaceXLaunches(composableScope)
-                if (failure.isEmpty()) {
-                    // success
-                    viewModel.launchesAvailable.value = success
-                    // failure
-                } else {
-                    viewModel.launchesFailure.value = failure
-                }
-            }
+    composableScope.launch {
+        val (success, failure) = viewModel.getSpaceXLaunches(composableScope)
+        if (failure.isEmpty()) {
+            // success
+            viewModel.launchesAvailable.value = success
+            // failure
+        } else {
+            viewModel.launchesFailure.value = failure
         }
-        ApiCalls.TravelDestinations -> {
-            composableScope.launch {
-                val (success, failure) = viewModel.getHotelDestinationIds(searchKey, composableScope)
-                if (failure.isEmpty()) {
-                    // success
-                    viewModel.destinationIdsAvailable.value = success
-                    viewModel.regionsSearchKey.value = searchKey
-                } else {
-                    // failure
-                    viewModel.destinationIdsFailure.value = failure
-                }
-            }
-        }
+    }
+}
 
-        ApiCalls.TravelRegions -> {
-            composableScope.launch {
-                val (success, failure) = viewModel.getHotels(searchKey, searchType, composableScope)
-                if (failure.isEmpty()) {
-                    // success
-                    viewModel.hotelsAvailable.value = success
-                } else {
-                    // failure
-                    viewModel.regionsFailure.value = failure
-                }
-            }
+fun travelDestinationsApiCall(
+    searchKey: String = "",
+    viewModel: TravelViewModel
+) {
+    val composableScope = viewModel.viewModelScope.coroutineScope
+    composableScope.launch {
+        val (success, failure) = viewModel.getHotelDestinationIds(searchKey, composableScope)
+        if (failure.isEmpty()) {
+            // success
+            viewModel.destinationIdsAvailable.value = success
+            Logger.i("JIMX    $success")
+            viewModel.regionsSearchKey.value = searchKey
+        } else {
+            // failure
+            viewModel.destinationIdsFailure.value = failure
+        }
+    }
+}
+
+fun travelRegionsApiCall(
+    searchKey: String = "",
+    searchType: String = "",
+    viewModel: TravelViewModel
+) {
+    val composableScope = viewModel.viewModelScope.coroutineScope
+    composableScope.launch {
+        val (success, failure) = viewModel.getHotels(searchKey, searchType, composableScope)
+        if (failure.isEmpty()) {
+            // success
+            viewModel.hotelsAvailable.value = success
+        } else {
+            // failure
+            viewModel.regionsFailure.value = failure
         }
     }
 }
@@ -208,5 +214,4 @@ enum class ApiCalls(val string: String) {
     SpaceX(Strings.get("rocket_launch_type")),
     TravelRegions(Strings.get("region_type")),
     TravelDestinations(Strings.get("destination_id_type"))
-
 }

@@ -1,6 +1,5 @@
 package ui
 
-import BloodViewModel
 import MaceButton
 import MaceEditText
 import androidx.compose.foundation.clickable
@@ -41,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.Strings
 import com.jetbrains.handson.kmm.shared.cache.Donor
+import viewmodels.BloodViewModel
 
 @Composable
 fun DonateProductsScreen(

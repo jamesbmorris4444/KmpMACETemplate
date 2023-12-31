@@ -1,6 +1,5 @@
 package com.mace.kmpmacetemplate.android
 
-import BloodViewModel
 import RepositoryImpl
 import StartApplication
 import android.content.Context
@@ -9,13 +8,11 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import com.Strings
 
 class MainActivity : ComponentActivity() {
     private val repository = RepositoryImpl()
-    private val viewModel: BloodViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Strings.context = this
@@ -23,7 +20,7 @@ class MainActivity : ComponentActivity() {
         repository.screenHeight = convertPixelsToDp(Resources.getSystem().displayMetrics.heightPixels.toFloat(), this).toInt()
         WindowCompat.setDecorFitsSystemWindows(window, true)
         setContent {
-            StartApplication(viewModel, repository)
+            StartApplication(repository)
         }
     }
 
