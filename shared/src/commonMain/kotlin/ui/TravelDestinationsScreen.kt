@@ -48,6 +48,7 @@ import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
 import com.jetbrains.handson.kmm.shared.entity.HotelRegion
 import com.mace.corelib.StandardModal
 import com.mace.corelib.StandardModalArgs
+import com.rickclephas.kmm.viewmodel.coroutineScope
 import io.kamel.core.Resource
 import io.kamel.core.utils.cacheControl
 import io.kamel.image.KamelImage
@@ -69,13 +70,53 @@ fun TravelDestinationsScreen(
     title: String,
     configAppBar: (AppBarState) -> Unit
 ) {
+
+    var progressBarState by remember { mutableStateOf(false) }
+    var destinationIdsAvailable: List<HotelDestinationId>? by remember { mutableStateOf(null) }
+    var regionsSearchKey by remember { mutableStateOf("") }
+
+    fun travelDestinationsApiCall(
+        searchKey: String = "",
+        viewModel: TravelViewModel
+    ) {
+        val composableScope = viewModel.viewModelScope.coroutineScope
+        composableScope.launch {
+            val (success, failure) = viewModel.getHotelDestinationIds(searchKey, composableScope)
+            if (failure.isEmpty()) {
+                // success
+                destinationIdsAvailable = success
+                regionsSearchKey = searchKey
+            } else {
+                // failure
+                viewModel.destinationIdsFailure.value = failure
+            }
+        }
+    }
+
+    fun travelRegionsApiCall(
+        searchKey: String = "",
+        searchType: String = "",
+        viewModel: TravelViewModel
+    ) {
+        val composableScope = viewModel.viewModelScope.coroutineScope
+        composableScope.launch {
+            val (success, failure) = viewModel.getHotels(searchKey, searchType, composableScope)
+            if (failure.isEmpty()) {
+                // success
+                viewModel.hotelsAvailable.value = success
+            } else {
+                // failure
+                viewModel.regionsFailure.value = failure
+            }
+        }
+    }
+
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     fun TravelStartHandler(
         navigator: Navigator,
         viewModel: TravelViewModel,
         title: String,
-        progressBarState: Boolean,
         configAppBar: (AppBarState) -> Unit
     ) {
         // state variables
@@ -125,7 +166,7 @@ fun TravelDestinationsScreen(
                                 keyboardController?.hide()
                                 destinationTextEntered = textEntered
                                 travelDestinationsApiCall(searchKey = destinationTextEntered, viewModel = viewModel)
-                                viewModel.progressBarState.value = true
+                                progressBarState = true
                             }
                         )
                     )
@@ -141,11 +182,10 @@ fun TravelDestinationsScreen(
         viewModel: TravelViewModel,
         title: String,
         configAppBar: (AppBarState) -> Unit,
-        progressBarState: Boolean,
         destinationIds: List<HotelDestinationId>? = null
     ) {
         // state variables
-        val regionsSearchKey  by viewModel.regionsSearchKey.collectAsState()
+        //val regionsSearchKey  by viewModel.regionsSearchKey.collectAsState()
         var regionTextEntered by remember { mutableStateOf("") }
         LaunchedEffect(key1 = true) {
             Logger.i("MACELOG: launch Travel Destinations Handler=${ScreenNames.TravelDestinations.name}")
@@ -212,9 +252,9 @@ fun TravelDestinationsScreen(
                                     onClick = {
                                         regionExpanded = false
                                         regionTextEntered = label.name
-                                        viewModel.destinationIdsAvailable.value = null
+                                        destinationIdsAvailable = null
                                         travelRegionsApiCall(searchKey = label.destId, searchType = label.searchType, viewModel = viewModel)
-                                        viewModel.progressBarState.value = true
+                                        progressBarState = true
                                     }
                                 ) {
                                     MaceText(
@@ -377,37 +417,31 @@ fun TravelDestinationsScreen(
 
     val destinationTitle = Strings.get("travel_destination_id")
     val hotelsTitle = Strings.get("travel_hotels")
-    val destinationIdsAvailable: List<HotelDestinationId>? by viewModel.destinationIdsAvailable.collectAsState()
+    //val destinationIdsAvailable: List<HotelDestinationId>? by viewModel.destinationIdsAvailable.collectAsState()
     val hotelsAvailable: HotelRegion? by viewModel.hotelsAvailable.collectAsState()
     val destinationIdsFailure by viewModel.destinationIdsFailure.collectAsState()
     val regionsFailure by viewModel.regionsFailure.collectAsState()
     val showStandardModalState by viewModel.showStandardModalState.collectAsState()
-    val progressBarState by viewModel.progressBarState.collectAsState()
-
-    Logger.i("JIMX 111111  $destinationIdsAvailable")
 
     when {
         destinationIdsFailure.isNotEmpty() -> {
-            Logger.i("JIMX 222222  $destinationIdsFailure")
-            viewModel.progressBarState.value = false
+            progressBarState = false
             handleFailure(viewModel, destinationIdsFailure, ApiCalls.TravelDestinations, showStandardModalState)
         }
         regionsFailure.isNotEmpty() -> {
-            Logger.i("JIMX 333333  $regionsFailure")
-            viewModel.progressBarState.value = false
+            progressBarState = false
             handleFailure(viewModel, regionsFailure, ApiCalls.TravelRegions, showStandardModalState)
         }
         destinationIdsAvailable != null -> {
-            Logger.i("JIMX 444444  $destinationIdsAvailable")
-            viewModel.progressBarState.value = false
-            TravelDestinationsHandler(navigator = navigator, configAppBar = configAppBar, viewModel = viewModel, title = destinationTitle, destinationIds = destinationIdsAvailable, progressBarState = progressBarState)
+            progressBarState = false
+            TravelDestinationsHandler(navigator = navigator, configAppBar = configAppBar, viewModel = viewModel, title = destinationTitle, destinationIds = destinationIdsAvailable)
         }
         hotelsAvailable != null -> {
-            viewModel.progressBarState.value = false
+            progressBarState = false
             TravelRegionsHandler(navigator = navigator, configAppBar = configAppBar, title = hotelsTitle, hotelRegion = hotelsAvailable)
         }
         else -> {
-            TravelStartHandler(navigator = navigator, configAppBar = configAppBar, viewModel = viewModel, title = title, progressBarState = progressBarState)
+            TravelStartHandler(navigator = navigator, configAppBar = configAppBar, viewModel = viewModel, title = title)
         }
     }
 }

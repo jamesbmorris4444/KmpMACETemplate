@@ -25,7 +25,6 @@ abstract class AbstractTravelViewModel : KMMViewModel(), KoinComponent {
     var regionsFailure: MutableStateFlow<String> = MutableStateFlow("")
     var regionsSearchKey: MutableStateFlow<String> = MutableStateFlow("")
     val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
-    var progressBarState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     suspend fun getHotelDestinationIds(destinationSearchKey: String, composableScope: CoroutineScope): Pair<List<HotelDestinationId>, String> {
         return repository.getHotelDestinationIds(destinationSearchKey, composableScope)

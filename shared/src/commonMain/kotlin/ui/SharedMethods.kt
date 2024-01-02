@@ -25,7 +25,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import co.touchlab.kermit.Logger
 import com.Strings
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.rickclephas.kmm.viewmodel.coroutineScope
@@ -34,7 +33,6 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import viewmodels.RocketViewModel
-import viewmodels.TravelViewModel
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -169,43 +167,6 @@ fun rocketApiCall(
             // failure
         } else {
             viewModel.launchesFailure.value = failure
-        }
-    }
-}
-
-fun travelDestinationsApiCall(
-    searchKey: String = "",
-    viewModel: TravelViewModel
-) {
-    val composableScope = viewModel.viewModelScope.coroutineScope
-    composableScope.launch {
-        val (success, failure) = viewModel.getHotelDestinationIds(searchKey, composableScope)
-        if (failure.isEmpty()) {
-            // success
-            viewModel.destinationIdsAvailable.value = success
-            Logger.i("JIMX    $success")
-            viewModel.regionsSearchKey.value = searchKey
-        } else {
-            // failure
-            viewModel.destinationIdsFailure.value = failure
-        }
-    }
-}
-
-fun travelRegionsApiCall(
-    searchKey: String = "",
-    searchType: String = "",
-    viewModel: TravelViewModel
-) {
-    val composableScope = viewModel.viewModelScope.coroutineScope
-    composableScope.launch {
-        val (success, failure) = viewModel.getHotels(searchKey, searchType, composableScope)
-        if (failure.isEmpty()) {
-            // success
-            viewModel.hotelsAvailable.value = success
-        } else {
-            // failure
-            viewModel.regionsFailure.value = failure
         }
     }
 }
