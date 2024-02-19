@@ -425,8 +425,10 @@ class MoviePagingSource : PagingSource<Int, Movie>() {
             }
             val responseBody = response.bodyAsText()
             val moviesWithPageNumber: MoviesWithPageNumber =  jsonSerializer.decodeFromString(responseBody)
+            Logger.i("MACELOG: getMovies page SUCCESS")
             return moviesWithPageNumber.results.filter { it.genreIds.any { genre -> genre == 37 || genre == 10759 || genre == 80 || genre == 18 || genre == 9648 } }
         } catch (e: Exception) {
+            Logger.i("MACELOG: getMovies page FAILURE: ${e.message}")
             return listOf()
         }
     }
