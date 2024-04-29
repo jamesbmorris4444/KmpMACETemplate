@@ -46,6 +46,11 @@ interface Repository {
 
 class RepositoryImpl : Repository, KoinComponent {
 
+    companion object {
+        private const val ARRIVAL = "2024-07-01"
+        private const val DEPARTURE = "2024-07-14"
+    }
+
     private val sdk: SpaceXSDK by inject()
     private val databaseDriverFactory: DatabaseDriverFactory by inject()
 
@@ -112,9 +117,9 @@ class RepositoryImpl : Repository, KoinComponent {
         val offsetRequestParamKey = "offset"
         val offsetRequestParamValue = "0"
         val arrivalDateRequestParamKey = "arrival_date"
-        val arrivalDateRequestParamValue = "2024-03-31"
+        val arrivalDateRequestParamValue = ARRIVAL
         val departureDateRequestParamKey = "departure_date"
-        val departureDateRequestParamValue = "2024-04-10"
+        val departureDateRequestParamValue = DEPARTURE
         val guestQtyRequestParamKey = "guest_qty"
         val guestQtyRequestParamValue = "2"
         val destIdsRequestParamKey = "dest_ids"
