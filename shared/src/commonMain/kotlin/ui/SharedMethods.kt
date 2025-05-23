@@ -27,12 +27,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.Strings
 import com.jetbrains.handson.kmm.shared.cache.Product
-import com.rickclephas.kmm.viewmodel.coroutineScope
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import viewmodels.RocketViewModel
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -153,22 +150,6 @@ fun ListDisplayText(testTag: String, label: String, body: String, color: Color =
         color = color,
         style = MaterialTheme.typography.body1
     )
-}
-
-fun rocketApiCall(
-    viewModel: RocketViewModel
-) {
-    val composableScope = viewModel.viewModelScope.coroutineScope
-    composableScope.launch {
-        val (success, failure) = viewModel.getSpaceXLaunches(composableScope)
-        if (failure.isEmpty()) {
-            // success
-            viewModel.launchesAvailable.value = success
-            // failure
-        } else {
-            viewModel.launchesFailure.value = failure
-        }
-    }
 }
 
 enum class ApiCalls(val string: String) {

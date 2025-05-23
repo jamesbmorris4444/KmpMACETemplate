@@ -17,10 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -32,7 +29,6 @@ import co.touchlab.kermit.Logger
 import com.Strings
 import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.mace.corelib.StandardModal
-import com.mace.corelib.StandardModalArgs
 import io.kamel.core.Resource
 import io.kamel.core.utils.cacheControl
 import io.kamel.image.KamelImage
@@ -45,7 +41,9 @@ import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
+import viewmodels.AbstractMovieViewModel.MoviesIntent
 import viewmodels.MovieViewModel
+import viewstate.MoviesViewState
 
 @Composable
 fun MoviesScreen(
@@ -71,33 +69,23 @@ fun MoviesHandler(
     title: String
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
-    var apiFailure by remember { mutableStateOf(false) }
+    val moviesViewState: MoviesViewState by viewModel.moviesViewState.collectAsState()
     val genreMap: Map<Int, String> = mapOf(Pair(37, "Western"), Pair(10759, "Action & Adventure"), Pair (80, "Crime"), Pair(18, "Drama"), Pair(9648, "Mystery"))
 
     @Composable
     fun standardModalError(failureMessage: String) {
-        if (showStandardModalState.topIconId.isNotEmpty()) {
-            StandardModal(
-                showStandardModalState.topIconId,
-                showStandardModalState.titleText,
-                showStandardModalState.bodyText,
-                showStandardModalState.positiveText,
-                showStandardModalState.negativeText,
-                showStandardModalState.neutralText,
-                showStandardModalState.onDismiss
-            )
-        } else {
-            viewModel.showStandardModalState.value = StandardModalArgs(
-                topIconId = "drawable/notification.xml",
-                titleText = Strings.get("failure_api_title_text"),
-                bodyText = failureMessage,
-                positiveText = Strings.get("positive_button_text_ok"),
-            ) {
-                viewModel.showStandardModalState.value = StandardModalArgs()
-                apiFailure = true
-            }
+        StandardModal(
+            topIconId = "drawable/notification.xml",
+            titleText = Strings.get("failure_api_title_text"),
+            bodyText = failureMessage,
+            positiveText = Strings.get("positive_button_text_ok"),
+        ) {
+            viewModel.handleIntent(MoviesIntent.apiFailure(failureMessage))
         }
+    }
+
+    when {
+        moviesViewState.apiFailure.isNotEmpty() -> standardModalError(moviesViewState.apiFailure)
     }
 
     @Composable
@@ -160,14 +148,14 @@ fun MoviesHandler(
                         loadState.refresh is LoadStateError -> {
                             item {
                                 (movies.loadState.refresh as LoadStateError).error.message?.let {
-                                    standardModalError(it)
+                                    viewModel.handleIntent(MoviesIntent.apiFailure(it))
                                 }
                             }
                         }
                         loadState.append is LoadStateError -> {
                             item {
                                 (movies.loadState.append as LoadStateError).error.message?.let {
-                                    standardModalError(it)
+                                    viewModel.handleIntent(MoviesIntent.apiFailure(it))
                                 }
                             }
                         }
@@ -204,7 +192,7 @@ fun MoviesHandler(
             .padding(start = 24.dp, end = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (apiFailure.not()) {
+        if (viewModel.moviesViewState.value.apiFailure.isEmpty()) {
             MoviesList()
         }
     }

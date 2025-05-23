@@ -25,12 +25,14 @@ import co.touchlab.kermit.Logger
 import com.Strings
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import com.mace.corelib.StandardModal
-import com.mace.corelib.StandardModalArgs
+import com.rickclephas.kmm.viewmodel.coroutineScope
+import kotlinx.coroutines.launch
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
-import viewmodels.BloodViewModel
+import viewmodels.AbstractRocketViewModel.RocketIntent
 import viewmodels.RocketViewModel
+import viewstate.RocketViewState
 
 @Composable
 fun RocketLaunchScreen(
@@ -40,40 +42,33 @@ fun RocketLaunchScreen(
     title: String
 ) {
 
-    @Composable
-    fun handleFailure(viewModel: RocketViewModel, message: String, typeOfApi: ApiCalls, showStandardModalState: StandardModalArgs) {
-        if (showStandardModalState.topIconId.isNotEmpty()) {
-            StandardModal(
-                showStandardModalState.topIconId,
-                showStandardModalState.titleText,
-                showStandardModalState.bodyText,
-                showStandardModalState.positiveText,
-                showStandardModalState.negativeText,
-                showStandardModalState.neutralText,
-                showStandardModalState.onDismiss
-            )
-        } else {
-            viewModel.showStandardModalState.value = StandardModalArgs(
-                topIconId = "drawable/notification.xml",
-                titleText = Strings.format("failure_api_title_text", typeOfApi.string),
-                bodyText = message,
-                positiveText = Strings.get("positive_button_text_ok"),
-            ) {
-                viewModel.launchesFailure.value = ""
-                viewModel.launchesAvailable.value = listOf()
-                viewModel.progressBarState.value = false
-                viewModel.showStandardModalState.value = StandardModalArgs()
-            }
+    val rocketViewState: RocketViewState by viewModel.rocketViewState.collectAsState()
+    Logger.i("MACELOG: Compose: ${ScreenNames.RocketLaunch.name}")
+
+    fun rocketApiCall(
+        viewModel: RocketViewModel
+    ) {
+        val composableScope = viewModel.viewModelScope.coroutineScope
+        composableScope.launch {
+            viewModel.handleIntent(RocketIntent.loadLaunches)
         }
     }
 
-    val launchesAvailable: List<RocketLaunch>? by viewModel.launchesAvailable.collectAsState()
-    val launchesFailure by viewModel.launchesFailure.collectAsState()
-    val showStandardModalState by viewModel.showStandardModalState.collectAsState()
-    Logger.i("MACELOG: Compose: ${ScreenNames.RocketLaunch.name}")
+    @Composable
+    fun handleFailure(message: String, typeOfApi: ApiCalls) {
+        StandardModal(
+            topIconId = "drawable/notification.xml",
+            titleText = Strings.format("failure_api_title_text", typeOfApi.string),
+            bodyText = message,
+            positiveText = Strings.get("positive_button_text_ok"),
+        ) {
+            viewModel.handleIntent(RocketIntent.failureDialogDismissed)
+        }
+    }
+
     when {
-        launchesFailure.isNotEmpty() -> handleFailure(viewModel, launchesFailure, ApiCalls.SpaceX, showStandardModalState)
-        launchesAvailable != null -> launchesAvailable ?.let { RocketLaunchHandler(navigator = navigator, configAppBar = configAppBar, title = title, launches = it) }
+        rocketViewState.launchesFailure.isNotEmpty() -> handleFailure(rocketViewState.launchesFailure, ApiCalls.SpaceX)
+        rocketViewState.launchesAvailable != null -> rocketViewState.launchesAvailable ?.let { RocketLaunchHandler(navigator = navigator, configAppBar = configAppBar, title = title, launches = it) }
         else -> {
             MaceProgressBar()
             rocketApiCall(viewModel = viewModel)
