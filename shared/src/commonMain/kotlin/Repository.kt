@@ -47,8 +47,8 @@ interface Repository {
 class RepositoryImpl : Repository, KoinComponent {
 
     companion object {
-        private const val ARRIVAL = "2024-07-01"
-        private const val DEPARTURE = "2024-07-14"
+        private const val ARRIVAL = "2026-07-01"
+        private const val DEPARTURE = "2026-07-14"
     }
 
     private val sdk: SpaceXSDK by inject()
