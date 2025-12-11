@@ -20,3 +20,5 @@ rootProject.name = "KmpMACETemplate"
 include(":androidApp")
 include(":shared")
 include(":corelib")
+include(":mediaplayer")
+include(":mediaplayerdata")

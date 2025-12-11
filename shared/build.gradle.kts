@@ -49,7 +49,7 @@ kotlin {
                 implementation(libs.sql.ios)
                 implementation(libs.koin.core)
                 implementation(libs.kermit)
-                implementation(libs.sentry)
+//                implementation(libs.sentry)
                 implementation(projects.corelib)
             }
         }

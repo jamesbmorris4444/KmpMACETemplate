@@ -6,7 +6,7 @@ import com.jetbrains.handson.kmm.shared.SpaceXSDK
 import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
 import org.koin.dsl.module
 
-fun appModule() = module {
+fun mainAppModule() = module {
     single<Repository> { RepositoryImpl() }
     single { DatabaseDriverFactory(get()) }
     single { SpaceXSDK() }
