@@ -10,7 +10,7 @@ import com.vdigital.volumestream.platform.enum.OsType
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-internal actual val platformCoreModule: Module = module {
+actual val platformCoreModule: Module = module {
     single<Media3PlayerComponent> {
         Media3Media3PlayerComponentImpl(
             AndroidApp.getAppInstance(),

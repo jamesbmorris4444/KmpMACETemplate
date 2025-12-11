@@ -3,6 +3,7 @@
     <string name="rocket_launch_complete_title">SpaceX Rocket Launches</string>
     <string name="rocket_launch_pending_title">Fetching SpaceX Launches …</string>
     <string name="rocket_launch_screen_name">SpaceX Rocket Launches</string>
+    <string name="exoplayer_screen_name">Media Player Demo</string>
     <string name="rocket_launch_type">SpaceX Launches</string>
     <string name="destination_id_type">Destination IDs</string>
     <string name="region_type">Regions</string>

@@ -41,6 +41,7 @@ kotlin {
                 implementation(libs.koin.android)
                 implementation(libs.kermit)
                 implementation(projects.corelib)
+                implementation(projects.mediaplayer)
             }
         }
         val iosMain by getting {
@@ -51,6 +52,7 @@ kotlin {
                 implementation(libs.kermit)
 //                implementation(libs.sentry)
                 implementation(projects.corelib)
+                implementation(projects.mediaplayer)
             }
         }
         val commonMain by getting {
@@ -77,6 +79,7 @@ kotlin {
                 implementation(libs.paging.compose)
                 implementation(libs.datetime)
                 implementation(projects.corelib)
+                implementation(projects.mediaplayer)
             }
         }
         val iosArm64Main by getting
@@ -96,7 +99,7 @@ kotlin {
 
 android {
     namespace = "com.mace.kmpmacetemplate"
-    compileSdk = 34
+    compileSdk = 36
     defaultConfig {
         minSdk = 24
     }

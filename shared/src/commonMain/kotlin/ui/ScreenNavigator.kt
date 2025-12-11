@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import co.touchlab.kermit.Logger
 import com.Strings
+import com.vdigital.volumestream.ui.view.MainNavigationControllerView
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -29,7 +30,7 @@ import viewmodels.RocketViewModel
 import viewmodels.TravelViewModel
 
 data class AppBarState(
-    val title: String = Strings.get("rocket_launch_pending_title"),
+    val title: String = Strings.get("exoplayer_screen_name"),
     val actions: (@Composable RowScope.() -> Unit)? = null,
     val navigationIcon: (@Composable () -> Unit)? = null
 )
@@ -57,6 +58,13 @@ fun ScreenNavigator(
                 navTransition = NavTransition(),
                 initialRoute = initialRoute,
             ) {
+                scene(
+                    route = ScreenNames.ExoPlayer.name,
+                    navTransition = NavTransition(),
+                ) {
+                    Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ExoPlayer.name}")
+                    MainNavigationControllerView()
+                }
                 scene(
                     route = ScreenNames.RocketLaunch.name,
                     navTransition = NavTransition(),
@@ -243,6 +251,7 @@ fun StartScreenAppBar(
 }
 
 enum class ScreenNames(val inDrawer: Boolean, val string: String) {
+    ExoPlayer(false, Strings.get("exoplayer_screen_name")),
     RocketLaunch(false, Strings.get("rocket_launch_screen_name")),
     Movies(false, Strings.get("movies_screen_name")),
     TravelDestinations(false, Strings.get("travel_destinations_screen_name")),

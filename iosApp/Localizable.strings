@@ -28,6 +28,7 @@
 "enter_last_name_text" = "Enter Last Name";
 "enter_middle_name_text" = "Enter Middle Name";
 "enter_product_code" = "Enter Prod Code";
+"exoplayer_screen_name" = "Media Player Demo";
 "expiration_title" = "EXPIRATION DATE";
 "failure_api_title_text" = "Movies API failure";
 "failure_db_entries_body_text" = "Failure Message is: %@";

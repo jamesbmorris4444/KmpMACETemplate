@@ -1,7 +1,7 @@
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
 }
@@ -72,10 +72,7 @@ android {
     namespace = "com.vdigital.volumestream"
     compileSdk = 36
     defaultConfig {
-        applicationId = "com.vdigital.volumestream"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
     }
 }

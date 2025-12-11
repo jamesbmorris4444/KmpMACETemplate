@@ -121,7 +121,7 @@ fun DrawerAppComponent(
         ScreenNavigator(
             openDrawer = openDrawer,
             navigator = navigator,
-            initialRoute = ScreenNames.RocketLaunch.name,
+            initialRoute = ScreenNames.ExoPlayer.name,
             screenWidth = screenWidth
         )
     }

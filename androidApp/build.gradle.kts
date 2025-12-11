@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.mace.kmpmacetemplate.android"
-    compileSdk = 34
+    compileSdk = 36
     defaultConfig {
         applicationId = "com.mace.kmpmacetemplate.android"
         minSdk = 24
@@ -44,6 +44,7 @@ android {
 configurations.all {
     resolutionStrategy {
         force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
+        force("androidx.work:work-runtime:2.6.0")
     }
 }
 
@@ -60,4 +61,5 @@ dependencies {
     implementation(libs.kmm.viewmodel.lifecycle)
     implementation(libs.kmm.viewmodel)
     implementation(projects.corelib)
+    implementation(projects.mediaplayer)
 }
