@@ -35,6 +35,7 @@ kotlin {
     sourceSets {
         val androidMain by getting {
             dependencies {
+                implementation(libs.kotlin.stdlib)
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.sql.android)
                 implementation(libs.koin.core)
@@ -46,6 +47,7 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
+                implementation(libs.kotlin.stdlib)
                 implementation(libs.ktor.client.darwin)
                 implementation(libs.sql.ios)
                 implementation(libs.koin.core)
@@ -57,6 +59,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
+                implementation(libs.kotlin.stdlib)
                 implementation(compose.ui)
                 implementation(compose.runtime)
                 implementation(compose.foundation)

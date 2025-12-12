@@ -36,6 +36,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
+            implementation(libs.kotlin.stdlib)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.media3.exoplayer)
             implementation(libs.androidx.media3.exoplayer.dash)
@@ -45,6 +46,7 @@ kotlin {
         }
         commonMain.dependencies {
             api(project(":mediaplayerdata"))
+            implementation(libs.kotlin.stdlib)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -63,6 +65,7 @@ kotlin {
 
         }
         iosMain.dependencies {
+            implementation(libs.kotlin.stdlib)
             implementation(libs.koin.core)
         }
     }
