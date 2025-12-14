@@ -63,7 +63,7 @@ fun ScreenNavigator(
                     navTransition = NavTransition(),
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ExoPlayer.name}")
-                    MainNavigationControllerView()
+                    MainNavigationControllerView { navigator.navigate(ScreenNames.RocketLaunch.name) }
                 }
                 scene(
                     route = ScreenNames.RocketLaunch.name,

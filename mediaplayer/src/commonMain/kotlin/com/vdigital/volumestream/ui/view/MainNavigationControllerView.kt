@@ -24,7 +24,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun MainNavigationControllerView() {
+fun MainNavigationControllerView(navigateTo: () -> Unit) {
     val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.background(Color.Black),
@@ -51,7 +51,7 @@ fun MainNavigationControllerView() {
                 SettingsScreen()
             }
             composable("play") { backStackEntry ->
-                PlaybackView()
+                PlaybackView(navigateTo)
             }
         }
     }

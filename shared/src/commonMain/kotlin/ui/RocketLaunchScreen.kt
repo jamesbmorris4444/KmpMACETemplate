@@ -13,7 +13,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -101,7 +101,7 @@ fun RocketLaunchHandler(
         }
     }
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(Unit) {
         configAppBar(
             AppBarState(
                 title = title,
@@ -113,7 +113,7 @@ fun RocketLaunchHandler(
                         )
                     }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = Strings.get("back_button_content_description")
                         )
                     }

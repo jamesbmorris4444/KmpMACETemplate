@@ -8,12 +8,8 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.Strings
-import org.koin.core.KoinApplication
 
 class MainActivity : ComponentActivity() {
     private val repository = RepositoryImpl()
