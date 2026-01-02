@@ -1,9 +1,12 @@
+import sqldelight.com.intellij.icons.AllIcons.General.Add
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.sqlDelightPlugin)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -12,16 +15,6 @@ kotlin {
 
     jvmToolchain(17)
 
-    androidTarget()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
-    }
-    
     listOf(
         iosX64(),
         iosArm64(),
@@ -59,6 +52,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlin.reflect)
+                implementation(libs.androidx.material.icons)
                 implementation(compose.ui)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -77,6 +72,7 @@ kotlin {
                 implementation(libs.colormath.compose)
                 implementation(libs.koin.core)
                 implementation(libs.kamel)
+                implementation(libs.kamel.decoder)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
                 implementation(libs.datetime)
@@ -87,7 +83,7 @@ kotlin {
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosX64Main by getting
-        sourceSets["commonMain"].resources.srcDir("src/commonMain/resources")
+        //sourceSets["commonMain"].resources.srcDir("src/commonMain/resources")
     }
 }
 
@@ -97,15 +93,10 @@ kotlin {
             languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
         }
     }
-}
-
-android {
-    namespace = "com.mace.kmpmacetemplate"
-    compileSdk = 36
-    defaultConfig {
-        minSdk = 24
+    androidLibrary {
+        namespace = "com.example.namespace"
+        compileSdk = 36
     }
-    sourceSets["main"].resources.srcDir("src/commonMain/resources")
 }
 
 sqldelight {

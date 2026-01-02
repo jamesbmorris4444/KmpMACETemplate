@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -14,14 +15,9 @@ kotlin {
 
     jvmToolchain(17)
 
-    androidTarget()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
+    androidLibrary {
+        namespace = "com.vditital.data.model"
+        compileSdk = 36
     }
 
     listOf(
@@ -56,14 +52,5 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.ktor.client.darwin)
         }
-    }
-}
-
-android {
-    namespace = "com.vditital.data"
-    compileSdk = 36
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 36
     }
 }

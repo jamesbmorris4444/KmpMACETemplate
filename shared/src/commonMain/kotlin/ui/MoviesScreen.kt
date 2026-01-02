@@ -1,12 +1,16 @@
 package ui
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -21,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import app.cash.paging.LoadStateError
 import app.cash.paging.compose.LazyPagingItems
@@ -110,19 +115,26 @@ fun MoviesHandler(
                 cacheControl(CacheControl.MAX_AGE)
             }
         }
+
         KamelImage(
+            resource = { painterResource },
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 12.dp, bottom = 4.dp)
                 .width(240.dp),
-            resource = painterResource,
-            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            onLoading = {
+                CircularProgressIndicator()
+            },
             onFailure = { exception ->
                 coroutineScope.launch {
                     Logger.i("MACELOG: Kamel EXCEPTION=${exception.message.toString()}")
                 }
-            }
+            },
+            animationSpec = tween(durationMillis = 300)
         )
+
         Divider(modifier = Modifier.padding(top = 4.dp, bottom = 4.dp), color = MaterialTheme.colors.onBackground, thickness = 2.dp)
     }
 

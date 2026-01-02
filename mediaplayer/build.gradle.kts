@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -13,15 +14,12 @@ kotlin {
 
     jvmToolchain(17)
 
-    androidTarget()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
+    androidLibrary {
+        namespace = "com.example.namespace"
+        compileSdk = 36
     }
+
+    jvm("desktop")
 
     listOf(
         iosX64(),
@@ -47,6 +45,7 @@ kotlin {
         commonMain.dependencies {
             api(project(":mediaplayerdata"))
             implementation(libs.kotlin.stdlib)
+            implementation(libs.androidx.material.icons)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -60,7 +59,6 @@ kotlin {
             implementation(libs.koin.composeVM)
             implementation(libs.koin.core)
             implementation(libs.navigation.compose)
-            //UI images
             implementation(libs.image.loader)
 
         }
@@ -68,14 +66,9 @@ kotlin {
             implementation(libs.kotlin.stdlib)
             implementation(libs.koin.core)
         }
-    }
-}
-
-android {
-    namespace = "com.vdigital.volumestream"
-    compileSdk = 36
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 36
+//        val desktopMain by getting
+//        desktopMain.dependencies {
+//            implementation(libs.compose.desktop)
+//        }
     }
 }

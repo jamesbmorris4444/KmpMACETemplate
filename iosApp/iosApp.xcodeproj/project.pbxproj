@@ -12,10 +12,6 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		BD0FAC982B090186006B869C /* Localizable.strings in CopyFiles */ = {isa = PBXBuildFile; fileRef = BD0FAC972B090186006B869C /* Localizable.strings */; };
-		BDAC40A72B06391500E3EE03 /* avenir_bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BDAC40A42B06391400E3EE03 /* avenir_bold.otf */; };
-		BDAC40A82B06391500E3EE03 /* avenir_book.otf in Resources */ = {isa = PBXBuildFile; fileRef = BDAC40A52B06391400E3EE03 /* avenir_book.otf */; };
-		BDAC40A92B06391500E3EE03 /* avenir_regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BDAC40A62B06391500E3EE03 /* avenir_regular.otf */; };
-		D8DDF0B81B864213A9E3BEE2 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 9DA6C75951CC4B5EB7B3117A /* Sentry */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,9 +45,6 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD0FAC972B090186006B869C /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		BDAC40A42B06391400E3EE03 /* avenir_bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_bold.otf; path = ../../corelib/src/main/res/font/avenir_bold.otf; sourceTree = "<group>"; };
-		BDAC40A52B06391400E3EE03 /* avenir_book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_book.otf; path = ../../corelib/src/main/res/font/avenir_book.otf; sourceTree = "<group>"; };
-		BDAC40A62B06391500E3EE03 /* avenir_regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = avenir_regular.otf; path = ../../corelib/src/main/res/font/avenir_regular.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +52,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8DDF0B81B864213A9E3BEE2 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,9 +87,6 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				BDAC40A42B06391400E3EE03 /* avenir_bold.otf */,
-				BDAC40A52B06391400E3EE03 /* avenir_book.otf */,
-				BDAC40A62B06391500E3EE03 /* avenir_regular.otf */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
@@ -127,7 +116,7 @@
 				7555FF79242A565900829871 /* Resources */,
 				7555FFB4242A642300829871 /* Embed Frameworks */,
 				BD303C4C2B08BF8C00278A41 /* CopyFiles */,
-				EE19DBE672454582BFD6328E /* Upload Debug Symbols to Sentry */,
+				EE19DBE672454582BFD6328E,
 				BE49A70A80714430876ED730 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
@@ -135,12 +124,12 @@
 			dependencies = (
 			);
 			name = iosApp;
+			packageProductDependencies = (
+				9DA6C75951CC4B5EB7B3117A,
+			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
 			productType = "com.apple.product-type.application";
-			packageProductDependencies = (
-				9DA6C75951CC4B5EB7B3117A /* Sentry */,
-			);
 		};
 /* End PBXNativeTarget section */
 
@@ -166,13 +155,14 @@
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
+			packageReferences = (
+			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				7555FF7A242A565900829871 /* iosApp */,
 			);
-			packageReferences = ();
 		};
 /* End PBXProject section */
 
@@ -181,10 +171,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDAC40A92B06391500E3EE03 /* avenir_regular.otf in Resources */,
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
-				BDAC40A82B06391500E3EE03 /* avenir_book.otf in Resources */,
-				BDAC40A72B06391500E3EE03 /* avenir_bold.otf in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,13 +201,13 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-			name = "Upload Debug Symbols to Sentry";
 			inputPaths = (
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
 			);
+			name = "Upload Debug Symbols to Sentry";
 			outputPaths = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# This script is responsable to upload debug symbols and source context for Sentry.\nif which sentry-cli >/dev/null; then\nexport SENTRY_ORG=florida-software\nexport SENTRY_PROJECT=apple-ios\nERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
 		};
@@ -360,6 +347,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -383,7 +371,6 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 			};
 			name = Debug;
 		};
@@ -392,6 +379,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -415,7 +403,6 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 			};
 			name = Release;
 		};
@@ -441,7 +428,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

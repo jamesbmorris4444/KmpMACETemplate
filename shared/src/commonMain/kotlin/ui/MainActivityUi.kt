@@ -28,17 +28,20 @@ import androidx.compose.ui.unit.dp
 import com.Strings
 import com.extraBlack
 import com.extraWhite
+import kmpmacetemplate.shared.generated.resources.Res
+import kmpmacetemplate.shared.generated.resources.fs_logo
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 // See https://www.geeksforgeeks.org/android-jetpack-compose-implement-navigation-drawer/ for Navigation Drawer
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, InternalResourceApi::class)
 @Composable
 fun DrawerAppComponent(
     screenWidth: Dp,
@@ -65,7 +68,7 @@ fun DrawerAppComponent(
                 Image(
                     modifier = Modifier
                         .size(120.dp),
-                    painter = painterResource(DrawableResource("drawable/fs_logo.png")),
+                    painter = painterResource(Res.drawable.fs_logo),
                     contentDescription = Strings.get("fs_logo_content_description"),
                     contentScale = ContentScale.Fit
                 )

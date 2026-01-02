@@ -4,15 +4,15 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.sqlDelightPlugin)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
+    jvmToolchain(17)
+
+    androidLibrary {
+        compileSdk = 36
+        namespace = "com"
     }
     
     listOf(
@@ -60,13 +60,5 @@ kotlin {
         val iosSimulatorArm64Main by getting
         val iosX64Main by getting
         sourceSets["commonMain"].resources.srcDir("src/commonMain/resources")
-    }
-}
-
-android {
-    namespace = "com.mace.corelib"
-    compileSdk = 36
-    defaultConfig {
-        minSdk = 24
     }
 }

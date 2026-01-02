@@ -35,6 +35,7 @@ import com.extraPrimary
 import com.extraWhite
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 data class StandardModalArgs(
@@ -47,7 +48,7 @@ data class StandardModalArgs(
     val onDismiss: (DismissSelector) -> Unit = { }
 )
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, InternalResourceApi::class)
 @Composable
 fun StandardModal(
     topIconId: String,
@@ -106,7 +107,7 @@ fun StandardModal(
                                     .padding(top = 22.dp)
                                     .height(160.dp)
                                     .width(120.dp),
-                                painter = painterResource(DrawableResource(topIconId)),
+                                painter = painterResource(DrawableResource(topIconId, items = setOf())),
                                 colorFilter = ColorFilter.tint(MaterialTheme.colors.extraPrimary),
                                 contentDescription = "Dialog Alert"
                             )

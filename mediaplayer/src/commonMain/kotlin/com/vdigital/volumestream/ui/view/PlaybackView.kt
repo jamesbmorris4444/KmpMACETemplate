@@ -69,6 +69,7 @@ fun PlaybackView(navigateTo: () -> Unit) {
                 .fillMaxWidth()
                 .padding(top = 10.dp, start = 36.dp, end = 36.dp),
             onClick = {
+                viewModel.playPause()
                 navigateTo()
             }
         ) {

@@ -2,6 +2,7 @@ package ui
 import MaceEditText
 import MaceProgressBar
 import MaceText
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,9 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -306,17 +309,21 @@ fun TravelDestinationsScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     KamelImage(
+                        resource = { painterResource },
+                        contentDescription = null,
                         modifier = Modifier
                             .padding(top = 8.dp, bottom = 4.dp)
                             .size(100.dp),
-                        resource = painterResource,
                         contentScale = ContentScale.FillBounds,
-                        contentDescription = null,
+                        onLoading = {
+                            CircularProgressIndicator()
+                        },
                         onFailure = { exception ->
                             coroutineScope.launch {
                                 Logger.i("MACELOG: Kamel EXCEPTION=${exception.message.toString()}")
                             }
-                        }
+                        },
+                        animationSpec = tween(durationMillis = 300)
                     )
                 }
 

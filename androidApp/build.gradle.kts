@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -33,11 +34,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-        kotlin {
-            kotlinOptions {
-                freeCompilerArgs += "-Xexpect-actual-classes"
-            }
-        }
+    }
+    kotlin {
+        jvmToolchain(17)
     }
 }
 
