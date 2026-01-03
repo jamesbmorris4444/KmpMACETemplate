@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.WindowCompat
 import com.Strings
 
