@@ -1,20 +1,18 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.sqlDelightPlugin)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
+    androidLibrary {
+        compileSdk = 36
+        namespace = "com.mace.corelib"
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -52,21 +50,15 @@ kotlin {
                 implementation(libs.paging.compose)
                 implementation(libs.datetime)
             }
+            resources.srcDir("src/commonMain/resources")
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
         }
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosX64Main by getting
-        sourceSets["commonMain"].resources.srcDir("src/commonMain/resources")
-    }
-}
-
-android {
-    namespace = "com.mace.corelib"
-    compileSdk = 36
-    defaultConfig {
-        minSdk = 24
     }
 }

@@ -1,26 +1,22 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.sqlDelightPlugin)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
 kotlin {
+    androidLibrary {
+        compileSdk = 36
+        namespace = "com.mace.shared"
+    }
+
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
     applyDefaultHierarchyTemplate()
 
     jvmToolchain(17)
-
-    androidTarget()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
-    }
     
     listOf(
         iosX64(),
@@ -33,27 +29,20 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+        }
         val androidMain by getting {
             dependencies {
-                implementation(libs.kotlin.stdlib)
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.sql.android)
-                implementation(libs.koin.core)
                 implementation(libs.koin.android)
-                implementation(libs.kermit)
-                implementation(projects.corelib)
-                implementation(projects.mediaplayer)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.kotlin.stdlib)
                 implementation(libs.ktor.client.darwin)
                 implementation(libs.sql.ios)
-                implementation(libs.koin.core)
-                implementation(libs.kermit)
-                implementation(projects.corelib)
-                implementation(projects.mediaplayer)
             }
         }
         val commonMain by getting {
@@ -74,7 +63,6 @@ kotlin {
                 implementation(libs.kotlin.serialization)
                 implementation(libs.ktor.client.core)
                 implementation(libs.sql)
-                implementation(libs.colormath.compose)
                 implementation(libs.koin.core)
                 implementation(libs.kamel)
                 implementation(libs.paging.common)
@@ -89,23 +77,6 @@ kotlin {
         val iosX64Main by getting
         sourceSets["commonMain"].resources.srcDir("src/commonMain/resources")
     }
-}
-
-kotlin {
-    sourceSets {
-        all {
-            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
-        }
-    }
-}
-
-android {
-    namespace = "com.mace.kmpmacetemplate"
-    compileSdk = 36
-    defaultConfig {
-        minSdk = 24
-    }
-    sourceSets["main"].resources.srcDir("src/commonMain/resources")
 }
 
 sqldelight {

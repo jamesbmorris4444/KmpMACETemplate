@@ -3,26 +3,21 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
 kotlin {
+    androidLibrary {
+        compileSdk = 36
+        namespace = "com.mace.mediaplayerdata"
+    }
 
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
     applyDefaultHierarchyTemplate()
 
     jvmToolchain(17)
-
-    androidTarget()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
-    }
 
     listOf(
         iosX64(),
@@ -30,7 +25,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            baseName = "mediaplayerdata"
         }
     }
 
@@ -56,14 +51,5 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.ktor.client.darwin)
         }
-    }
-}
-
-android {
-    namespace = "com.vditital.data"
-    compileSdk = 36
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 36
     }
 }

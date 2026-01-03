@@ -34,11 +34,12 @@ import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 // See https://www.geeksforgeeks.org/android-jetpack-compose-implement-navigation-drawer/ for Navigation Drawer
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, InternalResourceApi::class)
 @Composable
 fun DrawerAppComponent(
     screenWidth: Dp,
@@ -65,7 +66,7 @@ fun DrawerAppComponent(
                 Image(
                     modifier = Modifier
                         .size(120.dp),
-                    painter = painterResource(DrawableResource("drawable/fs_logo.png")),
+                    painter = painterResource(DrawableResource("drawable/fs_logo.png", items = setOf())),
                     contentDescription = Strings.get("fs_logo_content_description"),
                     contentScale = ContentScale.Fit
                 )

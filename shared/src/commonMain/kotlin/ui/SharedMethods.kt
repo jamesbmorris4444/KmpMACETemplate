@@ -29,9 +29,10 @@ import com.Strings
 import com.jetbrains.handson.kmm.shared.cache.Product
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, InternalResourceApi::class)
 @Composable
 fun ProductListContent(
     canScrollVertically: Boolean,
@@ -68,7 +69,7 @@ fun ProductListContent(
                                 onProductSelected(productSelectedAsList)
                             }
                         },
-                    painter = painterResource(DrawableResource("drawable/delete_icon.png")),
+                    painter = painterResource(DrawableResource("drawable/delete_icon.png", items = setOf())),
                     contentDescription = "Dialog Alert"
                 )
                 Image(
@@ -89,7 +90,7 @@ fun ProductListContent(
                                 onProductSelected(productSelectedAsList)
                             }
                         },
-                    painter = painterResource(DrawableResource("drawable/edit_icon.png")),
+                    painter = painterResource(DrawableResource("drawable/edit_icon.png", items = setOf())),
                     contentDescription = "Dialog Alert"
                 )
                 Column(modifier = Modifier

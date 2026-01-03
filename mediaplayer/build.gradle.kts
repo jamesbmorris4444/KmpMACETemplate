@@ -1,27 +1,21 @@
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
 kotlin {
+    androidLibrary {
+        compileSdk = 36
+        namespace = "com.mace.mediaplayer"
+    }
 
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
     applyDefaultHierarchyTemplate()
 
     jvmToolchain(17)
-
-    androidTarget()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
-    }
 
     listOf(
         iosX64(),
@@ -68,14 +62,5 @@ kotlin {
             implementation(libs.kotlin.stdlib)
             implementation(libs.koin.core)
         }
-    }
-}
-
-android {
-    namespace = "com.vdigital.volumestream"
-    compileSdk = 36
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 36
     }
 }
