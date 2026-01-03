@@ -7,6 +7,11 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
+compose.resources {
+    publicResClass = true
+    generateResClass = auto
+}
+
 kotlin {
     androidLibrary {
         compileSdk = 36
@@ -33,7 +38,6 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(compose.animation)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation(libs.colormath.compose)
                 implementation(libs.kermit)
@@ -50,7 +54,6 @@ kotlin {
                 implementation(libs.paging.compose)
                 implementation(libs.datetime)
             }
-            resources.srcDir("src/commonMain/resources")
         }
         val commonTest by getting {
             dependencies {
@@ -60,5 +63,11 @@ kotlin {
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosX64Main by getting
+    }
+
+    sqldelight {
+        database("AppDatabase") {
+            packageName = "com.mace.corelib.db"
+        }
     }
 }
