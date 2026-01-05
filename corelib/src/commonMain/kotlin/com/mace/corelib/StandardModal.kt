@@ -25,12 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.avenirFontFamilyBold
 import com.extraPrimary
 import com.extraWhite
 import org.jetbrains.compose.resources.DrawableResource
@@ -65,10 +64,8 @@ fun StandardModal(
         MaceText(
             text = text,
             color = if (isBackgrounded) MaterialTheme.colors.extraWhite else MaterialTheme.colors.extraPrimary,
-            style = TextStyle(
-                fontFamily = avenirFontFamilyBold,
-                fontSize = MaterialTheme.typography.body2.fontSize
-            )
+            style = MaterialTheme.typography.body2,
+            fontWeight = FontWeight.Bold
         )
     }
 
@@ -121,7 +118,7 @@ fun StandardModal(
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colors.secondaryVariant,
                             style = MaterialTheme.typography.body1,
-                            fontFamily = avenirFontFamilyBold
+                            fontWeight = FontWeight.Bold
                         )
                     }
 

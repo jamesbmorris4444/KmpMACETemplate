@@ -16,7 +16,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -37,11 +36,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import co.touchlab.kermit.Logger
 import com.Strings
-import com.avenirFontFamilyBold
 import com.jetbrains.handson.kmm.shared.cache.Donor
 import com.jetbrains.handson.kmm.shared.cache.Product
 import com.mace.corelib.DismissSelector
@@ -263,7 +261,7 @@ fun CreateProductsScreen(
                             .padding(start = leftGridPadding),
                         text = Strings.format("create_products_header_text", donor.lastName, donor.firstName),
                         style = MaterialTheme.typography.body2,
-                        fontFamily = avenirFontFamilyBold
+                        fontWeight = FontWeight.Bold
                     )
                 }
                 LazyVerticalGrid(
@@ -290,7 +288,7 @@ fun CreateProductsScreen(
                                         text = dinTitle,
                                         style = MaterialTheme.typography.subtitle1,
                                         color =  MaterialTheme.colors.onBackground,
-                                        fontFamily = avenirFontFamilyBold
+                                        fontWeight = FontWeight.Bold
 
                                     )
                                     MaceEditText(testTag = "otf_din", value = dinText, onValueChange = { dinText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterDinText,
@@ -312,7 +310,7 @@ fun CreateProductsScreen(
                                         text = productCodeTitle,
                                         style = MaterialTheme.typography.subtitle1,
                                         color =  MaterialTheme.colors.onBackground,
-                                        fontFamily = avenirFontFamilyBold
+                                        fontWeight = FontWeight.Bold
                                     )
                                     MaceEditText(testTag = "otf_product_code", value = productCodeText, onValueChange = { productCodeText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterProductCodeText,
                                         modifier = Modifier
@@ -347,7 +345,7 @@ fun CreateProductsScreen(
                                             .align(Alignment.TopStart),
                                         text = aboRhTitle,
                                         style = MaterialTheme.typography.subtitle1,
-                                        fontFamily = avenirFontFamilyBold
+                                        fontWeight = FontWeight.Bold
                                     )
                                     MaceText(
                                         modifier = Modifier
@@ -356,7 +354,7 @@ fun CreateProductsScreen(
                                         text = donor.aboRh,
                                         style = MaterialTheme.typography.body1,
                                         color = MaterialTheme.colors.primary,
-                                        fontFamily = avenirFontFamilyBold
+                                        fontWeight = FontWeight.Bold
                                     )
                                 }
                             }
@@ -373,7 +371,7 @@ fun CreateProductsScreen(
                                         text = expirationTitle,
                                         style = MaterialTheme.typography.subtitle1,
                                         color =  MaterialTheme.colors.onBackground,
-                                        fontFamily = avenirFontFamilyBold
+                                        fontWeight = FontWeight.Bold
                                     )
                                     MaceEditText(testTag = "otf_expiration", value = expirationText, onValueChange = { expirationText = it ; handleTextEntry(dinText, productCodeText, expirationText) }, label = enterExpirationText,
                                         modifier = Modifier

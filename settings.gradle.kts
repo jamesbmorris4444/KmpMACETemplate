@@ -2,6 +2,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
         maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
+        maven { url = uri("https://maven.pkg.jetbrains.space/public/p/jetbrains/maven") }
         google()
         gradlePluginPortal()
         mavenCentral()
@@ -11,6 +12,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories {
         maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
+        maven { url = uri("https://maven.pkg.jetbrains.space/public/p/jetbrains/maven") }
         google()
         mavenCentral()
     }

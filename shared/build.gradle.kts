@@ -1,4 +1,4 @@
-import sqldelight.com.intellij.icons.AllIcons.General.Add
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -22,6 +22,9 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            binaryOption("bundleId", "shared")
+            export(projects.corelib)
+            export(projects.mediaplayer)
         }
     }
 
@@ -34,8 +37,8 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.android)
                 implementation(libs.kermit)
-                implementation(projects.corelib)
-                implementation(projects.mediaplayer)
+                api(projects.corelib)
+                api(projects.mediaplayer)
             }
         }
         val iosMain by getting {
@@ -43,10 +46,8 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.ktor.client.darwin)
                 implementation(libs.sql.ios)
-                implementation(libs.koin.core)
-                implementation(libs.kermit)
-                implementation(projects.corelib)
-                implementation(projects.mediaplayer)
+                api(projects.corelib)
+                api(projects.mediaplayer)
             }
         }
         val commonMain by getting {
@@ -57,7 +58,6 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
                 implementation(compose.animation)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
@@ -76,8 +76,8 @@ kotlin {
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
                 implementation(libs.datetime)
-                implementation(projects.corelib)
-                implementation(projects.mediaplayer)
+                api(projects.corelib)
+                api(projects.mediaplayer)
             }
         }
         val iosArm64Main by getting
@@ -104,3 +104,7 @@ sqldelight {
         packageName = "com.jetbrains.handson.kmm.shared.cache"
     }
 }
+
+private fun KotlinMultiplatformExtension.iosTarget(function: Any) {}
+private fun KotlinMultiplatformExtension.framework(function: Any) {}
+private fun KotlinMultiplatformExtension.binaryOption(function: Any, string: String) {}

@@ -10,13 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.platform.Typeface
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.ajalt.colormath.extensions.android.composecolor.toComposeColor
 import com.github.ajalt.colormath.model.RGB
-import org.jetbrains.skia.FontStyle
-import org.jetbrains.skia.Typeface
 
 @get:Composable
 actual val Colors.extraBlack: Color
@@ -28,20 +25,6 @@ actual val Colors.extraWhite: Color
 actual val Colors.extraPrimary: Color
     get() = RGB("#6200ee").toComposeColor()
 
-
-private fun loadCustomFont(name: String): Typeface {
-    return when (name) {
-        "avenir_regular" -> Typeface.makeFromName(name, FontStyle.NORMAL)
-        "avenir_bold" -> Typeface.makeFromName(name, FontStyle.BOLD)
-        "avenir_book" -> Typeface.makeFromName(name, FontStyle.ITALIC)
-        else ->  Typeface.makeFromName(name, FontStyle.NORMAL)
-    }
-}
-
-actual val avenirFontFamilyRegular: FontFamily = FontFamily(Typeface(loadCustomFont("avenir_regular")))
-actual val avenirFontFamilyBold: FontFamily = FontFamily(Typeface(loadCustomFont("avenir_bold")))
-actual val avenirFontFamilyMedium: FontFamily = FontFamily(Typeface(loadCustomFont("avenir_medium")))
-
 actual val shapes = Shapes(
     small = RoundedCornerShape(8.dp),
     medium = RoundedCornerShape(12.dp),
@@ -49,19 +32,19 @@ actual val shapes = Shapes(
 )
 
 actual val typography = Typography(
-    h1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 32.sp),
-    h2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 24.sp),
-    h3 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 20.sp),
-    h4 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp),
-    h5 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 12.sp),
-    h6 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 10.sp),
-    body1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 18.sp),
-    body2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 16.sp),
-    subtitle1 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 14.sp),
-    subtitle2 = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 12.sp),
-    button = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 20.sp),
-    caption = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 24.sp),
-    overline = TextStyle(fontFamily = avenirFontFamilyRegular, fontSize = 14.sp)
+    h1 = TextStyle (fontFamily = FontFamily.SansSerif, fontSize = 36.sp),
+    h2 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 30.sp),
+    h3 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 24.sp),
+    h4 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 20.sp),
+    h5 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 16.sp),
+    h6 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 12.sp),
+    body1 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 20.sp),
+    body2 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 18.sp),
+    subtitle1 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 16.sp),
+    subtitle2 = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 14.sp),
+    button = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 22.sp),
+    caption = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 26.sp),
+    overline = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 16.sp)
 )
 
 actual val darkColorPalette = darkColors(

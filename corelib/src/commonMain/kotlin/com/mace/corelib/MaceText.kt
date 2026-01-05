@@ -6,9 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.avenirFontFamilyRegular
 
 @Composable
 fun MaceText(
@@ -17,7 +16,7 @@ fun MaceText(
     text: String = "",
     style: TextStyle = MaterialTheme.typography.body2,
     color: Color = Color.Unspecified,
-    fontFamily: FontFamily = avenirFontFamilyRegular
+    fontWeight: FontWeight = FontWeight.Normal
 ) {
     Text(
         modifier = modifier,
@@ -25,7 +24,7 @@ fun MaceText(
         text = text,
         style = style,
         color = color,
-        fontFamily = fontFamily
+        fontWeight = fontWeight
     )
 }
 
@@ -36,7 +35,7 @@ fun MaceAnnotatedText(
     text: AnnotatedString= AnnotatedString(""),
     style: TextStyle = MaterialTheme.typography.body2,
     color: Color = Color.Unspecified,
-    fontFamily: FontFamily = avenirFontFamilyRegular
+    fontWeight: FontWeight = FontWeight.Normal
 ) {
     Text(
         modifier = modifier,
@@ -44,6 +43,6 @@ fun MaceAnnotatedText(
         text = text,
         style = style,
         color = color,
-        fontFamily = fontFamily
+        fontWeight = fontWeight
     )
 }
