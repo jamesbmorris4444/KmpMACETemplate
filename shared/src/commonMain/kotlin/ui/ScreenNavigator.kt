@@ -47,11 +47,13 @@ fun ScreenNavigator(
     var appBarState by remember { mutableStateOf(AppBarState()) }
     var donor by remember { mutableStateOf(bloodViewModel.emptyDonor) }
     var transitionToCreateProductsScreen by remember { mutableStateOf(true) }
+    Logger.i("MACELOG: 7777")
     Scaffold(
         topBar = {
             StartScreenAppBar(appBarState = appBarState)
         }
     ) { internalPadding ->
+        Logger.i("MACELOG: 9999")
         Box(modifier = Modifier.padding(internalPadding)) {
             NavHost(
                 navigator = navigator,
@@ -63,6 +65,7 @@ fun ScreenNavigator(
                     navTransition = NavTransition(),
                 ) {
                     Logger.i("MACELOG: ScreenNavigator: launch screen=${ScreenNames.ExoPlayer.name}")
+                    Logger.i("MACELOG: aaaaa")
                     MainNavigationControllerView { navigator.navigate(ScreenNames.RocketLaunch.name) }
                 }
                 scene(
@@ -237,6 +240,7 @@ fun ScreenNavigator(
 fun StartScreenAppBar(
     appBarState: AppBarState
 ) {
+    Logger.i("MACELOG: 8888")
     TopAppBar(
         title = { MaceText(
             modifier = Modifier.testTag("item"),

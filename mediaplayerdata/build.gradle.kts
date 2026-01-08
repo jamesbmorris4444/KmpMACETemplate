@@ -1,11 +1,9 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    id("com.android.library")
+    kotlin("multiplatform")
+    id("org.jetbrains.compose")
+    kotlin("plugin.compose")
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -15,10 +13,7 @@ kotlin {
 
     jvmToolchain(17)
 
-    androidLibrary {
-        namespace = "com.vditital.data.model"
-        compileSdk = 36
-    }
+    androidTarget()
 
     listOf(
         iosX64(),
@@ -35,6 +30,7 @@ kotlin {
             implementation(libs.kotlin.stdlib)
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.ktor.client.content.negotiation)
         }
         commonMain.dependencies {
             implementation(libs.kotlin.stdlib)

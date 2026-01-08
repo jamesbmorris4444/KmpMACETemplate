@@ -1,10 +1,10 @@
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsCompose)
+    id("com.android.library")
+    kotlin("multiplatform")
+    id("org.jetbrains.compose")
+    kotlin("plugin.compose")
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -14,12 +14,7 @@ kotlin {
 
     jvmToolchain(17)
 
-    androidLibrary {
-        namespace = "com.example.namespace"
-        compileSdk = 36
-    }
-
-    jvm("desktop")
+    androidTarget()
 
     listOf(
         iosX64(),
@@ -53,8 +48,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.napier)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.lifecycle.viewmodel.compose)
+//            implementation(libs.androidx.lifecycle.runtime.compose)
+//            implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.koin.compose)
             implementation(libs.koin.composeVM)
             implementation(libs.koin.core)

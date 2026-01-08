@@ -1,7 +1,6 @@
-package com.mace.kmpmacetemplate.android.di
+package com.mace.kmpmacetemplate.di
 
 import android.app.Application
-import android.util.Log
 import com.vdigital.volumestream.InitKoinContentProvider
 import com.vdigital.volumestream.di.viewModelModule
 import com.vdigital.volumestream.platform.di.platformCoreModule

@@ -25,11 +25,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import com.Strings
 import com.extraBlack
 import com.extraWhite
 import kmpmacetemplate.shared.generated.resources.Res
 import kmpmacetemplate.shared.generated.resources.fs_logo
+import kmpmacetemplate.shared.generated.resources.walking_blood_bank_text
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.Navigator
@@ -38,6 +40,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 // See https://www.geeksforgeeks.org/android-jetpack-compose-implement-navigation-drawer/ for Navigation Drawer
 
@@ -50,6 +53,7 @@ fun DrawerAppComponent(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val currentScreen = remember { mutableStateOf(ScreenNames.DonateProductsSearch) }
     val coroutineScope = rememberCoroutineScope()
+    Logger.i("MACELOG: 2222")
     @Composable
     fun DrawerContentComponent(
         navigator: Navigator,
@@ -65,6 +69,7 @@ fun DrawerAppComponent(
                 modifier = Modifier
                     .align(CenterHorizontally)
             ) {
+                Logger.i("MACELOG: BBBB")
                 Image(
                     modifier = Modifier
                         .size(120.dp),
@@ -72,17 +77,18 @@ fun DrawerAppComponent(
                     contentDescription = Strings.get("fs_logo_content_description"),
                     contentScale = ContentScale.Fit
                 )
+                Logger.i("MACELOG: CCCC")
                 MaceText(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(top = 110.dp),
-                    text = Strings.get("walking_blood_bank_text"),
+                    text = stringResource(Res.string.walking_blood_bank_text),
                     style = MaterialTheme.typography.body1,
                     color =  MaterialTheme.colors.extraWhite
                 )
             }
             Spacer(Modifier.height(24.dp))
-            for (screen in ScreenNames.values()) {
+            for (screen in ScreenNames.entries) {
                 if (screen.inDrawer) {
                     Column(
                         Modifier.clickable(onClick = {
@@ -115,12 +121,14 @@ fun DrawerAppComponent(
             }
         }
     }
+    Logger.i("MACELOG: 3333")
 
     @Composable
     fun BodyContentComponent(
         navigator: Navigator,
         openDrawer: () -> Unit
     ) {
+        Logger.i("MACELOG: 6666")
         ScreenNavigator(
             openDrawer = openDrawer,
             navigator = navigator,
@@ -135,6 +143,7 @@ fun DrawerAppComponent(
             drawerState = drawerState,
             gesturesEnabled = true,
             drawerContent = {
+                Logger.i("MACELOG: 4444")
                 DrawerContentComponent(
                     navigator = navigator,
                     closeDrawer = { coroutineScope.launch { drawerState.close() } }
@@ -142,6 +151,7 @@ fun DrawerAppComponent(
             },
             drawerBackgroundColor = MaterialTheme.colors.onBackground,
             content = {
+                Logger.i("MACELOG: 5555")
                 BodyContentComponent(
                     navigator = navigator,
                     openDrawer = { coroutineScope.launch { drawerState.open() } }

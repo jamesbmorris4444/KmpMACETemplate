@@ -1,13 +1,11 @@
 [versions]
-agp = "8.9.1"
+agp = "9.4.0-milestone-4"
 kotlin = "2.3.0"
 compose = "1.11.0-alpha02"
-compose-compiler = "1.5.4"
-compose-material3 = "1.2.1"
 androidx-activityCompose = "1.9.0"
 kermit = "2.0.2"
-koin = "3.5.0"
-compose-plugin = "1.7.0"
+koin = "4.1.1"
+compose-plugin = "1.6.10"
 sql-version = "1.5.5"
 ktor = "3.3.3"
 colormath = "3.3.2"
@@ -21,15 +19,12 @@ paging = "3.3.0-alpha02-0.4.0"
 datetime= "0.3.3"
 media3Exoplayer = "1.8.0"
 media3Session = "1.8.0"
-seiko = "1.10.0"
 materialIcons = "1.7.3"
 napier = "2.6.1"
-navigationCompose = "2.7.0-alpha07"
-androidx-lifecycle = "2.8.0"
-koinMultiplatform = "1.2.0-Beta4"
+navigationCompose = "2.9.0-beta03"
 imageLoader = "1.8.3"
-uiText = "1.10.0"
-desktop = "1.1.1"
+plugin = "9.1.0-alpha02"
+composeMultiplatform = "1.10.0-rc02"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -39,14 +34,11 @@ kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3Exoplayer" }
 androidx-media3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "media3Exoplayer" }
 androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "media3Session" }
 androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3Exoplayer" }
 androidx-material-icons = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIcons" }
-seiko = { module = "io.github.qdsfdhvh:image-loader", version.ref = "seiko" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
@@ -64,7 +56,6 @@ colormath-compose = { module = "com.github.ajalt.colormath:colormath-ext-jetpack
 kmm-viewmodel = { module = "com.rickclephas.kmm:kmm-viewmodel-core", version.ref = "kmm-viewmodel" }
 kmm-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "kmm-lifecycle" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 precompose-navigation = { module = "moe.tlaster:precompose", version.ref = "precompose-navigation" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 kamel = { module = "media.kamel:kamel-image", version.ref = "kamel" }
@@ -74,21 +65,16 @@ paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagin
 datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinMultiplatform" }
-koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinMultiplatform" }
-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 image-loader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageLoader" }
-androidx-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
-compose-desktop = { module = "org.jetbrains.compose.desktop:desktop", version.ref = "desktop" }
 
 [plugins]
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
-jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqlDelightPlugin = { id = "com.squareup.sqldelight", version.ref = "sql-version" }

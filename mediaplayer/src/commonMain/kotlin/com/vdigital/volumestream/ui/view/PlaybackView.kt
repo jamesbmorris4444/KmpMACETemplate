@@ -77,7 +77,7 @@ fun PlaybackView(navigateTo: () -> Unit) {
         }
         Column(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
+                .align(Alignment.Center)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

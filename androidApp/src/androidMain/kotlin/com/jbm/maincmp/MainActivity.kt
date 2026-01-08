@@ -1,4 +1,4 @@
-package com.mace.kmpmacetemplate.android
+package com.jbm.maincmp
 
 import RepositoryImpl
 import StartApplication

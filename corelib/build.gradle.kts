@@ -1,19 +1,15 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsCompose)
+    id("com.android.library")
+    kotlin("multiplatform")
+    id("org.jetbrains.compose")
+    kotlin("plugin.compose")
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.sqlDelightPlugin)
-    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
     jvmToolchain(17)
 
-    androidLibrary {
-        compileSdk = 36
-        namespace = "com"
-    }
+    androidTarget()
     
     listOf(
         iosX64(),
