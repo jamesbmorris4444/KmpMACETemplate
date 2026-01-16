@@ -1,16 +1,14 @@
 [versions]
-agp = "9.4.0-milestone-4"
+agp = "8.7.3"
 kotlin = "2.3.0"
-compose = "1.11.0-alpha02"
 androidx-activityCompose = "1.9.0"
 kermit = "2.0.2"
 koin = "4.1.1"
-compose-plugin = "1.6.10"
-sql-version = "1.5.5"
+sql-version = "2.2.1"
 ktor = "3.3.3"
 colormath = "3.3.2"
 kmm-viewmodel = "1.0.0-ALPHA-15"
-coroutines = "1.7.3"
+coroutines = "1.9.0"
 precompose-navigation = "1.5.5"
 serialization = "1.6.0"
 kmm-lifecycle = "2.7.0"
@@ -31,9 +29,9 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
+compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
+compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3Exoplayer" }
 androidx-media3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "media3Exoplayer" }
 androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "media3Session" }
@@ -42,9 +40,9 @@ androidx-material-icons = { module = "org.jetbrains.compose.material:material-ic
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
-sql = { module = "com.squareup.sqldelight:runtime", version.ref = "sql-version" }
-sql-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sql-version" }
-sql-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sql-version" }
+sql = { module = "app.cash.sqldelight:runtime", version.ref = "sql-version" }
+sql-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sql-version" }
+sql-ios = { module = "app.cash.sqldelight:native-driver", version.ref = "sql-version" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
@@ -77,4 +75,4 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-sqlDelightPlugin = { id = "com.squareup.sqldelight", version.ref = "sql-version" }
+sqlDelightPlugin = { id = "app.cash.sqldelight", version.ref = "sql-version" }

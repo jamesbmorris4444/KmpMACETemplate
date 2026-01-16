@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.compose")
     kotlin("plugin.compose")
     alias(libs.plugins.kotlinSerialization)
+//    alias(libs.plugins.sqlDelightPlugin)
     alias(libs.plugins.sqlDelightPlugin)
 }
 
@@ -34,7 +35,6 @@ kotlin {
             implementation(libs.kotlin.stdlib)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.sql.android)
-            implementation(libs.koin.core)
             implementation(libs.koin.android)
             api(projects.corelib)
             api(projects.mediaplayer)
@@ -43,7 +43,6 @@ kotlin {
             implementation(libs.kotlin.stdlib)
             implementation(libs.ktor.client.darwin)
             implementation(libs.sql.ios)
-//            implementation(libs.koin.ios)
             api(projects.corelib)
             api(projects.mediaplayer)
         }

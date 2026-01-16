@@ -1,64 +1,56 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.targets
-import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.jvm
-
 plugins {
-    id("com.android.application")
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
-    kotlin("plugin.compose")
+//    id("com.android.application")
+//    kotlin("multiplatform")
+//    id("org.jetbrains.compose")
+//    kotlin("plugin.compose")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 kotlin {
-    androidTarget()
+//    androidTarget()
+//
+//    listOf(
+//        iosX64(),
+//        iosArm64(),
+//        iosSimulatorArm64()
+//    ).forEach { iosTarget ->
+//        iosTarget.binaries.framework {
+//            baseName = "androidApp"
+//            isStatic = true
+//            binaryOption("bundleId", "com.jbm.maincmp")
+//        }
+//    }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "androidApp"
-            isStatic = true
-            binaryOption("bundleId", "com.jbm.maincmp")
-        }
-    }
-
-    sourceSets {
-        androidMain {
-            dependencies {
-                implementation(libs.koin.android)
-                implementation("androidx.appcompat:appcompat:1.6.1") // Add if not present elsewhere
-                implementation("androidx.core:core-ktx:1.12.0") // Add if not present elsewhere
-            }
-        }
-
-        commonMain.dependencies {
-            implementation(projects.shared)
-            implementation(libs.kotlin.stdlib)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(compose.material3)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.koin.core)
-            implementation(libs.koin.android)
-            implementation(libs.kermit)
-            implementation(libs.kmm.viewmodel.lifecycle)
-            implementation(libs.kmm.viewmodel)
-            implementation(projects.corelib)
-            implementation(projects.mediaplayer)
-        }
+    dependencies {
+        implementation(libs.koin.android)
+        implementation("androidx.appcompat:appcompat:1.6.1") // Add if not present elsewhere
+        implementation("androidx.core:core-ktx:1.12.0") // Add if not present elsewhere
+        implementation(projects.shared)
+        implementation(libs.kotlin.stdlib)
+        implementation(libs.compose.ui)
+        implementation(libs.compose.ui.tooling.preview)
+//        implementation(compose.material3)
+        implementation(libs.androidx.activity.compose)
+        implementation(libs.koin.core)
+        implementation(libs.koin.android)
+        implementation(libs.kermit)
+        implementation(libs.kmm.viewmodel.lifecycle)
+        implementation(libs.kmm.viewmodel)
+        implementation(projects.corelib)
+        implementation(projects.mediaplayer)
     }
 
     //remove expect actual warning
-    targets.configureEach {
-        compilations.configureEach {
-            compileTaskProvider.configure{
-                compilerOptions {
-                    freeCompilerArgs.add("-Xexpect-actual-classes")
-                }
-            }
-        }
-    }
+//    targets.configureEach {
+//        compilations.configureEach {
+//            compileTaskProvider.configure{
+//                compilerOptions {
+//                    freeCompilerArgs.add("-Xexpect-actual-classes")
+//                }
+//            }
+//        }
+//    }
 }
 
 android {
