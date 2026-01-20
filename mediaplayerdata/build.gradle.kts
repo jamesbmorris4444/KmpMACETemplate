@@ -6,6 +6,16 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
 }
 
+android {
+    namespace = "com"
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 24
+        compileSdk = 36
+    }
+}
+
 kotlin {
 
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)

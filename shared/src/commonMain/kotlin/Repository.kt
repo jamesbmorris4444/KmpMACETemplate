@@ -1,17 +1,19 @@
 
+package viewstate
+
 import androidx.paging.PagingSource
 import app.cash.paging.PagingState
+import app.cash.sqldelight.db.SqlDriver
 import co.touchlab.kermit.Logger
+import com.database.Database
 import com.jetbrains.handson.kmm.shared.SpaceXSDK
-import com.jetbrains.handson.kmm.shared.cache.Database
-import com.jetbrains.handson.kmm.shared.cache.DatabaseDriverFactory
-import com.jetbrains.handson.kmm.shared.cache.Donor
-import com.jetbrains.handson.kmm.shared.cache.Product
+import com.jetbrains.handson.kmm.shared.entity.Donor
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
 import com.jetbrains.handson.kmm.shared.entity.HotelRegion
 import com.jetbrains.handson.kmm.shared.entity.Movie
 import com.jetbrains.handson.kmm.shared.entity.MoviesWithPageNumber
+import com.jetbrains.handson.kmm.shared.entity.Product
 import com.jetbrains.handson.kmm.shared.entity.RocketLaunch
 import io.ktor.client.HttpClient
 import io.ktor.client.request.header
@@ -52,7 +54,8 @@ class RepositoryImpl : Repository, KoinComponent {
     }
 
     private val sdk: SpaceXSDK by inject()
-    private val databaseDriverFactory: DatabaseDriverFactory by inject()
+    private val databaseDriverFactory: SqlDriver by inject()
+    private val sqlDriver: SqlDriver by inject()
 
     override var screenWidth = 0
     override var screenHeight = 0
@@ -318,7 +321,18 @@ class RepositoryImpl : Repository, KoinComponent {
                 19 -> { "The JCS" }
                 else -> { "" }
             }
-            donorList.add(Donor(id = 1L, lastName = lastName, middleName = middleName, firstName = firstName, aboRh = aboRh, dob = dob, branch = branch, gender = true))
+            donorList.add(
+                Donor(
+                    id = 1L,
+                    lastName = lastName,
+                    middleName = middleName,
+                    firstName = firstName,
+                    aboRh = aboRh,
+                    dob = dob,
+                    branch = branch,
+                    gender = true
+                )
+            )
         }
         return donorList
     }
@@ -349,7 +363,10 @@ class RepositoryImpl : Repository, KoinComponent {
     override fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts> {
         val donors = Database(databaseDriverFactory).getDonors(lastNameSearchKey)
         return donors.map {
-            DonorWithProducts(donor = it, products = Database(databaseDriverFactory).selectProductsList(it.id))
+            DonorWithProducts(
+                donor = it,
+                products = Database(databaseDriverFactory).selectProductsList(it.id)
+            )
         }
     }
 

@@ -19,9 +19,7 @@ class MainActivity : ComponentActivity() {
         repository.screenWidth = convertPixelsToDp(Resources.getSystem().displayMetrics.widthPixels.toFloat(), this).toInt()
         repository.screenHeight = convertPixelsToDp(Resources.getSystem().displayMetrics.heightPixels.toFloat(), this).toInt()
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        setContent {
-            StartApplication(repository)
-        }
+        StartApplication(repository)
     }
 
     private fun convertPixelsToDp(px: Float, context: Context): Float {

@@ -1,3 +1,5 @@
+import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
+
 plugins {
 //    id("com.android.application")
 //    kotlin("multiplatform")
@@ -60,6 +62,7 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 34
+        compileSdk = 36
         versionCode = 1
         versionName = "1.0"
     }

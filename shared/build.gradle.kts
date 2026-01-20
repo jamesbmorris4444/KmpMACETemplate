@@ -1,3 +1,7 @@
+import app.cash.sqlite.migrations.Database
+import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
+import org.gradle.kotlin.dsl.sqldelight
+
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
@@ -6,6 +10,16 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
 //    alias(libs.plugins.sqlDelightPlugin)
     alias(libs.plugins.sqlDelightPlugin)
+}
+
+android {
+    namespace = "com.sqldb"
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 24
+        compileSdk = 36
+    }
 }
 
 kotlin {
@@ -29,6 +43,8 @@ kotlin {
 //    sourceSets.all {
 //        languageSettings.enableLanguageFeature("ExplicitBackingFields")
 //    }
+
+
 
     sourceSets {
         androidMain.dependencies {
@@ -57,6 +73,7 @@ kotlin {
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.androidx.material.icons)
+            implementation(libs.sql.coroutines.extensions)
             implementation(libs.colormath.compose)
             implementation(libs.kermit)
             implementation(libs.kmm.viewmodel)
@@ -81,6 +98,14 @@ kotlin {
 //        val iosX64Main by getting
 //        sourceSets["commonMain"].resources.srcDir("src/commonMain/resources")
     }
+
+    sqldelight {
+        databases {
+            create("AppDatabase") {
+                packageName.set("com.sqldb.database")
+            }
+        }
+    }
 }
 
 //kotlin {
@@ -96,3 +121,4 @@ kotlin {
 //        packageName = "com.jetbrains.handson.kmm.shared.cache"
 //    }
 //}
+

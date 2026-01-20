@@ -1,10 +1,10 @@
 [versions]
-agp = "8.7.3"
-kotlin = "2.3.0"
+agp = "8.9.1"
+kotlin = "2.1.0"
 androidx-activityCompose = "1.9.0"
 kermit = "2.0.2"
 koin = "4.1.1"
-sql-version = "2.2.1"
+sql-version = "2.0.2"
 ktor = "3.3.3"
 colormath = "3.3.2"
 kmm-viewmodel = "1.0.0-ALPHA-15"
@@ -43,6 +43,7 @@ kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 sql = { module = "app.cash.sqldelight:runtime", version.ref = "sql-version" }
 sql-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sql-version" }
 sql-ios = { module = "app.cash.sqldelight:native-driver", version.ref = "sql-version" }
+sql-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sql-version" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }

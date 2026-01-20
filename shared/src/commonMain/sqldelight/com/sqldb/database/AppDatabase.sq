@@ -1,3 +1,5 @@
+import kotlin.Boolean;
+
 CREATE TABLE Donor (
     id INTEGER PRIMARY KEY,
     lastName TEXT NOT NULL,
@@ -6,7 +8,7 @@ CREATE TABLE Donor (
     branch TEXT NOT NULL,
     aboRh TEXT NOT NULL,
     dob TEXT NOT NULL,
-    gender INTEGER AS Boolean NOT NULL
+    gender INTEGER AS Boolean DEFAULT 0
 );
 
 insertDonor:

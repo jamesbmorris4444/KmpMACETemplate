@@ -1,13 +1,17 @@
-package com.jetbrains.handson.kmm.shared.cache
+package com.database
 
+import app.cash.sqldelight.db.SqlDriver
 import co.touchlab.kermit.Logger
+import com.jetbrains.handson.kmm.shared.entity.Donor
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
+import com.jetbrains.handson.kmm.shared.entity.Product
+import com.sqldb.database.AppDatabase
 
-internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
-    private val database = AppDatabase(databaseDriverFactory.createDriver())
+internal class Database(databaseDriverFactory: SqlDriver) {
+    private val database = AppDatabase(databaseDriverFactory)
     private val dbQuery = database.appDatabaseQueries
 
-    internal fun clearDatabase() {
+        internal fun clearDatabase() {
         dbQuery.transaction {
             dbQuery.removeAllDonors()
         }

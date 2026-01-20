@@ -3,6 +3,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import ui.DrawerAppComponent
+import viewstate.Repository
 
 @Composable
 fun StartApplication(repository: Repository) {
