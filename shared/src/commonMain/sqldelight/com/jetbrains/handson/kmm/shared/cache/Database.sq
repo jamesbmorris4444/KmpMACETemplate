@@ -22,6 +22,9 @@ selectAllDonorsInfo:
 SELECT Donor.*
 FROM Donor;
 
+getAllDonors:
+SELECT * FROM Donor;
+
 selectDonorsInfo:
 SELECT * FROM Donor
 WHERE lastName LIKE ?;

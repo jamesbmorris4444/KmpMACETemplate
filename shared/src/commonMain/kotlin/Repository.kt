@@ -5,8 +5,9 @@ import androidx.paging.PagingSource
 import app.cash.paging.PagingState
 import app.cash.sqldelight.db.SqlDriver
 import co.touchlab.kermit.Logger
-import com.database.Database
 import com.jetbrains.handson.kmm.shared.SpaceXSDK
+import com.jetbrains.handson.kmm.shared.cache.Database
+import com.jetbrains.handson.kmm.shared.cache.DatabaseQueries
 import com.jetbrains.handson.kmm.shared.entity.Donor
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
@@ -171,7 +172,9 @@ class RepositoryImpl : Repository, KoinComponent {
     }
 
     override fun initializeDatabase() {
-        val list = Database(databaseDriverFactory).getAllDonors()
+        val database = DatabaseQueries(databaseDriverFactory)
+        val dbQuery = database.getAllDonors()
+        val list = dbQuery.executeAsList()
         Logger.i("MACELOG: number of donors=${list.size}")
         if (list.isEmpty()) {
             Logger.i("MACELOG: DB initialize")

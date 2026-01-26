@@ -1,5 +1,3 @@
-import app.cash.sqlite.migrations.Database
-import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
 import org.gradle.kotlin.dsl.sqldelight
 
 plugins {
@@ -101,8 +99,8 @@ kotlin {
 
     sqldelight {
         databases {
-            create("AppDatabase") {
-                packageName.set("com.sqldb.database")
+            create("Database") {
+                packageName.set("com.jetbrains.handson.kmm.shared.cache")
             }
         }
     }

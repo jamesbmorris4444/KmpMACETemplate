@@ -1,24 +1,23 @@
-package com.database
+package com.jetbrains.handson.kmm.shared.cache
 
 import app.cash.sqldelight.db.SqlDriver
 import co.touchlab.kermit.Logger
 import com.jetbrains.handson.kmm.shared.entity.Donor
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.jetbrains.handson.kmm.shared.entity.Product
-import com.sqldb.database.AppDatabase
 
-internal class Database(databaseDriverFactory: SqlDriver) {
-    private val database = AppDatabase(databaseDriverFactory)
-    private val dbQuery = database.appDatabaseQueries
+class Database(databaseDriverFactory: SqlDriver) {
+    private val database = Database(databaseDriverFactory)
+    private val dbQuery = database.donorQ
 
-        internal fun clearDatabase() {
+    internal fun clearDatabase() {
         dbQuery.transaction {
             dbQuery.removeAllDonors()
         }
     }
 
     internal fun getAllDonors(): List<Donor> {
-        return dbQuery.selectAllDonorsInfo(::mapDonorSelecting).executeAsList()
+        return dbQuery.selectAllDonorsInfo().executeAsList()
     }
 
     private fun mapDonorSelecting(
@@ -93,11 +92,10 @@ internal class Database(databaseDriverFactory: SqlDriver) {
     }
 
    fun getAllProducts(): List<Product> {
-        return dbQuery.selectAllProductsInfo(::mapProductSelecting).executeAsList()
+        return dbQuery.selectAllProductsInfo().executeAsList()
     }
 
     private fun mapProductSelecting(
-        id: Long,
         donorId: Long,
         din: String,
         aboRh: String,
@@ -105,7 +103,6 @@ internal class Database(databaseDriverFactory: SqlDriver) {
         expirationDate: String
     ): Product {
         return Product(
-            id = id,
             donorId = donorId,
             din = din,
             aboRh = aboRh,
@@ -141,11 +138,11 @@ internal class Database(databaseDriverFactory: SqlDriver) {
     private fun dumpDonorsAndProducts() {
         val result1 = getAllDonors()
         result1.forEach {
-            Logger.i("MACELOG: DUMP DONORS      Donor=$it")
+            Logger.Companion.i("MACELOG: DUMP DONORS      Donor=$it")
         }
         val result2 = getAllProducts()
         result2.forEach {
-            Logger.i("MACELOG: DUMP PRODUCTS    Product=$it")
+            Logger.Companion.i("MACELOG: DUMP PRODUCTS    Product=$it")
         }
     }
 
