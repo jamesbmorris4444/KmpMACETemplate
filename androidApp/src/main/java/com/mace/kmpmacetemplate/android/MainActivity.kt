@@ -1,6 +1,5 @@
 package com.mace.kmpmacetemplate.android
 
-import BloodViewModel
 import RepositoryImpl
 import StartApplication
 import android.content.Context

@@ -1,5 +1,4 @@
 package ui
-import BloodViewModel
 import MaceEditText
 import MaceProgressBar
 import MaceText

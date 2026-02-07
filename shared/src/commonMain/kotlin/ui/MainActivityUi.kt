@@ -1,5 +1,4 @@
 package ui
-import BloodViewModel
 import MaceText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

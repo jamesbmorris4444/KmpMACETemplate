@@ -1,6 +1,5 @@
 package ui
 
-import BloodViewModel
 import MaceAnnotatedText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
