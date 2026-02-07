@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.sqlDelightPlugin)
 }
 
 kotlin {
@@ -36,7 +35,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
-                implementation(libs.sql.android)
                 implementation(libs.koin.core)
                 implementation(libs.koin.android)
                 implementation(libs.kermit)
@@ -46,7 +44,6 @@ kotlin {
         val iosMain by getting {
             dependencies {
                 implementation(libs.ktor.client.darwin)
-                implementation(libs.sql.ios)
                 implementation(libs.koin.core)
                 implementation(libs.kermit)
                 implementation(libs.sentry)
@@ -69,7 +66,6 @@ kotlin {
                 implementation(libs.precompose.navigation)
                 implementation(libs.kotlin.serialization)
                 implementation(libs.ktor.client.core)
-                implementation(libs.sql)
                 implementation(libs.colormath.compose)
                 implementation(libs.koin.core)
                 implementation(libs.kamel)
@@ -101,10 +97,4 @@ android {
         minSdk = 24
     }
     sourceSets["main"].resources.srcDir("src/commonMain/resources")
-}
-
-sqldelight {
-    database("AppDatabase") {
-        packageName = "com.jetbrains.handson.kmm.shared.cache"
-    }
 }

@@ -3,8 +3,6 @@ import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import app.cash.paging.cachedIn
-import com.jetbrains.handson.kmm.shared.cache.Donor
-import com.jetbrains.handson.kmm.shared.cache.Product
 import com.jetbrains.handson.kmm.shared.entity.DonorWithProducts
 import com.jetbrains.handson.kmm.shared.entity.HotelDestinationId
 import com.jetbrains.handson.kmm.shared.entity.HotelRegion
@@ -27,7 +25,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
         super.onCleared()
     }
 
-    val emptyDonor = Donor(0,"", "", "", "", "", "", gender = false)
     val noValue = "NO VALUE"
 
     var launchesAvailable: MutableStateFlow<List<RocketLaunch>?> = MutableStateFlow(null)
@@ -39,8 +36,6 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
     var regionsSearchKey: MutableStateFlow<String> = MutableStateFlow("")
     val showStandardModalState: MutableStateFlow<StandardModalArgs> = MutableStateFlow(StandardModalArgs())
     var progressBarState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var donorsAvailableState: MutableStateFlow<List<Donor>> = MutableStateFlow(listOf())
-    var productsListState: MutableStateFlow<MutableList<Product>> = MutableStateFlow(mutableListOf())
 
     val moviesAvailableState: Flow<PagingData<Movie>> = Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
@@ -59,67 +54,5 @@ abstract class ViewModel : KMMViewModel(), KoinComponent {
 
     suspend fun getHotels(regionSearchKey: String, regionSearchType: String, composableScope: CoroutineScope): Pair<HotelRegion, String> {
         return repository.getHotels(regionSearchKey, regionSearchType, composableScope)
-    }
-
-    fun initializeDatabase() {
-        repository.initializeDatabase()
-    }
-
-    fun donorsFromFullNameWithProducts(searchLast: String, dob: String): DonorWithProducts? {
-        return repository.donorsFromFullNameWithProducts(searchLast, dob)
-    }
-
-    fun insertProductsIntoDatabase(products: List<Product>) {
-        repository.insertProductsIntoDatabase(products)
-    }
-
-    fun handleSearchClick(searchKey:String): List<Donor> {
-        return repository.handleSearchClick(searchKey)
-    }
-
-    fun handleSearchClickWithProductsCorrectDonor(searchKey: String): List<DonorWithProducts> {
-        return repository.handleSearchClickWithProducts(searchKey)
-    }
-
-    fun handleSearchClickWithProductsIncorrectDonor(searchKey: String): List<DonorWithProducts> {
-        return repository.handleSearchClickWithProducts(searchKey)
-    }
-
-    fun updateDonorIdInProduct(correctDonorId: Long, productId: Long) {
-        repository.updateDonorIdInProduct(correctDonorId, productId)
-    }
-
-    fun donorFromNameAndDateWithProducts(donor: Donor): DonorWithProducts? {
-        return repository.donorFromNameAndDateWithProducts(donor)
-    }
-
-    fun donorAndProductsList(lastNameSearchKey: String): List<DonorWithProducts> {
-        return repository.donorAndProductsList(lastNameSearchKey)
-    }
-
-    fun updateDonor(
-        firstName: String,
-        middleName: String,
-        lastName: String,
-        dob: String,
-        aboRh: String,
-        branch: String,
-        gender: Boolean,
-        id: Long
-    ) {
-        repository.updateDonor(
-            firstName = firstName,
-            middleName = middleName,
-            lastName = lastName,
-            dob = dob,
-            aboRh = aboRh,
-            branch = branch,
-            gender = gender,
-            id = id
-        )
-    }
-
-    fun insertDonorIntoDatabase(donor: Donor) {
-        repository.insertDonorIntoDatabase(donor)
     }
 }

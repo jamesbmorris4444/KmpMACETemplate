@@ -8,7 +8,6 @@ androidx-activityCompose = "1.8.2"
 kermit = "2.0.2"
 koin = "3.5.0"
 compose-plugin = "1.6.0-dev1350"
-sql-version = "1.5.5"
 ktor = "2.3.7"
 colormath = "3.3.2"
 kmm-viewmodel = "1.0.0-ALPHA-15"
@@ -32,9 +31,6 @@ compose-material3 = { module = "androidx.compose.material3:material3", version.r
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
-sql = { module = "com.squareup.sqldelight:runtime", version.ref = "sql-version" }
-sql-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sql-version" }
-sql-ios = { module = "com.squareup.sqldelight:native-driver", version.ref = "sql-version" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
@@ -56,7 +52,5 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-sqlDelightPlugin = { id = "com.squareup.sqldelight", version.ref = "sql-version" }

@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.sqlDelightPlugin)
 }
 
 kotlin {
@@ -43,7 +42,6 @@ kotlin {
                 implementation(libs.precompose.navigation)
                 implementation(libs.kotlin.serialization)
                 implementation(libs.ktor.client.core)
-                implementation(libs.sql)
                 implementation(libs.colormath.compose)
                 implementation(libs.koin.core)
                 implementation(libs.kamel)
